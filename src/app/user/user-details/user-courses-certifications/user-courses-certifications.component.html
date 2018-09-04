@@ -1,0 +1,147 @@
+<mat-card class="language">
+
+  <app-spinner *ngIf="isLoading"></app-spinner>
+
+  <mat-card-title>
+    <span class="md-headline">
+      <strong>Courses & Certifications</strong>
+    </span>
+  </mat-card-title>
+
+  <mat-card-subtitle fxLayout="row">
+    <p class="c-card-profile__notes _md">
+      <strong>Note: </strong>
+      Complete here with the languages that you know.
+    </p>
+
+  </mat-card-subtitle>
+
+
+  <mat-card-content>
+
+    <!-- Preview Language -->
+    <div fxLayout="row"
+         fxLayout.xs="column"
+         *ngIf="!showForm"
+         class="language-card__preview">
+
+      <div *ngFor=""
+           class="language-card">
+        <div>
+          <span>{{ language.long_name }}</span>
+          <p>{{ getLevelText(language.level) }}</p>
+          <hr>
+        </div>
+      </div>
+
+    </div>
+    <!--/. Preview Language -->
+
+
+    <!-- Language Form -->
+    <div class="language-card__form"
+         *ngIf="showForm">
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           class="language-card__preview">
+
+        <div *ngFor="let language of userLanguages; let i = index"
+             class="language__card--edit">
+          <div class="language-card--body">
+            <div class="language__card--header">
+              <span class="language__card--title">{{ language.long_name }}</span>
+              <button mat-button
+                      matTooltip="remove language"
+                      aria-label="remove language"
+                      color="warn"
+                      class="language__card--remove">
+                <i class="material-icons">
+                  cancel
+                </i>
+              </button>
+            </div>
+            <p class="language__card--level">{{ getLevelText(language.level) }}</p>
+            <hr>
+          </div>
+        </div>
+
+      </div>
+
+      <form (ngSubmit)="onSubmit($event)">
+        <div>
+
+
+          <mat-form-field fxFlex.gt-sm="30%">
+            <input type="text"
+                   placeholder="Pick a language"
+                   aria-label="Select a language"
+                   matInput
+                   [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="">
+                ...
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+          <div fxFlex.gt-sm="10%"
+               class="language-card--action">
+            <button mat-button
+                    matTooltip="remove language"
+                    aria-label="remove language">
+              <i class="material-icons">
+                cancel
+              </i>
+            </button>
+
+            <button mat-button
+                    matTooltip="Add new language"
+                    aria-label="Add new language"
+                    color="primary">
+              <i class="material-icons">
+                add_box
+              </i>
+            </button>
+          </div>
+
+
+        </div>
+        <div fxLayout="row">
+          <button mat-button
+                  type="submit"
+                  [fxFlex]="100"
+                  color="primary"
+                  [disabled]="false">
+            Save Changes
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!--/. Language Form -->
+
+
+
+
+  </mat-card-content>
+
+
+  <mat-card-footer fxLayoutAlign="center"
+                   class="language-footer">
+
+    <!-- Actions button -->
+    <mat-card-actions fxFlex="100">
+      <app-toggle-button (cardVisibility)="onToggle($event)"
+                         [cardVisibilitySubject]="cardVisibilitySubject"
+                         name="Courses & Certifications"
+                         [disableButton]="isLoading"
+                         fxLayoutAlign="center"
+                         fxLayout="row"
+                         fxFlex="100"></app-toggle-button>
+    </mat-card-actions>
+    <!--/. Actions button -->
+  </mat-card-footer>
+
+
+
+</mat-card>

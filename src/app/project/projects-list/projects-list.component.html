@@ -1,0 +1,130 @@
+<mat-form-field>
+  <input matInput
+         (keyup)="applyFilter($event.target.value)"
+         placeholder="Filter">
+</mat-form-field>
+
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div class="mat-elevation-z8">
+
+  <mat-table #table
+             [dataSource]="dataSource"
+             matSort>
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef
+                       [translate]="'TABLE.NO_HEADER'"> </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index;">{{i+1}}.</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header>
+        <span [translate]="'TABLE.NAME_HEADER'"></span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="start_date"
+                  class="date--cell">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header>
+        <span [translate]="'TABLE.SART_DATE_HEADER'"></span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.start_date ? moment(element.start_date).format('LL') : '' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="end_date"
+                  class="date--cell">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header>
+        <span [translate]="'TABLE.END_DATE_HEADER'"></span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.end_date ? moment(element.end_date).format('LL') : '' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="customer">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header>
+        <span [translate]="'TABLE.CUSTOMER_HEADER'"></span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-list>
+          <mat-list-item *ngFor="let customer of element.customers">
+            <span class="flag"
+                  [ngClass]="['flag-' + customer.name]"></span>
+            {{ customer.name }}
+          </mat-list-item>
+        </mat-list>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="application_types">
+      <mat-header-cell *matHeaderCellDef
+                       [translate]="'TABLE.APP_TYPE_HEADER'"> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-list>
+          <mat-list-item *ngFor="let application_type of element.application_types">
+            {{ application_type.name }}
+          </mat-list-item>
+        </mat-list>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="industries">
+      <mat-header-cell *matHeaderCellDef
+                       [translate]="'TABLE.INDUSTRY_HEADER'"> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-list>
+          <mat-list-item *ngFor="let industry of element.industries">
+            {{ industry.name }}
+          </mat-list-item>
+        </mat-list>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="users">
+      <mat-header-cell *matHeaderCellDef
+                       [translate]="'TABLE.EMPLOYEES_HEADER'"> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-list>
+          <mat-list-item *ngFor="let user of element.users">
+            {{ user.first_name + ' ' + user.last_name }}
+          </mat-list-item>
+        </mat-list>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="technologies">
+      <mat-header-cell *matHeaderCellDef
+                       [translate]="'TABLE.TECHNOLOGIES_HEADER'"> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-list>
+          <mat-list-item *ngFor="let technology of element.technologies">
+            {{ technology.name }}
+          </mat-list-item>
+        </mat-list>
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef
+                       [translate]="'TABLE.ACTIONS_HEADER'"> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a mat-icon-button
+           routerLink="/projects/{{element.id}}"
+           routerLinkActive="active"
+           color="secondary">
+          <mat-icon aria-label="View">pageview</mat-icon>
+        </a>
+      </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                 [pageSize]="10"></mat-paginator>
+</div>

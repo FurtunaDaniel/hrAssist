@@ -1,0 +1,182 @@
+<mat-card class="language">
+
+  <app-spinner *ngIf="isLoading"></app-spinner>
+
+  <mat-card-title>
+    <span class="md-headline">
+      <strong [translate]="'LANGUAGES.TITLE'"></strong>
+    </span>
+  </mat-card-title>
+
+  <mat-card-subtitle fxLayout="row">
+    <p class="c-card-profile__notes _md">
+      <strong [translate]="'COMMON.NOTE_LABEL'"></strong>
+      <span [translate]="'LANGUAGES.NOTE_TEXT'"></span>
+    </p>
+
+  </mat-card-subtitle>
+
+
+  <mat-card-content>
+
+    <!-- Preview Language -->
+    <div fxLayout="row"
+         fxLayout.xs="column"
+         *ngIf="!showForm"
+         class="language-card__preview">
+
+      <div *ngFor="let language of userLanguages; let i = index"
+           [ngClass]="{'language__card--odd': i%2==0}"
+           class="language-card">
+        <div>
+          <span>{{ language.long_name }}</span>
+          <p>{{ getLevelText(language.level) }}</p>
+          <hr>
+        </div>
+      </div>
+
+    </div>
+    <!--/. Preview Language -->
+
+
+    <!-- Language Form -->
+    <div class="language-card__form"
+         *ngIf="showForm">
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           class="language-card__preview">
+
+        <div *ngFor="let language of userLanguages; let i = index"
+             class="language__card--edit">
+          <div class="language-card--body">
+            <div class="language__card--header">
+              <span class="language__card--title">{{ language.long_name }}</span>
+              <button mat-button
+                      matTooltip="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                      attr.aria-label="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                      color="warn"
+                      (click)="removeLanguage(language, i)"
+                      class="language__card--remove">
+                <i class="material-icons">
+                  cancel
+                </i>
+              </button>
+            </div>
+            <p class="language__card--level">{{ getLevelText(language.level) }}</p>
+            <hr>
+          </div>
+        </div>
+
+      </div>
+
+      <form [formGroup]="languageFormGroup"
+            #userForm="ngForm"
+            (ngSubmit)="onSubmit($event)">
+        <div formArrayName="languagesToAdd"
+             *ngFor="let item of languageFormGroup.get('languagesToAdd').controls; let languageIndex = index;">
+
+          <div [formGroupName]="languageIndex"
+               fxLayout="row">
+            <mat-form-field fxFlex.gt-sm="30%">
+              <input type="text"
+                     #inputText
+                     placeholder="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate:{ element:'language'} }}"
+                     attr.aria-label="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate:{ element:'language'} }}"
+                     matInput
+                     formControlName="language"
+                     [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete"
+                                [displayWith]="displayFn">
+                <mat-option *ngFor="let lang of languages | FilterArrayByProperty:'long_name': inputText.value "
+                            [value]="lang">
+                  {{ lang.long_name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+
+            <div fxFlex.gt-sm="60%"
+                 class="language-card--rating">
+              <ngb-rating formControlName="level"
+                          max="5">
+                <ng-template let-fill="fill"
+                             let-index="index">
+                  <span class="star"
+                        [ngClass]="{'bad': index <= 1 ,
+                         'good': index >= 2 && index <= 3,
+                         'great' :index > 3 }"
+                        [class.filled]="fill === 100">&#9733;</span>
+                </ng-template>
+              </ngb-rating>
+              <div class="rating-value">
+                <span>
+                  {{ getLevelText(userForm.value.languagesToAdd[languageIndex].level) }}
+                </span>
+              </div>
+            </div>
+
+            <div fxFlex.gt-sm="10%"
+                 class="language-card--action">
+              <button mat-button
+                      matTooltip="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                      attr.aria-label="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                      *ngIf="languageIndex != 0 || languageFormGroup.get('languagesToAdd').controls.length > 1"
+                      (click)="removeField(languageIndex)">
+                <i class="material-icons">
+                  cancel
+                </i>
+              </button>
+
+              <button *ngIf="languageFormGroup.get('languagesToAdd').controls.length - languageIndex == 1"
+                      mat-button
+                      matTooltip="{{ 'COMMON.ADD_NEW_LBL' | translate:{ element:'language'} }}"
+                      attr.aria-label="{{ 'COMMON.ADD_NEW_LBL' | translate:{ element:'language'} }}"
+                      color="primary"
+                      (click)="addFields()">
+                <i class="material-icons">
+                  add_box
+                </i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <div fxLayout="row">
+          <button mat-button
+                  type="submit"
+                  [fxFlex]="100"
+                  color="primary"
+                  [disabled]="languageFormGroup.pristine && !languagesToRemove.length">
+            <span [translate]="'COMMON.SAVE_BTN'"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!--/. Language Form -->
+
+
+
+
+  </mat-card-content>
+
+
+  <mat-card-footer fxLayoutAlign="center"
+                   class="language-footer">
+
+    <!-- Actions button -->
+    <mat-card-actions fxFlex="100">
+      <app-toggle-button (cardVisibility)="onToggle($event)"
+                         [cardVisibilitySubject]="cardVisibilitySubject"
+                         name="Languages"
+                         [disableButton]="isLoading"
+                         fxLayoutAlign="center"
+                         fxLayout="row"
+                         fxFlex="100"></app-toggle-button>
+    </mat-card-actions>
+    <!--/. Actions button -->
+  </mat-card-footer>
+
+
+
+</mat-card>

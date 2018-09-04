@@ -1,0 +1,18 @@
+mat-list {
+    max-height: 80px;
+    overflow-y: auto;
+    mat-list-item {
+        font-size: 12px;
+        height: 18px;
+        /*Horrible hack to get rid of .mat-list-item-content padding */
+        margin-left: -16px;
+    }
+}
+
+mat-row {
+    height: 80px;
+}
+
+mat-cell {
+    padding-right: 15px;
+}

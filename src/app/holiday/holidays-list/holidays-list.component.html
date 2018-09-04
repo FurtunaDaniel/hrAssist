@@ -1,0 +1,84 @@
+<mat-form-field>
+  <input matInput
+         (keyup)="applyFilter($event.target.value)"
+         placeholder="Filter">
+</mat-form-field>
+
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div class="responsive__table">
+
+  <mat-table #table
+             [dataSource]="dataSource"
+             matSort>
+    <ng-container matColumnDef="index">
+      <mat-header-cell *matHeaderCellDef
+                       [translate]="'TABLE.NO_HEADER'"> </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index;">{{i+1}}.</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="employee">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header>
+        <span [translate]="'TABLE.NAME_HEADER'"></span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.employee }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="start_date"
+                  class="date--cell">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header>
+        <span [translate]="'TABLE.SART_DATE_HEADER'"></span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.start_date ? moment(element.start_date).format('LL') : '' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="end_date"
+                  class="date--cell">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header>
+        <span [translate]="'TABLE.END_DATE_HEADER'"></span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.end_date ? moment(element.end_date).format('LL') : '' }} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="days">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header>
+        <span [translate]="'TABLE.HOLIDAYS.NO_DAYS'"></span>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.days }}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="signing_day">
+      <mat-header-cell *matHeaderCellDef
+                       [translate]="'TABLE.HOLIDAYS.SIGNING_DAY'"> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.signing_day? moment(element.signing_day).format('LL'): '' }}
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef
+                       [translate]="'TABLE.ACTIONS_HEADER'"> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a mat-icon-button
+           routerLink="/holidays/{{element.id}}"
+           routerLinkActive="active"
+           color="secondary">
+          <mat-icon aria-label="View">pageview</mat-icon>
+        </a>
+      </mat-cell>
+    </ng-container>
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                 [pageSize]="10"></mat-paginator>
+</div>

@@ -1,0 +1,14 @@
+<button mat-button
+        color="primary"
+        (click)="toggle()"
+        [disabled]="disableButton"
+        fxFlex="100">
+  <span [hidden]="!visible">
+    {{ 'COMMON.CLOSE_TOGGLE' | translate:{ card: name } }}
+  </span>
+  <span [hidden]="visible">
+    {{ 'COMMON.VIEW_TOGGLE' | translate:{ card: name } }}
+  </span>
+
+
+</button>

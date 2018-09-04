@@ -1,0 +1,187 @@
+<mat-card class="device">
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <mat-card-title>
+    <span class="md-headline">
+      <strong [translate]="'DEVICES.TITLE'"></strong>
+
+    </span>
+  </mat-card-title>
+
+  <mat-card-subtitle fxLayout="row">
+    <p class="c-card-profile__notes">
+      <strong [translate]="'COMMON.NOTE_LABEL'"></strong>
+      <span [translate]="'DEVICES.NOTE_TEXT'"></span>
+    </p>
+
+  </mat-card-subtitle>
+
+
+  <mat-card-content>
+
+    <!-- Preview device -->
+    <div fxLayout="row wrap"
+         *ngIf="!showForm"
+         class="device-card__preview">
+
+      <div *ngFor="let device of userDevices; let i = index"
+           class="device-card"
+           fxFlex="50%">
+        <div>
+          <h3 class="device-card--name">{{ device.device_name }}</h3>
+
+          <div fxLayout="row">
+            <strong [translate]="'DEVICES.COMPONENTS'"></strong>
+          </div>
+
+          <div *ngFor="let component of device.components; let j = index"
+               fxLayout="row">
+            {{ component.name }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!--/. Preview device -->
+
+
+    <!-- device Form -->
+    <div class="device-card__form"
+         *ngIf="showForm">
+      <div fxLayout="row wrap"
+           fxLayout.xs="column"
+           fxLayoutGap.gt-sm="20px"
+           class="device-card__preview">
+
+        <div *ngFor="let device of userDevices; let i = index"
+             class="device__card--edit"
+             fxFlex.gt-sm="30%"
+             fxFlex.gt-xs="50%">
+          <div class="device-card--body">
+
+            <div class="device__card--header">
+              <span class="device__card--title">{{ device.device_name }}</span>
+
+              <button mat-button
+                      matTooltip="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                      attr.aria-label="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                      color="primary"
+                      (click)="viewDevice(device, i)"
+                      class="device__card--action">
+                <i class="material-icons">
+                  visibility
+                </i>
+              </button>
+
+              <button mat-button
+                      matTooltip="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                      attr.aria-label="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                      color="warn"
+                      (click)="removeDevice(device, i)"
+                      class="device__card--action">
+                <i class="material-icons">
+                  cancel
+                </i>
+              </button>
+            </div>
+
+            <hr>
+
+          </div>
+        </div>
+
+      </div>
+
+      <form [formGroup]="deviceFormGroup"
+            (ngSubmit)="onSubmit($event)">
+
+        <div fxLayout="row wrap"
+             fxLayoutGap="20px">
+
+          <mat-form-field fxFlex.gt-sm="40%">
+            <input type="text"
+                   placeholder="Device (i.e Desktop / Laptop)"
+                   aria-label="Device (i.e Desktop / Laptop)"
+                   matInput
+                   required
+                   formControlName="device_name"
+                   [attr.disabled]="viewDeviceMode">
+            <mat-error *ngIf="deviceFormGroup.get('device_name').invalid"
+                       [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+          </mat-form-field>
+
+          <mat-form-field fxFlex.gt-sm="50%">
+            <input type="text"
+                   placeholder="Device Serial No."
+                   aria-label="Device Serial No."
+                   matInput
+                   required
+                   formControlName="serial_number">
+            <mat-error *ngIf="deviceFormGroup.get('serial_number').invalid"
+                       [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="chip-list">
+
+            <mat-chip-list #componentsList>
+              <mat-chip *ngFor="let component of componentsToAdd"
+                        (removed)="remove(component)">
+                {{ component.name ? component.name : component }}
+                <mat-icon matChipRemove
+                          *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input #componentInput
+                     formControlName="components"
+                     [matAutocomplete]="auto"
+                     placeholder="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate:{ element:'component'} }}"
+                     attr.aria-label="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate:{ element:'component'} }}"
+                     [matChipInputFor]="componentsList">
+            </mat-chip-list>
+
+            <mat-autocomplete #auto="matAutocomplete"
+                              (optionSelected)="selected($event)">
+              <mat-option *ngFor="let component of components | FilterArrayByProperty:'name': componentInput.value"
+                          [value]="component">
+                {{component.name}}
+              </mat-option>
+            </mat-autocomplete>
+
+          </mat-form-field>
+
+        </div>
+        <div fxLayout="row">
+          <button mat-button
+                  type="submit"
+                  [fxFlex]="100"
+                  color="primary"
+                  [disabled]="deviceFormGroup.pristine && !devicesToRemove.length">
+            <span [translate]="'COMMON.SAVE_BTN'"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!--/. device Form -->
+
+
+
+
+  </mat-card-content>
+
+
+  <mat-card-footer fxLayoutAlign="center"
+                   class="device-footer">
+
+    <!-- Actions button -->
+    <mat-card-actions fxFlex="100">
+      <app-toggle-button (cardVisibility)="onToggle($event)"
+                         [cardVisibilitySubject]="cardVisibilitySubject"
+                         name="Devices"
+                         [disableButton]="isLoading"
+                         fxLayoutAlign="center"></app-toggle-button>
+    </mat-card-actions>
+    <!--/. Actions button -->
+  </mat-card-footer>
+
+
+
+</mat-card>

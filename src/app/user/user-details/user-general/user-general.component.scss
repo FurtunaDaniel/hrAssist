@@ -1,0 +1,18 @@
+.mat-card .mat-divider {
+    position: relative;
+}
+
+.c-card-profile__info {
+    margin-bottom: 10px;
+    @media screen and (max-width: 599px) {
+        .u-align-right {
+            text-align: left;
+        }
+    }
+}
+
+mat-card-title {
+    a[mat-icon-button] {
+        float: right;
+    }
+}

@@ -1,0 +1,54 @@
+{
+	"CORE": {
+		"LOADING": "Is Loading..."
+	},
+	"COMMON": {
+		"NOTE_LABEL": "NOTE: ",
+		"CANCEL_BTN": "Cancel",
+		"REMOVE_LBL": "Remove",
+		"SAVE_BTN": "Save Changes",
+		"ADD_NEW_LBL": "Add new {{ element }}",
+		"AUTOCOMPLETE_LBL": "Pick a {{ element }}",
+		"CLOSE_TOGGLE": "Close {{ card }}",
+		"VIEW_TOGGLE": "View/Edit {{ card }}"
+	},
+	"TABLE": {
+		"NO_HEADER": "No.",
+		"NAME_HEADER": "Name",
+		"SART_DATE_HEADER": "Start Date",
+		"END_DATE_HEADER": "End Date",
+		"CUSTOMER_HEADER": "Customer",
+		"APP_TYPE_HEADER": "Application Type",
+		"INDUSTRY_HEADER": "Industries",
+		"EMPLOYEES_HEADER": "Employees",
+		"TECHNOLOGIES_HEADER": "Technologies",
+		"ACTIONS_HEADER": "Actions",
+		"HOLIDAYS": {
+			"NO_DAYS": "No. Days",
+			"SIGNING_DAY": "Signing day"
+		}
+	},
+	"FORM": {
+		"FIELD_REQUIRED": "Field required",
+		"PATTERN_ERR": "Pattern doesn't match",
+		"EMAIL_LBL": "Email",
+		"PASSWORD_LBL": "Password",
+
+		"LOGIN": {
+			"TITLE": "Login",
+			"CREDENTIALS_ERROR": "{{ server_msg }} Please try again!",
+			"IMPORTANT_LBL": "Important! ",
+			"IMPORTANT_NOTE": "Use your ASSIST email credentials.",
+			"BTN_LBL": "Sign In"
+		}
+	},
+	"DEVICES": {
+		"TITLE": "Devices",
+		"NOTE_TEXT": "Complete here with the devices that you are using.",
+		"COMPONENTS": "Components: "
+	},
+	"LANGUAGES": {
+		"TITLE": "Languages",
+		"NOTE_TEXT": "Complete here with the languages that you know."
+	}
+}

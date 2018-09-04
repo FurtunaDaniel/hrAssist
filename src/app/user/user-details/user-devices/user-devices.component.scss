@@ -1,0 +1,28 @@
+// .device-card {
+//     min-width: 100px;
+// }
+.chip-list {
+    width: 100%;
+}
+
+.device-card {
+    padding-bottom: 20px;
+}
+
+.device-card--body {
+    .device__card--action {
+        min-width: 40px;
+        padding-left: 0;
+        padding-right: 0;
+        float: right;
+    }
+}
+
+.device__card--header {
+    line-height: 32px;
+    padding-right: 10px;
+}
+
+.device-card--name {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+}

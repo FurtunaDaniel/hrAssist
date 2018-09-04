@@ -1,0 +1,646 @@
+<mat-card>
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <mat-card-title>
+    <span class="md-headline">
+      <strong>Employee general info</strong>
+      <a mat-icon-button
+         color="secondary"
+         (click)="logout()">
+        <mat-icon aria-label="View"
+                  class="material-icons">power_settings_new</mat-icon>
+      </a>
+    </span>
+  </mat-card-title>
+
+  <mat-card-subtitle fxLayout="row">
+    <p class="c-card-profile__info c-card-profile__name u-clearfix">
+      <strong>Profile of: </strong> {{user?.first_name}} {{user?.middle_name}} {{user?.last_name}}
+    </p>
+  </mat-card-subtitle>
+
+  <!-- Preview General Info -->
+  <mat-card-content *ngIf="!showForm"
+                    class="c-card-profile__preview">
+    <section fxLayout="row"
+             *ngIf="!isLoading"
+             fxLayoutGap="20px">
+
+      <div class="c-card-profile__picture"
+           ng-if="user.email"
+           layout-align="top center"
+           fxHide.lt-sm="true">
+        <img *ngIf="gravatarUrl"
+             class="md-card-image cv-picture"
+             src="{{gravatarUrl}}">
+      </div>
+
+      <div class="c-card-profile__general-info"
+           fxFlex.gt-xs="80">
+
+        <div *ngIf="user.birthday"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Birthday: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.birthday }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.phone"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Phone: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.phone }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.other_email"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Other email: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.other_email }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.address"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Address: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.address }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.car_plate"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Car's license plate: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.car_plate }}</span>
+          </div>
+
+        </div>
+
+        <mat-divider class="md-padding divider-bold u-no-padding u-mt-20 u-mb-20">
+        </mat-divider>
+
+
+        <div *ngIf="user.company_start_date"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Start date at Company: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.company_start_date | date: 'MMMM yyyy' }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="userPosition"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Position: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ userPosition.name }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.email"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Company email: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.email }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.office_nr"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Office: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.office_nr }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.schedule"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Contract type: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.schedule }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.cnp"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Personal Identification number: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.cnp }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.work_info?.bitbucket"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Bitbucket Username: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.work_info.bitbucket }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.work_info?.github"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Github Username: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.work_info.github }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.work_info?.ssh_public_key"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Public SSH key: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span (click)="toggleViewSsh()">
+              <span *ngIf="!showSsh"
+                    matTooltip="{{ toggleSshLabel }}"
+                    matTooltipPosition="above">
+                <mat-icon aria-hidden="true"
+                          aria-label="toggleSshLabel">
+                  visibility
+                </mat-icon>
+                <!-- View SSH key ^^ -->
+              </span>
+              <span *ngIf="showSsh"
+                    matTooltip="{{ toggleSshLabel }}"
+                    matTooltipPosition="above">
+                <mat-icon aria-hidden="true"
+                          aria-label="toggleSshLabel">
+                  visibility_off
+                </mat-icon>
+                <!-- Hide SSH key ^^ -->
+              </span>
+            </span>
+          </div>
+
+        </div>
+        <div fxFlex.gt-xs="100"
+             *ngIf="user.work_info?.ssh_public_key && showSsh"
+             class="wrap-text">
+          <span>{{ user?.work_info?.ssh_public_key }}</span>
+        </div>
+
+
+        <mat-divider class="md-padding divider-bold u-no-padding u-mt-20 u-mb-20">
+        </mat-divider>
+
+
+        <div *ngIf="user.urgent_contact_name"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Urgent Contact Person: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.urgent_contact_name }}</span>
+          </div>
+
+        </div>
+
+
+        <div *ngIf="user.urgent_contact_phone"
+             class="c-card-profile__info"
+             fxLayout="row"
+             fxLayout.xs="column">
+
+          <div fxFlex.gt-xs="50">
+            <strong>Urgent Contact Phone: </strong>
+          </div>
+
+          <div fxFlex.gt-xs="50"
+               class="u-align-right">
+            <span>{{ user.urgent_contact_phone }}</span>
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </section>
+
+  </mat-card-content>
+  <!--/. Preview General Info -->
+
+
+
+
+  <!-- General Info formular -->
+  <mat-card-content *ngIf="showForm && !isLoading">
+    <form novalidate
+          [formGroup]="generalInfoForm"
+          (ngSubmit)="onSubmit(userForm)"
+          #userForm="ngForm">
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px">
+        <mat-form-field fxFlex.gt-sm="50%">
+          <input matInput
+                 formControlName="first_name"
+                 name="first_name"
+                 placeholder="First Name">
+          <mat-error *ngIf="(generalInfoForm.get('first_name').hasError('pattern') && !generalInfoForm.get('first_name').hasError('required')) || userForm.submitted">
+            Please enter a valid First Name
+          </mat-error>
+          <mat-error *ngIf="generalInfoForm.get('first_name').hasError('required') || userForm.submitted">
+            First Name is
+            <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50%">
+          <input matInput
+                 formControlName="last_name"
+                 placeholder="Last Name"
+                 name="last_name">
+          <mat-error *ngIf="(generalInfoForm.get('last_name').hasError('pattern') && !generalInfoForm.get('last_name').hasError('required')) || userForm.submitted">
+            Please enter a valid Last Name
+          </mat-error>
+          <mat-error *ngIf="generalInfoForm.get('last_name').hasError('required') || userForm.submitted">
+            Last Name is
+            <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div fxLayout="row">
+        <mat-form-field fxFlex.gt-sm="100%">
+          <input matInput
+                 type="text"
+                 formControlName="middle_name"
+                 placeholder="Middle Name"
+                 name="middle_name">
+          <mat-error *ngIf="(generalInfoForm.get('middle_name').hasError('pattern') && !generalInfoForm.get('middle_name').hasError('required')) || userForm.submitted">
+            Please enter a valid Middle Name
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px">
+        <mat-form-field fxFlex="50%">
+          <input matInput
+                 [matDatepicker]="birthdayPicker"
+                 formControlName="birthday"
+                 (dateInput)="formatDate('birthday', $event)"
+                 name="birthday"
+                 [max]="today"
+                 placeholder="Birthday">
+          <mat-datepicker-toggle matSuffix
+                                 [for]="birthdayPicker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #birthdayPicker
+                          startView="year">
+          </mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50%">
+          <input matInput
+                 [matDatepicker]="company_start_datePicker"
+                 (dateInput)="formatDate('company_start_date', $event)"
+                 formControlName="company_start_date"
+                 name="company_start_date"
+                 [max]="today"
+                 placeholder="Start date at Company">
+          <mat-datepicker-toggle matSuffix
+                                 [for]="company_start_datePicker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #company_start_datePicker
+                          startView="year">
+          </mat-datepicker>
+        </mat-form-field>
+
+      </div>
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px">
+        <mat-form-field fxFlex.gt-sm="50%">
+          <input matInput
+                 type="number"
+                 formControlName="cnp"
+                 name="cnp"
+                 placeholder="CNP">
+          <mat-error *ngIf="generalInfoForm.get('cnp').hasError('pattern')  && userForm.submitted">
+            Please enter a valid Middle Name
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50%">
+          <input matInput
+                 type="text"
+                 name="car_plate"
+                 formControlName="car_plate"
+                 placeholder="Car license plate">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px">
+        <mat-form-field fxFlex.gt-sm="50%">
+          <input matInput
+                 type="text"
+                 formControlName="city"
+                 name="city"
+                 placeholder="City">
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50%">
+          <input matInput
+                 type="text"
+                 formControlName="zip_code"
+                 name="zip_code"
+                 placeholder="Zip code">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+        <mat-form-field fxFlex.gt-sm="100%">
+          <input matInput
+                 type="text"
+                 formControlName="address"
+                 name="address"
+                 placeholder="Address">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px">
+        <mat-form-field fxFlex.gt-sm="50%">
+          <input matInput
+                 type="tel"
+                 formControlName="phone"
+                 name="phone"
+                 placeholder="Phone">
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50%">
+          <input matInput
+                 type="text"
+                 formControlName="other_email"
+                 name="other_email"
+                 placeholder="Other E-mail">
+
+          <mat-error *ngIf="generalInfoForm.get('other_email').hasError('pattern') || userForm.submitted">
+            Please enter a valid
+            <strong>E-mail address</strong>
+
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-divider class="md-padding divider-bold u-no-padding u-mt-20 u-mb-20">
+      </mat-divider>
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px">
+        <mat-form-field fxFlex.gt-sm="100%">
+          <mat-select placeholder="Your position"
+                      [(value)]="userPosition.name">
+            <mat-option *ngFor="let position of positions"
+                        [value]="position.name"
+                        (click)="savePosition(position)">
+              {{ position.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="100%">
+          <input matInput
+                 type="text"
+                 name="office_nr"
+                 formControlName="office_nr"
+                 placeholder="Office No.">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row"
+           *ngIf="user">
+        <mat-form-field fxFlex.gt-sm="100%"
+                        formGroupName="work_info">
+          <input matInput
+                 type="text"
+                 name="ssh_public_key"
+                 formControlName="ssh_public_key"
+                 placeholder="Public SSH key">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px"
+           *ngIf="user">
+        <mat-form-field fxFlex.gt-sm="50%"
+                        formGroupName="work_info">
+          <input matInput
+                 type="text"
+                 name="bitbucket"
+                 formControlName="bitbucket"
+                 placeholder="Bitbucket Username">
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50%"
+                        formGroupName="work_info">
+          <input matInput
+                 type="text"
+                 name="github"
+                 formControlName="github"
+                 placeholder="Github Username">
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px">
+        <mat-form-field fxFlex.gt-sm="50%">
+          <input matInput
+                 type="text"
+                 name="urgent_contact_name"
+                 formControlName="urgent_contact_name"
+                 placeholder="Urgent Contact Name">
+        </mat-form-field>
+
+        <mat-form-field fxFlex.gt-sm="50%">
+          <input matInput
+                 type="tel"
+                 name="urgent_contact_phone"
+                 formControlName="urgent_contact_phone"
+                 placeholder="Urgent Contact Phone">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row"
+           fxLayoutAlign="center"
+           *ngIf="alertMsg.show"
+           class="alert"
+           [ngClass]="{'alert-success': alertMsg.type == 'success',
+                        'alert-info': alertMsg.type == 'info',
+                        'alert-warning': alertMsg.type == 'warning'}">
+        {{alertMsg.message}}
+
+      </div>
+
+      <div fxLayout="row">
+        <button mat-button
+                *ngIf="showForm  && !isLoading"
+                type="submit"
+                [fxFlex]="100"
+                [color]="!generalInfoForm.valid && userForm.submitted ? 'warn':'primary'">
+          Save General info
+        </button>
+      </div>
+    </form>
+  </mat-card-content>
+  <!--/. General Info formular -->
+
+
+
+  <mat-card-footer fxLayoutAlign="center">
+    <!-- Actions button -->
+    <mat-card-actions fxFlex="100">
+      <app-toggle-button (cardVisibility)="onToggle($event)"
+                         [cardVisibilitySubject]="cardVisibilitySubject"
+                         name="General Information"
+                         [disableButton]="isLoading"
+                         fxLayoutAlign="center"
+                         fxLayout="row"
+                         fxFlex="100"></app-toggle-button>
+
+    </mat-card-actions>
+    <!--/. Actions button -->
+  </mat-card-footer>
+
+
+
+
+</mat-card>

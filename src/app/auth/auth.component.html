@@ -1,0 +1,89 @@
+<div fxLayoutAlign="center"
+     fxLayout="row">
+  <img fxFlex="20"
+       class="login-img"
+       src="/assets/images/logo-assist.png">
+</div>
+
+<section fxLayoutAlign="center"
+         fxLayout="row">
+
+  <mat-card class="login-card"
+            fxLayout='column'>
+
+
+    <mat-card-title>
+      <span class="md-headline">
+        <strong [translate]="'FORM.LOGIN.TITLE'"></strong>
+      </span>
+    </mat-card-title>
+
+    <form name="login_form"
+          autocomplete="on"
+          [formGroup]="userFormGroup"
+          (ngSubmit)="onSubmit($event)">
+
+      <!-- Input fields -->
+      <div fxLayout="row">
+        <mat-form-field md-no-float
+                        fxFlex.gt-xs="100%"
+                        md-no-float>
+          <label [translate]="'FORM.EMAIL_LBL'"></label>
+          <input matInput
+                 type="email"
+                 autocomplete="email"
+                 formControlName="email">
+          <mat-error *ngIf="userFormGroup.get('email').errors?.required"
+                     [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+          <mat-error *ngIf="userFormGroup.get('email').errors?.pattern"
+                     [translate]="'FORM.PATTERN_ERR'"></mat-error>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+        <mat-form-field md-no-float
+                        fxFlex.gt-xs="100%">
+          <label [translate]="'FORM.PASSWORD_LBL'"></label>
+          <input matInput
+                 formControlName="password"
+                 type="password"
+                 autocomplete="current-password"
+                 required>
+          <mat-error *ngIf="userFormGroup.get('password').invalid"
+                     [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+        </mat-form-field>
+      </div>
+      <!-- /Input fields -->
+
+      <mat-card-subtitle fxLayout="row">
+        <p class="login-footer-note">
+          <strong [translate]="'FORM.LOGIN.IMPORTANT_LBL'"> </strong>
+          <span [translate]="'FORM.LOGIN.IMPORTANT_NOTE'"></span>
+        </p>
+      </mat-card-subtitle>
+
+      <mat-card-content fxLayoutAlign="center">
+        <p class="login-footer-note login-error"
+           *ngIf="errorMsg">
+          <strong>{{ 'FORM.LOGIN.CREDENTIALS_ERROR' | translate:{ server_msg: errorMsg } }} </strong>
+        </p>
+      </mat-card-content>
+
+      <mat-card-footer fxLayoutAlign="center">
+        <!-- Actions button -->
+        <mat-card-actions fxLayoutAlign="center"
+                          fxFlex="100">
+          <button mat-button
+                  [fxFlex.md]="100"
+                  color="primary"
+                  type="submit">
+            <span [translate]="'FORM.LOGIN.BTN_LBL'"></span>
+          </button>
+        </mat-card-actions>
+      </mat-card-footer>
+      <!-- /Actions button -->
+    </form>
+
+  </mat-card>
+
+</section>

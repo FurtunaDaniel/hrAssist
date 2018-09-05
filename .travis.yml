@@ -17,7 +17,7 @@ script:
 
 deploy:
   provider: firebase
-  project: $TRAVIS_BRANCH
+  project: 'assist-hr'
   skip_cleanup: true
   token:
     secure: $FIREBASE_TOKEN

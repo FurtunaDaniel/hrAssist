@@ -3,10 +3,8 @@ language: node_js
 node_js:
   - '10'
   - '9'
-  - '8'
-  - node
 
-script: -npm run checkNode
+script:
   - npm run checkNode
 
 after_success:

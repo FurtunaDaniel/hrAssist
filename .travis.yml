@@ -15,6 +15,17 @@ script:
   - npm run checkNode
   - npm run deploy
 
+deploy:
+  provider: firebase
+  project: $TRAVIS_BRANCH
+  skip_cleanup: true
+  token:
+    secure: $FIREBASE_TOKEN
+# deploy to firebase
 after_success:
-  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && firebase deploy --token $FIREBASE_TOKEN --non-interactive # firebase deploy after angular-cli build
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false"
 
+notifications:
+  email:
+    on_failure: change
+    on_success: false

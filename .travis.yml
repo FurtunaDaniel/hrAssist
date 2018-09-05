@@ -2,7 +2,7 @@ language: node_js
 
 node_js:
   - '10'
-  - '9'
+# latest version of nodeJs in this moment
 
 before_install:
   - npm install -g npm@latest

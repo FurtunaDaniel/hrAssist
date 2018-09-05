@@ -4,9 +4,17 @@ node_js:
   - '10'
   - '9'
 
+before_install:
+  - npm install -g npm@latest
+
+before_script:
+  - npm install -g --silent firebase-tools # installs firebase to run firebase deploy
+  - npm install -g --silent @angular/cli
+
 script:
   - npm run checkNode
+  - npm run deploy
 
 after_success:
-  - test $TRAVIS_BRANCH = "master" # firebase deploy after angular-cli build
+  - test $TRAVIS_BRANCH = "master" && test $TRAVIS_PULL_REQUEST = "false" && firebase deploy --token $FIREBASE_TOKEN --non-interactive # firebase deploy after angular-cli build
 

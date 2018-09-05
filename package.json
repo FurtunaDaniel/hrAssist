@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "deploy":
-      "ng build --prod && compodoc -p tsconfig.json && -n \"Hr Assist Documentation\" && cp -r documentation/ dist &&firebase deploy",
+      "ng build --prod && compodoc -p tsconfig.json && -n \"Hr Assist Documentation\" && cp -r documentation/ dist",
     "doc":
       "./node_modules/.bin/compodoc -p tsconfig.json  -s --port 8081 --theme postmark -o ",
     "checkNode": "check-node-version --package "

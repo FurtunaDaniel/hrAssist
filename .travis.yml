@@ -1,39 +1,14 @@
-# language: node_js
-# node_js:
-#  — “7”
-# script:
-#  — echo “Deploy!!”
-# install:
-#  — npm install -g firebase-tools
-# after_success:
-#  — firebase deploy — project assist-hr — token $FIREBASE_TOKEN.
-
-
-# tavis.yml
-
 language: node_js
+
 node_js:
-  - "7"
+  - '10'
+  - '9'
+  - '8'
+  - node
 
-branches:
-  only:
-  - master
+script: -npm run checkNode
+  - npm run checkNode
 
-before_script:
-  - npm install -g  firebase-tools
-  - npm install -g  @angular/cli
-  - npm install
+after_success:
+  - test $TRAVIS_BRANCH = "master" # firebase deploy after angular-cli build
 
-script:
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then ng build --prod && npm run deploy; fi
-
-  after_success:
-   - firebase deploy --token $FIREBASE_TOKEN
-
-# deploy:
-#   - provider: firebase
-#     token:
-#       secure: token
-#     project: "assist-hr"
-#     on:
-#       branch: master

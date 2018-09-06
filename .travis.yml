@@ -13,7 +13,6 @@ before_script:
 
 install:
   - travis_wait 30 npm install
-  - travis_wait 30 mvn install
 
 script:
   - npm run deploy

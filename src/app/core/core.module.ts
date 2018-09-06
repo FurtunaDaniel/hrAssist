@@ -1,24 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { HttpTokenInterceptor } from './interceptors/http.token.interceptor';
 
 import {
 	AuthentificatHelper,
 	UserLoginService,
 	AuthGuard,
-	AuthStatusService
+	AuthStatusService,
+	ApiService,
+	MomentService
 } from './services';
-import { ApiService } from './services/api.service';
 
 @NgModule({
-	imports: [CommonModule],
+	imports: [CommonModule, FormsModule, ReactiveFormsModule],
 	providers: [
 		AuthentificatHelper,
 		UserLoginService,
 		AuthGuard,
 		ApiService,
 		AuthStatusService,
+		MomentService,
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: HttpTokenInterceptor,

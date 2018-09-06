@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { ProjectService } from '../services/project.service';
 import { TranslateService } from '@ngx-translate/core';
+import { MomentService } from '../../core/services';
 
 @Component({
 	selector: 'app-projects-list',
@@ -25,14 +26,12 @@ export class ProjectsListComponent implements OnInit {
 	dataSource: MatTableDataSource<any>;
 	isLoading: boolean;
 
-	@ViewChild(MatPaginator)
-	paginator: MatPaginator;
-	@ViewChild(MatSort)
-	sort: MatSort;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
 
 	constructor(
 		private projectService: ProjectService,
-		@Inject('moment') private moment,
+		private ms: MomentService,
 		translate: TranslateService
 	) {
 		this.isLoading = true;

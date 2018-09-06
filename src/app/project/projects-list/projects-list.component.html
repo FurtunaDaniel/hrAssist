@@ -30,7 +30,7 @@
                        mat-sort-header>
         <span [translate]="'TABLE.SART_DATE_HEADER'"></span>
       </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.start_date ? moment(element.start_date).format('LL') : '' }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.start_date ? ms.moment(element.start_date).format('LL') : '' }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="end_date"
@@ -39,7 +39,7 @@
                        mat-sort-header>
         <span [translate]="'TABLE.END_DATE_HEADER'"></span>
       </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.end_date ? moment(element.end_date).format('LL') : '' }} </mat-cell>
+      <mat-cell *matCellDef="let element"> {{ element.end_date ? ms.moment(element.end_date).format('LL') : '' }} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="customer">

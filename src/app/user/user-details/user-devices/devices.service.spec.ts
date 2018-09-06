@@ -4,12 +4,12 @@ import { DevicesService } from './devices.service';
 
 describe('DevicesService', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [DevicesService]
-    });
+	TestBed.configureTestingModule({
+		providers: [DevicesService]
+	});
   });
 
   it('should be created', inject([DevicesService], (service: DevicesService) => {
-    expect(service).toBeTruthy();
+	expect(service).toBeTruthy();
   }));
 });

@@ -14,7 +14,7 @@
 
   <mat-card-subtitle fxLayout="row">
     <p class="c-card-profile__info c-card-profile__name u-clearfix">
-      <strong>Profile of: </strong> {{user?.first_name}} {{user?.middle_name}} {{user?.last_name}}
+      <strong>Profile of: </strong> {{ user?.first_name }} {{ user?.middle_name }} {{ user?.last_name }}
     </p>
   </mat-card-subtitle>
 
@@ -606,7 +606,7 @@
            [ngClass]="{'alert-success': alertMsg.type == 'success',
                         'alert-info': alertMsg.type == 'info',
                         'alert-warning': alertMsg.type == 'warning'}">
-        {{alertMsg.message}}
+        {{ alertMsg.message }}
 
       </div>
 

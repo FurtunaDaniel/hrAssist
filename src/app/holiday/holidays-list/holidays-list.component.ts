@@ -3,6 +3,7 @@ import { HolidayService } from '../services/holiday.service';
 import { UserService } from '../../user/services/user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MomentService } from '../../core/services';
 
 @Component({
 	selector: 'app-holidays-list',
@@ -22,15 +23,13 @@ export class HolidaysListComponent implements OnInit {
 		'action'
 	];
 	dataSource: MatTableDataSource<any>;
-	@ViewChild(MatPaginator)
-	paginator: MatPaginator;
-	@ViewChild(MatSort)
-	sort: MatSort;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
 
 	constructor(
 		private holidayService: HolidayService,
 		private userService: UserService,
-		@Inject('moment') private moment,
+		private ms: MomentService,
 		translate: TranslateService
 	) {
 		// this language will be used as a fallback when a translation isn't found in the current language

@@ -11,8 +11,10 @@ before_script:
   - npm install -g --silent firebase-tools # installs firebase to run firebase deploy
   - npm install -g --silent @angular/cli
 
-script:
+install:
   - travis_wait 30 npm install
+
+script:
   - npm run deploy
 
 deploy:

@@ -7,19 +7,19 @@ describe('UserCoursesCertificationsComponent', () => {
   let fixture: ComponentFixture<UserCoursesCertificationsComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ UserCoursesCertificationsComponent ]
-    })
-    .compileComponents();
+	TestBed.configureTestingModule({
+		declarations: [ UserCoursesCertificationsComponent ]
+	})
+	.compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserCoursesCertificationsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+	fixture = TestBed.createComponent(UserCoursesCertificationsComponent);
+	component = fixture.componentInstance;
+	fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+	expect(component).toBeTruthy();
   });
 });

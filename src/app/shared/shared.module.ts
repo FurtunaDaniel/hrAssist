@@ -74,9 +74,6 @@ import { SpinnerComponent } from './spinner/spinner.component';
 	imports: [
 		RouterModule,
 		HttpClientModule,
-		CommonModule,
-		FormsModule,
-		ReactiveFormsModule,
 		MatButtonModule,
 		MatMenuModule,
 		MatToolbarModule,
@@ -169,10 +166,6 @@ import { SpinnerComponent } from './spinner/spinner.component';
 			provide: DateAdapter,
 			useClass: MomentDateAdapter,
 			deps: [MAT_DATE_LOCALE]
-		},
-		{
-			provide: 'moment',
-			useFactory: (): any => _moment
 		},
 
 		{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }

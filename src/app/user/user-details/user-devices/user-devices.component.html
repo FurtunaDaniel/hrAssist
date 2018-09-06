@@ -141,7 +141,7 @@
                               (optionSelected)="selected($event)">
               <mat-option *ngFor="let component of components | FilterArrayByProperty:'name': componentInput.value"
                           [value]="component">
-                {{component.name}}
+                {{ component.name }}
               </mat-option>
             </mat-autocomplete>
 

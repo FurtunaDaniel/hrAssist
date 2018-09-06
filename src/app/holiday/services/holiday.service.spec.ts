@@ -4,12 +4,12 @@ import { HolidayService } from './holiday.service';
 
 describe('HolidayService', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [HolidayService]
-    });
+	TestBed.configureTestingModule({
+		providers: [HolidayService]
+	});
   });
 
   it('should be created', inject([HolidayService], (service: HolidayService) => {
-    expect(service).toBeTruthy();
+	expect(service).toBeTruthy();
   }));
 });

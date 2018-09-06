@@ -7,19 +7,19 @@ describe('UserTechnologiesComponent', () => {
   let fixture: ComponentFixture<UserTechnologiesComponent>;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ UserTechnologiesComponent ]
-    })
-    .compileComponents();
+	TestBed.configureTestingModule({
+		declarations: [ UserTechnologiesComponent ]
+	})
+	.compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserTechnologiesComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+	fixture = TestBed.createComponent(UserTechnologiesComponent);
+	component = fixture.componentInstance;
+	fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+	expect(component).toBeTruthy();
   });
 });

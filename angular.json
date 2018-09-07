@@ -19,7 +19,8 @@
             "assets": [
               "src/assets",
               "src/favicon.ico",
-              "src/assets/images/*.png"
+              "src/assets/images/*.png",
+              "src/manifest.json"
             ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
@@ -43,7 +44,8 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "serviceWorker": true
             }
           }
         },
@@ -81,7 +83,9 @@
             "assets": [
               "src/assets",
               "src/favicon.ico",
-              "src/assets/images/*.png"
+              "src/assets/images/*.png",
+              "manifest.json",
+              "src/manifest.json"
             ]
           }
         },

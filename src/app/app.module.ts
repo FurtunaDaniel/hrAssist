@@ -10,6 +10,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { HttpBackend, HttpClient } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 export function HttpLoaderFactory(handler: HttpBackend) {
 	// return new TranslateHttpLoader(http, 'assets/i18n', '-lang.json');
@@ -35,7 +37,8 @@ export function HttpLoaderFactory(handler: HttpBackend) {
 				useFactory: HttpLoaderFactory,
 				deps: [HttpBackend]
 			}
-		})
+		}),
+		ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 	],
 	providers: [],
 	bootstrap: [AppComponent]

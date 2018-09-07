@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { HolidayService } from '../services/holiday.service';
-import { UserService } from '../../user/services/user.service';
-
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
+import { HolidayService } from '../services/holiday.service';
 import { MomentService } from '../../core/services';
+import { UserService } from '../../user/services/user.service';
 
 @Component({
 	selector: 'app-holidays-list',

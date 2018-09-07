@@ -1,11 +1,13 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { ToggleCard } from '../../../shared';
 import { Subject } from 'rxjs/Subject';
-
+import { MatAutocompleteSelectedEvent } from '@angular/material';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
+import { ToggleCard } from '../../../shared';
 import { DevicesService } from './devices.service';
 import { UserService } from '../../services/user.service';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
 
 @Component({
 	selector: 'app-user-devices',
@@ -22,10 +24,9 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 	/*End Toggle Card Proprieties */
 
 	public devices: any[];
-	public viewDeviceMode: boolean;
 	public userDevices: any[];
 	public devicesToRemove: any[];
-	deviceFormGroup: FormGroup;
+	public deviceFormGroup: FormGroup;
 
 	components: any[];
 
@@ -38,7 +39,6 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 		private devicesService: DevicesService,
 		private userService: UserService
 	) {
-		this.viewDeviceMode = false;
 		this.showForm = false;
 
 		this.deviceFormGroup = new FormGroup({
@@ -69,15 +69,13 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 
 	public viewDevice(device, index): void {
 		this.devicesToRemove.push(device.device_id);
-		this.viewDeviceMode = !this.viewDeviceMode;
-		// this.deviceFormGroup.controls['device_name'].disabled();
-		this.deviceFormGroup.controls['components'].setValue(device.components);
-		this.deviceFormGroup.controls['device_name'].setValue(
-			device.device_name
-		);
-		this.deviceFormGroup.controls['serial_number'].setValue(
-			device.serial_number
-		);
+
+		this.deviceFormGroup.get('device_name').disable();
+		this.deviceFormGroup.get('components').setValue(device.components);
+		this.deviceFormGroup.get('device_name').setValue(device.device_name);
+		this.deviceFormGroup
+			.get('serial_number')
+			.setValue(device.serial_number);
 
 		this.componentsToAdd = device.components.map(item => item.name);
 	}
@@ -88,14 +86,12 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 
 	public onSubmit(event): void {
 		event.preventDefault();
-		this.deviceFormGroup.controls['components'].setValue(
-			this.componentsToAdd
-		);
+		this.deviceFormGroup.get('components').setValue(this.componentsToAdd);
 
 		if (this.deviceFormGroup.valid || this.devicesToRemove.length) {
 			if (
 				this.devicesToRemove.length &&
-				this.deviceFormGroup.controls['components'].value.length == 0
+				this.deviceFormGroup.get('components').value.length == 0
 			) {
 				/* check if are devices to remove but not to update */
 				/* In this case will just remove the unwanted devices */
@@ -106,7 +102,7 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 					});
 			} else if (
 				this.devicesToRemove.length &&
-				this.deviceFormGroup.controls['components'].value.length
+				this.deviceFormGroup.get('components').value.length
 			) {
 				/* check if are device to remove but also to update */
 				this.userService
@@ -151,7 +147,7 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 		} else {
 			this.showForm = event.visible;
 		}
-		if (this.deviceFormGroup.controls['device_name'].valid) {
+		if (this.deviceFormGroup.get('device_name').valid) {
 			this.deviceFormGroup.reset();
 			this.componentsToAdd = [];
 		}

@@ -1,15 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
-import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
 
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
+import { ToggleCard } from '../../../shared';
+import { User } from '../../models/user.model';
 import { UserService } from '../../services/user.service';
 import { PositionService } from '../../services/position.service';
-import { User } from '../../models/user.model';
 import { GravatarService } from '@infinitycube/gravatar';
-import { ToggleCard } from '../../../shared';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import * as _ from 'lodash';
 @Component({
@@ -18,7 +18,7 @@ import * as _ from 'lodash';
 	styleUrls: ['./user-general.component.scss'],
 	providers: [PositionService, GravatarService]
 })
-export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
+export class UserGeneralComponent implements OnInit, ToggleCard {
 	user: User;
 	/* cardVisibilitySubject notify to childrens that showForm value was changed */
 	public cardVisibilitySubject: Subject<any> = new Subject();
@@ -37,19 +37,14 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 	public today: Date;
 	public positions: any[];
 	public userPosition: any;
-	private _getInfoSubs: Subscription;
-	private _getUserPositionsSubs: Subscription;
-	private _getPositionsSubs: Subscription;
-	private _updateInfoSubs: Subscription;
-	private _routeSubs: Subscription;
-	private _dateFormat: string;
-	private _initialUserObj: User;
+
+	private dateFormat: string;
+	private initialUserObj: User;
 
 	contractType = ['Full-time', 'Part-time 4h', 'Part-time 6h'];
 
 	constructor(
 		private userService: UserService,
-		private route: ActivatedRoute,
 		private positionService: PositionService,
 		private gravatar: GravatarService
 	) {
@@ -57,7 +52,7 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 		this.showForm = false;
 		this.showSsh = false;
 		this.toggleSshLabel = 'Show';
-		this._dateFormat = 'YYYY-MM-DD';
+		this.dateFormat = 'YYYY-MM-DD';
 		this.alertMsg.show = false;
 		this.alertMsg.message = ``;
 		this.today = new Date();
@@ -71,118 +66,95 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 	}
 
 	ngOnInit() {
-		this._routeSubs = this.route.paramMap.subscribe(pmap => {
-			this._getInfoSubs = this.getUserGeneralInfo().subscribe(
-				userJson => {
-					if (userJson) {
-						this.user = userJson;
+		this.getUserGeneralInfo().subscribe(userJson => {
+			if (userJson) {
+				this.user = userJson;
 
-						this.gravatarUrl = this.gravatar.url(
-							this.user.email,
-							128,
-							'wavatar'
-						);
+				this.gravatarUrl = this.gravatar.url(
+					this.user.email,
+					128,
+					'wavatar'
+				);
 
-						// Create GeneralInfo Form
-						this.generalInfoForm = new FormGroup({
-							// tslint:disable-next-line
+				// Create GeneralInfo Form
+				this.generalInfoForm = new FormGroup({
+					// tslint:disable-next-line
 
-							first_name: new FormControl(
-								this.user.first_name || '',
-								[
-									Validators.required,
-									Validators.pattern(`^[a-zA-Z ,.'-]+$`)
-								]
-							),
-							middle_name: new FormControl(
-								this.user.middle_name || '',
-								[Validators.pattern(`^[a-zA-Z ,.'-]+$`)]
-							),
+					first_name: new FormControl(this.user.first_name || '', [
+						Validators.required,
+						Validators.pattern(`^[a-zA-Z ,.'-]+$`)
+					]),
+					middle_name: new FormControl(this.user.middle_name || '', [
+						Validators.pattern(`^[a-zA-Z ,.'-]+$`)
+					]),
 
-							last_name: new FormControl(
-								this.user.last_name || '',
-								[
-									Validators.required,
-									Validators.pattern(`^[a-zA-Z ,.'-]+$`)
-								]
-							),
-							birthday: new FormControl(
-								this.user.birthday || null
-							),
-							company_start_date: new FormControl(
-								this.user.company_start_date || null
-							),
-							cnp: new FormControl(this.user.cnp || '', [
-								Validators.pattern(`^[0-9]{13}`)
-							]),
-							city: new FormControl(this.user.city || ''),
-							zip_code: new FormControl(this.user.zip_code || ''),
-							address: new FormControl(this.user.address || ''),
-							phone: new FormControl(this.user.phone || null),
-							other_email: new FormControl(
-								this.user.other_email || null,
-								[
-									Validators.pattern(
-										// tslint:disable-next-line:max-line-length
-										`^[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`
-									)
-								]
-							),
-							car_plate: new FormControl(
-								this.user.car_plate || ''
-							),
-
-							office_nr: new FormControl(
-								this.user.office_nr || ''
-							),
-							work_info: new FormGroup({
-								ssh_public_key: new FormControl(
-									this.user.work_info
-										? this.user.work_info.ssh_public_key
-										: ''
-								),
-								bitbucket: new FormControl(
-									this.user.work_info
-										? this.user.work_info.bitbucket
-										: ''
-								),
-								github: new FormControl(
-									this.user.work_info
-										? this.user.work_info.github
-										: ''
-								)
-							}),
-
-							urgent_contact_name: new FormControl(
-								this.user.urgent_contact_name || null
-							),
-							urgent_contact_phone: new FormControl(
-								this.user.urgent_contact_phone || null
+					last_name: new FormControl(this.user.last_name || '', [
+						Validators.required,
+						Validators.pattern(`^[a-zA-Z ,.'-]+$`)
+					]),
+					birthday: new FormControl(this.user.birthday || null),
+					company_start_date: new FormControl(
+						this.user.company_start_date || null
+					),
+					cnp: new FormControl(this.user.cnp || '', [
+						Validators.pattern(`^[0-9]{13}`)
+					]),
+					city: new FormControl(this.user.city || ''),
+					zip_code: new FormControl(this.user.zip_code || ''),
+					address: new FormControl(this.user.address || ''),
+					phone: new FormControl(this.user.phone || null),
+					other_email: new FormControl(
+						this.user.other_email || null,
+						[
+							Validators.pattern(
+								// tslint:disable-next-line:max-line-length
+								`^[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`
 							)
-						});
+						]
+					),
+					car_plate: new FormControl(this.user.car_plate || ''),
 
-						// save value init value of user for later comparison
-						this._initialUserObj = _.cloneDeep(
-							this.generalInfoForm.value
-						);
+					office_nr: new FormControl(this.user.office_nr || ''),
+					work_info: new FormGroup({
+						ssh_public_key: new FormControl(
+							this.user.work_info
+								? this.user.work_info.ssh_public_key
+								: ''
+						),
+						bitbucket: new FormControl(
+							this.user.work_info
+								? this.user.work_info.bitbucket
+								: ''
+						),
+						github: new FormControl(
+							this.user.work_info
+								? this.user.work_info.github
+								: ''
+						)
+					}),
 
-						this.isLoading = false;
-					}
-				}
-			);
+					urgent_contact_name: new FormControl(
+						this.user.urgent_contact_name || null
+					),
+					urgent_contact_phone: new FormControl(
+						this.user.urgent_contact_phone || null
+					)
+				});
+
+				// save value init value of user for later comparison
+				this.initialUserObj = _.cloneDeep(this.generalInfoForm.value);
+
+				this.isLoading = false;
+			}
 		});
 
-		this._getPositionsSubs = this.positionService
-			.getPositions()
-			.subscribe(positions => {
-				this.positions = positions;
-			});
+		this.positionService.getPositions().subscribe(positions => {
+			this.positions = positions;
+		});
 
-		this._getUserPositionsSubs = this.userService
-			.getUserPosition()
-			.subscribe(userPosition => {
-				this.userPosition = userPosition;
-			});
+		this.userService.getUserPosition().subscribe(userPosition => {
+			this.userPosition = userPosition;
+		});
 	}
 	public logout() {
 		localStorage.clear();
@@ -192,7 +164,7 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 	// Because of momentjs in "ngModel" is passed a Moment object
 	// and need to be converted to accepted format of API
 	public formatDate(model: string, event: MatDatepickerInputEvent<any>) {
-		this.user[model] = event.value.format(this._dateFormat);
+		this.user[model] = event.value.format(this.dateFormat);
 	}
 
 	public onToggle(event?): void {
@@ -202,8 +174,8 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 		} else {
 			this.showForm = event.visible;
 		}
-		if (!_.isEqual(this.user, this._initialUserObj)) {
-			this.user = _.cloneDeep(this._initialUserObj);
+		if (!_.isEqual(this.user, this.initialUserObj)) {
+			this.user = _.cloneDeep(this.initialUserObj);
 		}
 	}
 
@@ -216,12 +188,12 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 
 	onSubmit(userForm): void {
 		if (this.generalInfoForm.valid) {
-			if (!_.isEqual(userForm.value, this._initialUserObj)) {
-				this._updateInfoSubs = this.userService
+			if (!_.isEqual(userForm.value, this.initialUserObj)) {
+				this.userService
 					.updateUserInfo(userForm.value)
 					.subscribe(updatedUser => {
-						// reinit _initialUserObj with new saved value/
-						this._initialUserObj = _.cloneDeep(userForm.value);
+						// reinit initialUserObj with new saved value/
+						this.initialUserObj = _.cloneDeep(userForm.value);
 						this.showAlert(
 							`Your informations was saved`,
 							'success',
@@ -280,15 +252,5 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 
 	private getUserGeneralInfo() {
 		return this.userService.getUserInfo();
-	}
-
-	ngOnDestroy() {
-		this._getInfoSubs.unsubscribe();
-		if (this._updateInfoSubs) {
-			this._updateInfoSubs.unsubscribe();
-		}
-		this._routeSubs.unsubscribe();
-		this._getUserPositionsSubs.unsubscribe();
-		this._getPositionsSubs.unsubscribe();
 	}
 }

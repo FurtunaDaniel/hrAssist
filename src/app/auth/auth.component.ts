@@ -1,19 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import {
-	UserLoginService,
-	AuthentificatHelper,
-	AuthStatusService
-} from '../core/services';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-
 import { Router } from '@angular/router';
 
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
+import {
+	AuthentificatHelper,
+	AuthStatusService,
+	UserLoginService
+} from '../core/services';
 @Component({
 	selector: 'app-login',
 	templateUrl: './auth.component.html',
 	styleUrls: ['./auth.component.scss']
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent {
 	public userFormGroup: FormGroup;
 	errorMsg: string;
 
@@ -37,8 +38,6 @@ export class AuthComponent implements OnInit {
 			password: new FormControl('', [Validators.required])
 		});
 	}
-
-	ngOnInit() {}
 
 	public onSubmit(event): void {
 		event.preventDefault();

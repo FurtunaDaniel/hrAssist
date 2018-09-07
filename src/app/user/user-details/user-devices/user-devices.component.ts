@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ToggleCard } from '../../../shared';
 import { Subject } from 'rxjs/Subject';
-import { TranslateService } from '@ngx-translate/core';
+
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { DevicesService } from './devices.service';
 import { UserService } from '../../services/user.service';
@@ -31,21 +31,15 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 	/* Mat Chip elements */
-	@ViewChild('componentInput')
-	componentInput: ElementRef;
+	@ViewChild('componentInput') componentInput: ElementRef;
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 	componentsToAdd = [];
 	constructor(
-		translate: TranslateService,
 		private devicesService: DevicesService,
 		private userService: UserService
 	) {
 		this.viewDeviceMode = false;
 		this.showForm = false;
-		// this language will be used as a fallback when a translation isn't found in the current language
-		translate.setDefaultLang('en');
-		// the lang to use, if the lang isn't available, it will use the current loader to get them
-		translate.use('en');
 
 		this.deviceFormGroup = new FormGroup({
 			device_name: new FormControl('', [

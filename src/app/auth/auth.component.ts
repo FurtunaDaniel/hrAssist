@@ -5,7 +5,7 @@ import {
 	AuthStatusService
 } from '../core/services';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -23,7 +23,6 @@ export class AuthComponent implements OnInit {
 
 	constructor(
 		private userLoginService: UserLoginService,
-		private translate: TranslateService,
 		private authHelper: AuthentificatHelper,
 		private authStatus: AuthStatusService,
 		private router: Router
@@ -37,11 +36,6 @@ export class AuthComponent implements OnInit {
 			]),
 			password: new FormControl('', [Validators.required])
 		});
-
-		// this language will be used as a fallback when a translation isn't found in the current language
-		this.translate.setDefaultLang('en');
-		// the lang to use, if the lang isn't available, it will use the current loader to get them
-		this.translate.use('en');
 	}
 
 	ngOnInit() {}

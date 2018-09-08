@@ -20,7 +20,9 @@
               "src/assets",
               "src/favicon.ico",
               "src/assets/images/*.png",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/sitemap.xml",
+              "src/robots.txt"
             ],
             "styles": [
               "node_modules/bootstrap/scss/bootstrap.scss",
@@ -84,8 +86,9 @@
               "src/assets",
               "src/favicon.ico",
               "src/assets/images/*.png",
-              "manifest.json",
-              "src/manifest.json"
+              "src/manifest.json",
+              "src/sitemap.xml",
+              "src/robots.txt"
             ]
           }
         },

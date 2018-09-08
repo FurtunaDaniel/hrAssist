@@ -8,7 +8,7 @@ import {
 	MatTableModule,
 	MatListModule,
 	MatIconModule,
-	MatPaginatorModule
+	MatPaginatorModule,
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { UserService } from '../services/user.service';
@@ -27,10 +27,10 @@ describe('UserListComponent', () => {
 				MatListModule,
 				RouterModule,
 				MatIconModule,
-				MatPaginatorModule
+				MatPaginatorModule,
 			],
 			providers: [UserService],
-			declarations: [UserListComponent]
+			declarations: [UserListComponent],
 		}).compileComponents();
 	}));
 

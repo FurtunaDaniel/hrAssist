@@ -10,6 +10,6 @@ import { UserLoginService } from '../core/services';
 @NgModule({
 	imports: [SharedModule, AuthRoutingModule],
 	declarations: [AuthComponent],
-	providers: [NoAuthGuard, UserLoginService]
+	providers: [NoAuthGuard, UserLoginService],
 })
 export class AuthModule {}

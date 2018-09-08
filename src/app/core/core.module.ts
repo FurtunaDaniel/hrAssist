@@ -11,7 +11,7 @@ import {
 	AuthGuard,
 	AuthStatusService,
 	ApiService,
-	MomentService
+	MomentService,
 } from './services';
 
 @NgModule({
@@ -26,9 +26,9 @@ import {
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: HttpTokenInterceptor,
-			multi: true
-		}
+			multi: true,
+		},
 	],
-	declarations: []
+	declarations: [],
 })
 export class CoreModule {}

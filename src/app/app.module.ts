@@ -13,7 +13,7 @@ import { HttpBackend, HttpClient } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
-export function HttpLoaderFactory(handler: HttpBackend) {
+export function httpLoaderFactory(handler: HttpBackend) {
 	// return new TranslateHttpLoader(http, 'assets/i18n', '-lang.json');
 	/* above code if I have want a custom path for translation */
 	const http = new HttpClient(handler);
@@ -34,13 +34,15 @@ export function HttpLoaderFactory(handler: HttpBackend) {
 		TranslateModule.forRoot({
 			loader: {
 				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpBackend]
-			}
+				useFactory: httpLoaderFactory,
+				deps: [HttpBackend],
+			},
 		}),
-		ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+		ServiceWorkerModule.register('ngsw-worker.js', {
+			enabled: environment.production,
+		}),
 	],
 	providers: [],
-	bootstrap: [AppComponent]
+	bootstrap: [AppComponent],
 })
 export class AppModule {}

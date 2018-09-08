@@ -10,7 +10,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material';
 @Component({
 	selector: 'app-user-devices',
 	templateUrl: './user-devices.component.html',
-	styleUrls: ['./user-devices.component.scss']
+	styleUrls: ['./user-devices.component.scss'],
 })
 export class UserDevicesComponent implements OnInit, ToggleCard {
 	/* Toggle Card Proprieties
@@ -38,7 +38,7 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 	constructor(
 		translate: TranslateService,
 		private devicesService: DevicesService,
-		private userService: UserService
+		private userService: UserService,
 	) {
 		this.viewDeviceMode = false;
 		this.showForm = false;
@@ -50,13 +50,13 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 		this.deviceFormGroup = new FormGroup({
 			device_name: new FormControl('', [
 				Validators.required,
-				Validators.pattern(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]+$`)
+				Validators.pattern(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]+$`),
 			]),
 			serial_number: new FormControl('', [
 				Validators.required,
-				Validators.pattern(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]+$`)
+				Validators.pattern(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]+$`),
 			]),
-			components: new FormControl([])
+			components: new FormControl([]),
 		});
 	}
 
@@ -79,10 +79,10 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 		// this.deviceFormGroup.controls['device_name'].disabled();
 		this.deviceFormGroup.controls['components'].setValue(device.components);
 		this.deviceFormGroup.controls['device_name'].setValue(
-			device.device_name
+			device.device_name,
 		);
 		this.deviceFormGroup.controls['serial_number'].setValue(
-			device.serial_number
+			device.serial_number,
 		);
 
 		this.componentsToAdd = device.components.map(item => item.name);
@@ -95,7 +95,7 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 	public onSubmit(event): void {
 		event.preventDefault();
 		this.deviceFormGroup.controls['components'].setValue(
-			this.componentsToAdd
+			this.componentsToAdd,
 		);
 
 		if (this.deviceFormGroup.valid || this.devicesToRemove.length) {

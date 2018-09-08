@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
 	Router,
 	RouterStateSnapshot,
-	ActivatedRouteSnapshot
+	ActivatedRouteSnapshot,
 } from '@angular/router';
 import { AuthentificatHelper } from './AuthentificationHelper.service';
 import { BehaviorSubject } from 'rxjs';
@@ -10,7 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class AuthStatusService {
 	private loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false
+		false,
 	);
 	private adminLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<
 		boolean

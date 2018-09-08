@@ -7,7 +7,7 @@ describe('ToggleButtonComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [ToggleButtonComponent]
+			declarations: [ToggleButtonComponent],
 		}).compileComponents();
 	}));
 

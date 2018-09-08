@@ -6,26 +6,26 @@ const routes: Routes = [
 	{
 		path: '',
 		redirectTo: '/login',
-		pathMatch: 'full'
+		pathMatch: 'full',
 	},
 	{
 		path: 'employees',
 		canActivate: [AuthGuard],
-		loadChildren: 'app/user/employee.module#UserModule'
+		loadChildren: 'app/user/employee.module#UserModule',
 		/* Lazy Load Module */
 	},
 	{
 		path: 'projects',
 		canActivate: [AuthGuard],
-		loadChildren: 'app/project/project.module#ProjectModule'
+		loadChildren: 'app/project/project.module#ProjectModule',
 		/* Lazy Load Module */
 	},
 	{
 		path: 'holidays',
 		canActivate: [AuthGuard],
-		loadChildren: 'app/holiday/holiday.module#HolidayModule'
+		loadChildren: 'app/holiday/holiday.module#HolidayModule',
 		/* Lazy Load Module */
-	}
+	},
 ];
 @NgModule({
 	imports: [
@@ -33,9 +33,9 @@ const routes: Routes = [
 			// preload all modules; optionally we could
 			// implement a custom preloading strategy for just some
 			// of the modules (PRs welcome 😉)
-			preloadingStrategy: PreloadAllModules
-		})
+			preloadingStrategy: PreloadAllModules,
+		}),
 	],
-	exports: [RouterModule]
+	exports: [RouterModule],
 })
 export class AppRoutingModule {}

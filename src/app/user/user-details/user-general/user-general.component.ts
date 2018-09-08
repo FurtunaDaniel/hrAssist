@@ -16,7 +16,7 @@ import * as _ from 'lodash';
 	selector: 'app-user-general',
 	templateUrl: './user-general.component.html',
 	styleUrls: ['./user-general.component.scss'],
-	providers: [PositionService, GravatarService]
+	providers: [PositionService, GravatarService],
 })
 export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 	user: User;
@@ -31,7 +31,7 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 	private alertMsg = {
 		show: <boolean>false,
 		message: <string>'',
-		type: <string>''
+		type: <string>'',
 	};
 	public gravatarUrl: string;
 	public today: Date;
@@ -51,7 +51,7 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 		private userService: UserService,
 		private route: ActivatedRoute,
 		private positionService: PositionService,
-		private gravatar: GravatarService
+		private gravatar: GravatarService,
 	) {
 		this.isLoading = true;
 		this.showForm = false;
@@ -66,7 +66,7 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 		this.userPosition = {
 			id: 0,
 			name: '',
-			job_detail: null
+			job_detail: null,
 		};
 	}
 
@@ -80,7 +80,7 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 						this.gravatarUrl = this.gravatar.url(
 							this.user.email,
 							128,
-							'wavatar'
+							'wavatar',
 						);
 
 						// Create GeneralInfo Form
@@ -91,29 +91,29 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 								this.user.first_name || '',
 								[
 									Validators.required,
-									Validators.pattern(`^[a-zA-Z ,.'-]+$`)
-								]
+									Validators.pattern(`^[a-zA-Z ,.'-]+$`),
+								],
 							),
 							middle_name: new FormControl(
 								this.user.middle_name || '',
-								[Validators.pattern(`^[a-zA-Z ,.'-]+$`)]
+								[Validators.pattern(`^[a-zA-Z ,.'-]+$`)],
 							),
 
 							last_name: new FormControl(
 								this.user.last_name || '',
 								[
 									Validators.required,
-									Validators.pattern(`^[a-zA-Z ,.'-]+$`)
-								]
+									Validators.pattern(`^[a-zA-Z ,.'-]+$`),
+								],
 							),
 							birthday: new FormControl(
-								this.user.birthday || null
+								this.user.birthday || null,
 							),
 							company_start_date: new FormControl(
-								this.user.company_start_date || null
+								this.user.company_start_date || null,
 							),
 							cnp: new FormControl(this.user.cnp || '', [
-								Validators.pattern(`^[0-9]{13}`)
+								Validators.pattern(`^[0-9]{13}`),
 							]),
 							city: new FormControl(this.user.city || ''),
 							zip_code: new FormControl(this.user.zip_code || ''),
@@ -124,51 +124,51 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 								[
 									Validators.pattern(
 										// tslint:disable-next-line:max-line-length
-										`^[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`
-									)
-								]
+										`^[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`,
+									),
+								],
 							),
 							car_plate: new FormControl(
-								this.user.car_plate || ''
+								this.user.car_plate || '',
 							),
 
 							office_nr: new FormControl(
-								this.user.office_nr || ''
+								this.user.office_nr || '',
 							),
 							work_info: new FormGroup({
 								ssh_public_key: new FormControl(
 									this.user.work_info
 										? this.user.work_info.ssh_public_key
-										: ''
+										: '',
 								),
 								bitbucket: new FormControl(
 									this.user.work_info
 										? this.user.work_info.bitbucket
-										: ''
+										: '',
 								),
 								github: new FormControl(
 									this.user.work_info
 										? this.user.work_info.github
-										: ''
-								)
+										: '',
+								),
 							}),
 
 							urgent_contact_name: new FormControl(
-								this.user.urgent_contact_name || null
+								this.user.urgent_contact_name || null,
 							),
 							urgent_contact_phone: new FormControl(
-								this.user.urgent_contact_phone || null
-							)
+								this.user.urgent_contact_phone || null,
+							),
 						});
 
 						// save value init value of user for later comparison
 						this._initialUserObj = _.cloneDeep(
-							this.generalInfoForm.value
+							this.generalInfoForm.value,
 						);
 
 						this.isLoading = false;
 					}
-				}
+				},
 			);
 		});
 
@@ -226,7 +226,7 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 							`Your informations was saved`,
 							'success',
 							true,
-							3000
+							3000,
 						);
 					});
 			} else {
@@ -234,7 +234,7 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 					`Your Didn't change any field`,
 					'info',
 					true,
-					3000
+					3000,
 				);
 			}
 		} else {
@@ -244,7 +244,7 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 	public savePosition(position) {
 		this.userService
 			.updateUserPosition({
-				position_id: position.id
+				position_id: position.id,
 			})
 			.subscribe(data => {
 				this.userPosition = data;
@@ -256,10 +256,13 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 		message: string,
 		type?: string,
 		toggle?: boolean,
-		time?: number
+		time?: number,
 	) {
+		// tslint:disable-next-line:no-parameter-reassignment
 		type = type ? type : 'success';
+		// tslint:disable-next-line:no-parameter-reassignment
 		time = time ? time : 0;
+		// tslint:disable-next-line:no-parameter-reassignment
 		toggle = toggle ? toggle : false;
 
 		this.alertMsg.show = true;
@@ -269,12 +272,12 @@ export class UserGeneralComponent implements OnInit, OnDestroy, ToggleCard {
 			setTimeout(() => {
 				this.onToggle();
 				this.alertMsg.show = !this.alertMsg.show;
-			}, time);
+			},         time);
 		}
 		if (time && !toggle) {
 			setTimeout(() => {
 				this.alertMsg.show = !this.alertMsg.show;
-			}, time);
+			},         time);
 		}
 	}
 

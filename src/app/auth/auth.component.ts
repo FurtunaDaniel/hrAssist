@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {
 	UserLoginService,
 	AuthentificatHelper,
-	AuthStatusService
+	AuthStatusService,
 } from '../core/services';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 @Component({
 	selector: 'app-login',
 	templateUrl: './auth.component.html',
-	styleUrls: ['./auth.component.scss']
+	styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent implements OnInit {
 	public userFormGroup: FormGroup;
@@ -26,16 +26,16 @@ export class AuthComponent implements OnInit {
 		private translate: TranslateService,
 		private authHelper: AuthentificatHelper,
 		private authStatus: AuthStatusService,
-		private router: Router
+		private router: Router,
 	) {
 		this.userFormGroup = new FormGroup({
 			email: new FormControl('', [
 				Validators.required,
 				Validators.pattern(
-					'([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})'
-				)
+					'([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})',
+				),
 			]),
-			password: new FormControl('', [Validators.required])
+			password: new FormControl('', [Validators.required]),
 		});
 
 		// this language will be used as a fallback when a translation isn't found in the current language
@@ -58,13 +58,13 @@ export class AuthComponent implements OnInit {
 						localStorage.setItem(
 							this.authToken,
 							this.authHelper.getUserDecodedToken(
-								data.custom_token
-							)
+								data.custom_token,
+							),
 						);
 						// this.router.navigate(['/employees/:id']);
 						this.router.navigate([
 							'/employees',
-							this.authHelper.getUserId(data.custom_token)
+							this.authHelper.getUserId(data.custom_token),
 						]);
 						this.authStatus.setIsLoggedInBasedOfRole();
 					}
@@ -74,7 +74,7 @@ export class AuthComponent implements OnInit {
 					this.errorMsg = error.error.message || 'Wrong credentials,';
 
 					return error;
-				}
+				},
 			);
 		}
 	}

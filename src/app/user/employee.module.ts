@@ -14,7 +14,7 @@ import {
 	UserProjectsComponent,
 	UserTechnologiesComponent,
 	UserEducationComponent,
-	UserCoursesCertificationsComponent
+	UserCoursesCertificationsComponent,
 } from './user-details';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -37,7 +37,7 @@ import { DevicesService } from './user-details/user-devices/devices.service';
 		UserProjectsComponent,
 		UserTechnologiesComponent,
 		UserEducationComponent,
-		UserCoursesCertificationsComponent
+		UserCoursesCertificationsComponent,
 	],
 	providers: [
 		UserLoginService,
@@ -48,8 +48,8 @@ import { DevicesService } from './user-details/user-devices/devices.service';
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: HttpTokenInterceptor,
-			multi: true
-		}
-	]
+			multi: true,
+		},
+	],
 })
 export class UserModule {}

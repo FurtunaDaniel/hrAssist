@@ -11,7 +11,7 @@ import { ToggleCard } from '../../../shared';
 @Component({
 	selector: 'app-user-languages',
 	templateUrl: './user-languages.component.html',
-	styleUrls: ['./user-languages.component.scss']
+	styleUrls: ['./user-languages.component.scss'],
 })
 export class UserLanguagesComponent implements OnInit, OnDestroy, ToggleCard {
 	public isLoading: boolean;
@@ -29,7 +29,7 @@ export class UserLanguagesComponent implements OnInit, OnDestroy, ToggleCard {
 	constructor(
 		private languageService: LangaugeService,
 		private userService: UserService,
-		private formBuilder: FormBuilder
+		private formBuilder: FormBuilder,
 	) {
 		this.showForm = false;
 		this.isLoading = true;
@@ -48,7 +48,7 @@ export class UserLanguagesComponent implements OnInit, OnDestroy, ToggleCard {
 		this.getUserLanguages();
 
 		this.languageFormGroup = this.formBuilder.group({
-			languagesToAdd: this.formBuilder.array([this.createItem()])
+			languagesToAdd: this.formBuilder.array([this.createItem()]),
 		});
 	}
 
@@ -62,7 +62,7 @@ export class UserLanguagesComponent implements OnInit, OnDestroy, ToggleCard {
 	/* Add more fields (autocomplete and lvl range) */
 	public addFields(): void {
 		(this.languageFormGroup.get('languagesToAdd') as FormArray).push(
-			this.createItem()
+			this.createItem(),
 		);
 	}
 
@@ -78,18 +78,18 @@ export class UserLanguagesComponent implements OnInit, OnDestroy, ToggleCard {
 
 	public getLevelText(data): string {
 		switch (data) {
-			case 1:
-				return 'Elementary proficiency';
-			case 2:
-				return 'Limited working proficiency';
-			case 3:
-				return 'Professional working proficiency';
-			case 4:
-				return 'Full professional proficiency';
-			case 5:
-				return 'Native or bilingual proficiency';
-			default:
-				return 'Please select your experience level';
+		case 1:
+			return 'Elementary proficiency';
+		case 2:
+			return 'Limited working proficiency';
+		case 3:
+			return 'Professional working proficiency';
+		case 4:
+			return 'Full professional proficiency';
+		case 5:
+			return 'Native or bilingual proficiency';
+		default:
+			return 'Please select your experience level';
 		}
 	}
 	onToggle(event?): void {
@@ -156,14 +156,14 @@ export class UserLanguagesComponent implements OnInit, OnDestroy, ToggleCard {
 
 				/* Reset form controls */
 				this.languageFormGroup = this.formBuilder.group({
-					languagesToAdd: this.formBuilder.array([this.createItem()])
+					languagesToAdd: this.formBuilder.array([this.createItem()]),
 				});
 			});
 	}
 	private createItem(): FormGroup {
 		return this.formBuilder.group({
 			language: '',
-			level: ''
+			level: '',
 		});
 	}
 

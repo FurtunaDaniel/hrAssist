@@ -8,7 +8,7 @@ describe('LangaugeService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [RouterTestingModule],
-			providers: [LangaugeService, HttpClient, HttpHandler]
+			providers: [LangaugeService, HttpClient, HttpHandler],
 		});
 	});
 
@@ -16,6 +16,6 @@ describe('LangaugeService', () => {
 		[LangaugeService],
 		(service: LangaugeService) => {
 			expect(service).toBeTruthy();
-		}
+		},
 	));
 });

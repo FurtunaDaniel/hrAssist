@@ -15,7 +15,7 @@ export class LangaugeService {
 		return this.http.get<any>(url).pipe(
 			map(data => {
 				return data.items;
-			})
+			}),
 		);
 	}
 }

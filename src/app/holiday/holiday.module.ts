@@ -21,8 +21,8 @@ import { UserService } from '../user/services/user.service';
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: HttpTokenInterceptor,
-			multi: true
-		}
-	]
+			multi: true,
+		},
+	],
 })
 export class HolidayModule {}

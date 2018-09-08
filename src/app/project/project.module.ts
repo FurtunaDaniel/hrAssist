@@ -19,8 +19,8 @@ import { ProjectService } from './services/project.service';
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: HttpTokenInterceptor,
-			multi: true
-		}
-	]
+			multi: true,
+		},
+	],
 })
 export class ProjectModule {}

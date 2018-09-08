@@ -8,7 +8,7 @@ import { MomentService } from '../../core/services';
 @Component({
 	selector: 'app-holidays-list',
 	templateUrl: './holidays-list.component.html',
-	styleUrls: ['./holidays-list.component.scss']
+	styleUrls: ['./holidays-list.component.scss'],
 })
 export class HolidaysListComponent implements OnInit {
 	holidays: Array<any> = [];
@@ -20,7 +20,7 @@ export class HolidaysListComponent implements OnInit {
 		'end_date',
 		'days',
 		'signing_day',
-		'action'
+		'action',
 	];
 	dataSource: MatTableDataSource<any>;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -30,7 +30,7 @@ export class HolidaysListComponent implements OnInit {
 		private holidayService: HolidayService,
 		private userService: UserService,
 		private ms: MomentService,
-		translate: TranslateService
+		translate: TranslateService,
 	) {
 		// this language will be used as a fallback when a translation isn't found in the current language
 		translate.setDefaultLang('en');
@@ -44,7 +44,6 @@ export class HolidaysListComponent implements OnInit {
 	}
 	applyFilter(filterValue: string) {
 		this.dataSource.filter = filterValue.trim().toLowerCase();
-		debugger;
 
 		if (this.dataSource.paginator) {
 			this.dataSource.paginator.firstPage();
@@ -67,15 +66,14 @@ export class HolidaysListComponent implements OnInit {
 
 								if (userfound) {
 									this.holidays.push({
-										employee:
-											userfound.first_name +
-											' ' +
-											userfound.last_name,
+										employee: `${userfound.first_name} ${
+											userfound.last_name
+										}`,
 										signing_day: holiday.signing_day,
 										start_date: holiday.start_date,
 										end_date: holiday.end_date,
 										days: holiday.days,
-										id: holiday.holiday_id
+										id: holiday.holiday_id,
 									});
 								}
 							});
@@ -83,7 +81,7 @@ export class HolidaysListComponent implements OnInit {
 						if (this.holidays) {
 							this.isLoading = false;
 							this.dataSource = new MatTableDataSource(
-								this.holidays
+								this.holidays,
 							);
 							this.dataSource.paginator = this.paginator;
 							this.dataSource.sort = this.sort;
@@ -91,12 +89,12 @@ export class HolidaysListComponent implements OnInit {
 					},
 					usersError => {
 						console.error(usersError);
-					}
+					},
 				);
 			},
 			holidaysError => {
 				console.error(holidaysError);
-			}
+			},
 		);
 	}
 }

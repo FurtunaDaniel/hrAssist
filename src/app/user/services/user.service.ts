@@ -21,14 +21,14 @@ export class UserService {
 	getUserInfo(): Observable<User> {
 		return this.apiService.getAll(`/users/${this.id}`).pipe(
 			map(data => data),
-			catchError(this.handleError<any>(`getUserInfo faild`))
+			catchError(this.handleError<any>(`getUserInfo faild`)),
 		);
 	}
 
 	getUsers(): Observable<User[]> {
 		return this.apiService.getAll(`/users/`).pipe(
 			map(data => data.items),
-			catchError(this.handleError<any>(`getUsers faild`))
+			catchError(this.handleError<any>(`getUsers faild`)),
 		);
 	}
 
@@ -39,7 +39,7 @@ export class UserService {
 			'languages',
 			'technologies',
 			'projects',
-			'certifications'
+			'certifications',
 		];
 		let params = new HttpParams();
 		parameters.forEach(element => {
@@ -47,7 +47,7 @@ export class UserService {
 		});
 		return this.apiService.get(`/users`, params).pipe(
 			map(data => data.items),
-			catchError(this.handleError<any>(`getAll faild`))
+			catchError(this.handleError<any>(`getAll faild`)),
 		);
 	}
 
@@ -58,7 +58,7 @@ export class UserService {
 	getUserPosition(): Observable<any> {
 		return this.apiService.getAll(`/users/${this.id}/position`).pipe(
 			map(data => data),
-			catchError(this.handleError<any>(`getUserPosition faild`))
+			catchError(this.handleError<any>(`getUserPosition faild`)),
 		);
 	}
 
@@ -74,7 +74,7 @@ export class UserService {
 	getUserLanguages(): Observable<any> {
 		return this.apiService.getAll(`/users/${this.id}/languages`).pipe(
 			map(data => data.items),
-			catchError(this.handleError<any>(`getUserLanguages faild`))
+			catchError(this.handleError<any>(`getUserLanguages faild`)),
 		);
 	}
 
@@ -84,7 +84,7 @@ export class UserService {
 		languages.forEach(element => {
 			data.languages.push({
 				id: element.language.id,
-				level: element.level
+				level: element.level,
 			});
 		});
 		return this.apiService.put(`/users/${this.id}/languages`, data);
@@ -95,7 +95,7 @@ export class UserService {
 		data.forEach(element => {
 			params = params.append(
 				'language_ids[]'.toString(),
-				element.toString()
+				element.toString(),
 			);
 		});
 		return this.apiService.delete(`/users/${this.id}/languages`, params);
@@ -122,7 +122,7 @@ export class UserService {
 		devices.forEach(element => {
 			params = params.append(
 				'device_ids[]'.toString(),
-				element.toString()
+				element.toString(),
 			);
 		});
 		return this.apiService.delete(`/users/${this.id}/devices`, params);

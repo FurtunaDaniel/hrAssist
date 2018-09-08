@@ -4,14 +4,14 @@ import {
 	Input,
 	EventEmitter,
 	Output,
-	OnDestroy
+	OnDestroy,
 } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 
 @Component({
 	selector: 'app-toggle-button',
 	templateUrl: './toggle-button.component.html',
-	styleUrls: ['./toggle-button.component.scss']
+	styleUrls: ['./toggle-button.component.scss'],
 })
 export class ToggleButtonComponent implements OnInit, OnDestroy {
 	@Input()

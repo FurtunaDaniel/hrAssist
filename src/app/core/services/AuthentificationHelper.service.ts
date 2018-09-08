@@ -19,10 +19,9 @@ export class AuthentificatHelper {
 	getUserDecodedToken(token) {
 		if (token) {
 			return this.decodeToken(token).token;
-		} else {
-			console.error('Token missing');
-			return null;
 		}
+		console.error('Token missing');
+		return null;
 	}
 
 	getUserId(token) {

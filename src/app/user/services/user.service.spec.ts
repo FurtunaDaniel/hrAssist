@@ -9,7 +9,7 @@ describe('UserService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [RouterTestingModule],
-			providers: [UserService, HttpClient, HttpHandler]
+			providers: [UserService, HttpClient, HttpHandler],
 		});
 	});
 

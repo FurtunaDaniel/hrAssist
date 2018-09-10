@@ -7,7 +7,7 @@
     "start": "ng serve --open",
     "build": "ng build --prod",
     "test": "ng test --source-map=false",
-    "lint": "ng lint",
+    "lint": "ng lint hr-assist",
     "e2e": "ng e2e",
     "deploy":
       "ng build --prod && compodoc -p tsconfig.json -n \"Hr Assist Documentation\" && cp -r documentation/ dist",

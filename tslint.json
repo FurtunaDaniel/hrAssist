@@ -1,5 +1,5 @@
 {
-  "extends": "tslint-config-airbnb",
+  "extends": ["tslint-config-airbnb"],
   "rulesDirectory": ["node_modules/codelyzer"],
   "rules": {
     "ter-arrow-parens": [true, "as-needed"],
@@ -19,7 +19,7 @@
     "forin": true,
     "import-blacklist": [true, "rxjs/Rx"],
     "import-spacing": true,
-    "ter-indent": [true, "tab"],
+    "ter-indent": [false, "tab"],
     "ter-func-call-spacing": [false],
     "interface-over-type-literal": true,
     "label-position": true,

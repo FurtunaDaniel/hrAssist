@@ -103,8 +103,7 @@
                    aria-label="Device (i.e Desktop / Laptop)"
                    matInput
                    required
-                   formControlName="device_name"
-                   [attr.disabled]="viewDeviceMode">
+                   formControlName="device_name">
             <mat-error *ngIf="deviceFormGroup.get('device_name').invalid"
                        [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
           </mat-form-field>

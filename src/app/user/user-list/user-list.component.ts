@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { UserService } from '../services/user.service';
 
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
+import { UserService } from '../services/user.service';
 @Component({
 	selector: 'app-user-list',
 	templateUrl: './user-list.component.html',
-	styleUrls: ['./user-list.component.scss']
+	styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
 	displayedColumns = [
@@ -16,18 +17,14 @@ export class UserListComponent implements OnInit {
 		'certifications',
 		'projects',
 		'technologies',
-		'action'
+		'action',
 	];
 	users: any[];
 	dataSource: MatTableDataSource<any>;
 	isLoading: boolean;
-	circleValue = 50;
-	mode = 'indeterminate';
 
-	@ViewChild(MatPaginator)
-	paginator: MatPaginator;
-	@ViewChild(MatSort)
-	sort: MatSort;
+	@ViewChild(MatPaginator) paginator: MatPaginator;
+	@ViewChild(MatSort) sort: MatSort;
 
 	constructor(private userService: UserService) {
 		this.isLoading = true;

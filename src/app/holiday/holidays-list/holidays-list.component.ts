@@ -1,14 +1,16 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { HolidayService } from '../services/holiday.service';
-import { UserService } from '../../user/services/user.service';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
+import { HolidayService } from '../services/holiday.service';
 import { MomentService } from '../../core/services';
+import { UserService } from '../../user/services/user.service';
 
 @Component({
 	selector: 'app-holidays-list',
 	templateUrl: './holidays-list.component.html',
-	styleUrls: ['./holidays-list.component.scss']
+	styleUrls: ['./holidays-list.component.scss'],
 })
 export class HolidaysListComponent implements OnInit {
 	holidays: Array<any> = [];
@@ -20,7 +22,7 @@ export class HolidaysListComponent implements OnInit {
 		'end_date',
 		'days',
 		'signing_day',
-		'action'
+		'action',
 	];
 	dataSource: MatTableDataSource<any>;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -29,14 +31,9 @@ export class HolidaysListComponent implements OnInit {
 	constructor(
 		private holidayService: HolidayService,
 		private userService: UserService,
-		private ms: MomentService,
-		translate: TranslateService
-	) {
-		// this language will be used as a fallback when a translation isn't found in the current language
-		translate.setDefaultLang('en');
-		// the lang to use, if the lang isn't available, it will use the current loader to get them
-		translate.use('en');
-	}
+
+		private ms: MomentService
+	) {}
 
 	ngOnInit() {
 		this.isLoading = true;
@@ -44,7 +41,6 @@ export class HolidaysListComponent implements OnInit {
 	}
 	applyFilter(filterValue: string) {
 		this.dataSource.filter = filterValue.trim().toLowerCase();
-		debugger;
 
 		if (this.dataSource.paginator) {
 			this.dataSource.paginator.firstPage();
@@ -67,15 +63,14 @@ export class HolidaysListComponent implements OnInit {
 
 								if (userfound) {
 									this.holidays.push({
-										employee:
-											userfound.first_name +
-											' ' +
-											userfound.last_name,
+										employee: `${userfound.first_name} ${
+											userfound.last_name
+										}`,
 										signing_day: holiday.signing_day,
 										start_date: holiday.start_date,
 										end_date: holiday.end_date,
 										days: holiday.days,
-										id: holiday.holiday_id
+										id: holiday.holiday_id,
 									});
 								}
 							});
@@ -83,7 +78,7 @@ export class HolidaysListComponent implements OnInit {
 						if (this.holidays) {
 							this.isLoading = false;
 							this.dataSource = new MatTableDataSource(
-								this.holidays
+								this.holidays,
 							);
 							this.dataSource.paginator = this.paginator;
 							this.dataSource.sort = this.sort;
@@ -91,12 +86,12 @@ export class HolidaysListComponent implements OnInit {
 					},
 					usersError => {
 						console.error(usersError);
-					}
+					},
 				);
 			},
 			holidaysError => {
 				console.error(holidaysError);
-			}
+			},
 		);
 	}
 }

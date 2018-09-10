@@ -9,11 +9,14 @@ describe('UserService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [RouterTestingModule],
-			providers: [UserService, HttpClient, HttpHandler]
+			providers: [UserService, HttpClient, HttpHandler],
 		});
 	});
 
-	it('should be created', inject([UserService], (service: UserService) => {
-		expect(service).toBeTruthy();
-	}));
+	it(
+		'should be created',
+		inject([UserService], (service: UserService) => {
+			expect(service).toBeTruthy();
+		})
+	);
 });

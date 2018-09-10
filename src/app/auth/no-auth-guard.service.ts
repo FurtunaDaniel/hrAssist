@@ -3,7 +3,7 @@ import {
 	CanActivate,
 	Router,
 	RouterStateSnapshot,
-	ActivatedRouteSnapshot
+	ActivatedRouteSnapshot,
 } from '@angular/router';
 import { AuthentificatHelper, AuthStatusService } from '../core/services';
 import { Observable } from 'rxjs';
@@ -14,12 +14,12 @@ export class NoAuthGuard implements CanActivate {
 	constructor(
 		private router: Router,
 		private authHelper: AuthentificatHelper,
-		private authStatus: AuthStatusService
+		private authStatus: AuthStatusService,
 	) {}
 
 	canActivate(
 		route: ActivatedRouteSnapshot,
-		state: RouterStateSnapshot
+		state: RouterStateSnapshot,
 	): Observable<boolean> {
 		return this.authStatus.isLoggedIn.pipe(
 			take(1),
@@ -27,17 +27,14 @@ export class NoAuthGuard implements CanActivate {
 				if (!this.authStatus.getUserToken()) {
 					this.authStatus.setIsLoggedIn(false);
 					return true;
-				} else {
-					this.authStatus.setIsLoggedInBasedOfRole();
-					this.router.navigate([
-						'/employees',
-						this.authHelper.getUserId(
-							this.authStatus.getUserToken()
-						)
-					]);
-					return false;
 				}
-			})
+				this.authStatus.setIsLoggedInBasedOfRole();
+				this.router.navigate([
+					'/employees',
+					this.authHelper.getUserId(this.authStatus.getUserToken()),
+				]);
+				return false;
+			}),
 		);
 	}
 }

@@ -2,7 +2,7 @@ import { Pipe, Injectable, PipeTransform } from '@angular/core';
 
 @Pipe({
 	name: 'FilterArrayByProperty',
-	pure: false
+	pure: false,
 })
 @Injectable()
 export class FilterArrayPipe implements PipeTransform {
@@ -20,17 +20,6 @@ export class FilterArrayPipe implements PipeTransform {
 				return option[property]
 					.toLowerCase()
 					.includes(val.toLowerCase());
-			});
-		} else if (type === 'object') {
-			return array.filter(option => {
-				// debugger;
-				for (const key in option) {
-					// option[property]
-					// console.log(key);
-				}
-				// return option[property]
-				// 	.toLowerCase()
-				// 	.includes(val.toLowerCase());
 			});
 		}
 	}

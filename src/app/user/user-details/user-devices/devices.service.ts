@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
-import { environment } from '../../../../environments/environment';
+
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
 import { ApiService } from '../../../core/services/api.service';
 
 @Injectable()
 export class DevicesService {
-	private APIURL = environment.api_url;
-
 	constructor(private apiService: ApiService) {}
 	getAll(): Observable<any> {
 		return this.apiService.getAll('/devices').pipe(map(data => data));

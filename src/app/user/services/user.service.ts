@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
-
 import { catchError, map } from 'rxjs/operators';
+
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Observable';
-import { Users } from '../models/users.model';
 import { ApiService } from '../../core/services/api.service';
+// import { Users } from '../models/users.model';
 @Injectable()
 export class UserService {
 	private id: number;
@@ -19,17 +21,22 @@ export class UserService {
 	// ~~~~~~~~ Employees General Info HTTP Requests ~~~~~~~
 	// START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	getUserInfo(): Observable<User> {
-		return this.apiService.getAll(`/users/${this.id}`).pipe(
-			map(data => data),
-			catchError(this.handleError<any>(`getUserInfo faild`))
-		);
+
+		return this.apiService
+			.getAll(`/users/${this.id}`)
+			.pipe(
+				map(data => data),
+				catchError(this.handleError<any>(`getUserInfo faild`))
+			);
 	}
 
 	getUsers(): Observable<User[]> {
-		return this.apiService.getAll(`/users/`).pipe(
-			map(data => data.items),
-			catchError(this.handleError<any>(`getUsers faild`))
-		);
+		return this.apiService
+			.getAll(`/users/`)
+			.pipe(
+				map(data => data.items),
+				catchError(this.handleError<any>(`getUsers faild`))
+			);
 	}
 
 	getAll(): Observable<any> {
@@ -39,16 +46,19 @@ export class UserService {
 			'languages',
 			'technologies',
 			'projects',
-			'certifications'
+			'certifications',
 		];
 		let params = new HttpParams();
 		parameters.forEach(element => {
 			params = params.append('with[]', element.toString());
 		});
-		return this.apiService.get(`/users`, params).pipe(
-			map(data => data.items),
-			catchError(this.handleError<any>(`getAll faild`))
-		);
+
+		return this.apiService
+			.get(`/users`, params)
+			.pipe(
+				map(data => data.items),
+				catchError(this.handleError<any>(`getAll faild`))
+			);
 	}
 
 	updateUserInfo(data): Observable<any> {
@@ -56,10 +66,12 @@ export class UserService {
 	}
 
 	getUserPosition(): Observable<any> {
-		return this.apiService.getAll(`/users/${this.id}/position`).pipe(
-			map(data => data),
-			catchError(this.handleError<any>(`getUserPosition faild`))
-		);
+		return this.apiService
+			.getAll(`/users/${this.id}/position`)
+			.pipe(
+				map(data => data),
+				catchError(this.handleError<any>(`getUserPosition faild`))
+			);
 	}
 
 	updateUserPosition(data): Observable<any> {
@@ -72,10 +84,13 @@ export class UserService {
 	// ~~~~~~~~ Employees Languages Card HTTP Requests ~~~~~~~
 	// START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	getUserLanguages(): Observable<any> {
-		return this.apiService.getAll(`/users/${this.id}/languages`).pipe(
-			map(data => data.items),
-			catchError(this.handleError<any>(`getUserLanguages faild`))
-		);
+
+		return this.apiService
+			.getAll(`/users/${this.id}/languages`)
+			.pipe(
+				map(data => data.items),
+				catchError(this.handleError<any>(`getUserLanguages faild`))
+			);
 	}
 
 	updateUserLanguages(languages): Observable<any> {
@@ -84,7 +99,7 @@ export class UserService {
 		languages.forEach(element => {
 			data.languages.push({
 				id: element.language.id,
-				level: element.level
+				level: element.level,
 			});
 		});
 		return this.apiService.put(`/users/${this.id}/languages`, data);
@@ -95,7 +110,7 @@ export class UserService {
 		data.forEach(element => {
 			params = params.append(
 				'language_ids[]'.toString(),
-				element.toString()
+				element.toString(),
 			);
 		});
 		return this.apiService.delete(`/users/${this.id}/languages`, params);
@@ -122,7 +137,7 @@ export class UserService {
 		devices.forEach(element => {
 			params = params.append(
 				'device_ids[]'.toString(),
-				element.toString()
+				element.toString(),
 			);
 		});
 		return this.apiService.delete(`/users/${this.id}/devices`, params);

@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
 @Injectable()
 export class ApiService {
 	constructor(private http: HttpClient) {}
@@ -39,7 +37,7 @@ export class ApiService {
 
 	delete(path, params?): Observable<any> {
 		return this.http
-			.delete(`${environment.api_url}${path}`, { params: params })
+			.delete(`${environment.api_url}${path}`, { params })
 			.pipe(catchError(this.formatErrors));
 	}
 }

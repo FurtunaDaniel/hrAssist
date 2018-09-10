@@ -8,3 +8,7 @@ export * from './user-projects/user-projects.component';
 export * from './user-technologies/user-technologies.component';
 export * from './user-education/user-education.component';
 export * from './user-courses-certifications/user-courses-certifications.component';
+// Export Services
+
+export * from './user-devices/devices.service';
+export * from './user-languages/langauges.service';

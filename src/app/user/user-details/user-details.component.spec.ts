@@ -19,7 +19,7 @@ import {
 	MatDatepickerModule,
 	MatSelectModule,
 	MatButtonModule,
-	MatAutocompleteModule
+	MatAutocompleteModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -51,7 +51,7 @@ describe('UserDetailsComponent', () => {
 				FlexLayoutModule,
 				MatButtonModule,
 				NgbModule,
-				MatAutocompleteModule
+				MatAutocompleteModule,
 			],
 			providers: [HttpClient, HttpHandler, AuthentificatHelper],
 			declarations: [
@@ -60,8 +60,8 @@ describe('UserDetailsComponent', () => {
 				UserLanguagesComponent,
 				UserDevicesComponent,
 
-				FilterArrayPipe
-			]
+				FilterArrayPipe,
+			],
 		}).compileComponents();
 	}));
 

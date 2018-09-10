@@ -1,28 +1,20 @@
 import { NgModule } from '@angular/core';
 
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
 import { SharedModule } from '../shared';
-import { HttpTokenInterceptor } from '../core';
-
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
-import { HolidaysListComponent } from './holidays-list/holidays-list.component';
-import { HolidayDetailsComponent } from './holiday-details/holiday-details.component';
 import { HolidayRoutingModule } from './holiday-routing.module';
-import { HolidayService } from './services/holiday.service';
 import { UserService } from '../user/services/user.service';
+import {
+	HolidaysListComponent,
+	HolidayDetailsComponent,
+	HolidayService
+} from '.';
 
-// BrowserAnimationsModule
 @NgModule({
 	imports: [SharedModule, HolidayRoutingModule],
 	declarations: [HolidaysListComponent, HolidayDetailsComponent],
-	providers: [
-		HolidayService,
-		UserService,
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: HttpTokenInterceptor,
-			multi: true
-		}
-	]
+	providers: [HolidayService, UserService]
+
 })
 export class HolidayModule {}

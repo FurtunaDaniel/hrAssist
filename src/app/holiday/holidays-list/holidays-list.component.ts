@@ -1,9 +1,11 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { HolidayService } from '../services/holiday.service';
-import { UserService } from '../../user/services/user.service';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
+import { HolidayService } from '../services/holiday.service';
 import { MomentService } from '../../core/services';
+import { UserService } from '../../user/services/user.service';
 
 @Component({
 	selector: 'app-holidays-list',
@@ -29,14 +31,9 @@ export class HolidaysListComponent implements OnInit {
 	constructor(
 		private holidayService: HolidayService,
 		private userService: UserService,
-		private ms: MomentService,
-		translate: TranslateService,
-	) {
-		// this language will be used as a fallback when a translation isn't found in the current language
-		translate.setDefaultLang('en');
-		// the lang to use, if the lang isn't available, it will use the current loader to get them
-		translate.use('en');
-	}
+
+		private ms: MomentService
+	) {}
 
 	ngOnInit() {
 		this.isLoading = true;

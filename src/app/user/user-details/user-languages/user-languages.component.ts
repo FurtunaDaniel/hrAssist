@@ -1,33 +1,32 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { Subject } from 'rxjs/Subject';
 
-import { LangaugeService } from './langauge.service';
-import { UserService } from '../../services/user.service';
-
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
 import { ToggleCard } from '../../../shared';
+import { UserService } from '../../services/user.service';
+import { LangaugesService } from './langauges.service';
 
 @Component({
 	selector: 'app-user-languages',
 	templateUrl: './user-languages.component.html',
 	styleUrls: ['./user-languages.component.scss'],
 })
-export class UserLanguagesComponent implements OnInit, OnDestroy, ToggleCard {
+export class UserLanguagesComponent implements OnInit, ToggleCard {
 	public isLoading: boolean;
 	public showForm: boolean;
 	public languages: any[];
 	public userLanguages: any[];
 	public languagesToAdd: FormArray;
-	languageFormGroup: FormGroup;
+	public languageFormGroup: FormGroup;
 	public languagesToRemove: any[];
 	public cardVisibilitySubject: Subject<any> = new Subject();
-	private _initUserLanguages: any[];
-	private languagesSubs: Subscription;
-	private userLanguagesSubs: Subscription;
+
+	private initUserLanguages: any[];
 
 	constructor(
-		private languageService: LangaugeService,
+		private languageService: LangaugesService,
 		private userService: UserService,
 		private formBuilder: FormBuilder,
 	) {
@@ -38,12 +37,10 @@ export class UserLanguagesComponent implements OnInit, OnDestroy, ToggleCard {
 	}
 
 	ngOnInit() {
-		this.languagesSubs = this.languageService
-			.getLanguages()
-			.subscribe(languages => {
-				this.languages = languages;
-				this.isLoading = false;
-			});
+		this.languageService.getLanguages().subscribe(languages => {
+			this.languages = languages;
+			this.isLoading = false;
+		});
 
 		this.getUserLanguages();
 
@@ -122,7 +119,7 @@ export class UserLanguagesComponent implements OnInit, OnDestroy, ToggleCard {
 			this.userService
 				.deleteUserLanguages(this.languagesToRemove)
 				.subscribe(data => {
-					this.userLanguages = this._initUserLanguages.slice(0);
+					this.userLanguages = this.initUserLanguages.slice(0);
 				});
 		} else if (
 			this.languageFormGroup.value.languagesToAdd[0].language != ''
@@ -134,13 +131,11 @@ export class UserLanguagesComponent implements OnInit, OnDestroy, ToggleCard {
 	}
 
 	private getUserLanguages() {
-		this.userLanguagesSubs = this.userService
-			.getUserLanguages()
-			.subscribe(languages => {
-				this.userLanguages = languages;
-				/* create a list with initial user language */
-				this._initUserLanguages = languages;
-			});
+		this.userService.getUserLanguages().subscribe(languages => {
+			this.userLanguages = languages;
+			/* create a list with initial user language */
+			this.initUserLanguages = languages;
+		});
 	}
 
 	private updateLanguages() {
@@ -165,10 +160,5 @@ export class UserLanguagesComponent implements OnInit, OnDestroy, ToggleCard {
 			language: '',
 			level: '',
 		});
-	}
-
-	ngOnDestroy(): void {
-		this.userLanguagesSubs.unsubscribe();
-		this.languagesSubs.unsubscribe();
 	}
 }

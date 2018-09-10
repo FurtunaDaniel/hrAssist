@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '../shared';
-import { UserLoginService, HttpTokenInterceptor } from '../core';
-
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
 import { EmployeeRoutingModule } from './employee-routing.module';
 import {
 	UserDetailsComponent,
@@ -15,15 +14,13 @@ import {
 	UserTechnologiesComponent,
 	UserEducationComponent,
 	UserCoursesCertificationsComponent,
+	DevicesService,
+	LangaugesService,
 } from './user-details';
-
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { UserService } from './services/user.service';
-import { LangaugeService } from './user-details/user-languages/langauge.service';
 import { UserListComponent } from './user-list/user-list.component';
-import { DevicesService } from './user-details/user-devices/devices.service';
+import { SharedModule } from '../shared';
+import { UserService } from './services/user.service';
 
-// BrowserAnimationsModule
 @NgModule({
 	imports: [SharedModule, EmployeeRoutingModule],
 	declarations: [
@@ -39,17 +36,6 @@ import { DevicesService } from './user-details/user-devices/devices.service';
 		UserEducationComponent,
 		UserCoursesCertificationsComponent,
 	],
-	providers: [
-		UserLoginService,
-		UserService,
-		LangaugeService,
-		DevicesService,
-
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: HttpTokenInterceptor,
-			multi: true,
-		},
-	],
+	providers: [UserService, LangaugesService, DevicesService]
 })
 export class UserModule {}

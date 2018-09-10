@@ -4,17 +4,16 @@ import { Observable } from 'rxjs/Observable';
 
 // keep an empty line between third party imports and application imports
 // The empty line separates your stuff from their stuff. Style 03-06
-import { ApiService } from '../../../core/services/api.service';
-
+import { ApiService } from '../../../core/services';
 @Injectable()
-export class DevicesService {
+export class LangaugesService {
 	constructor(private apiService: ApiService) {}
-	getAll(): Observable<any> {
-		return this.apiService.getAll('/devices').pipe(map(data => data));
-	}
-	getAllComponents(): Observable<any> {
-		return this.apiService
-			.getAll('/components')
-			.pipe(map(data => data.items));
+
+	getLanguages(): Observable<any> {
+		return this.apiService.getAll(`/languages`).pipe(
+			map(data => {
+				return data.items;
+			})
+		);
 	}
 }

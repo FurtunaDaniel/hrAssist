@@ -1,19 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import {
-	UserLoginService,
-	AuthentificatHelper,
-	AuthStatusService,
-} from '../core/services';
+
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
+import {
+	AuthentificatHelper,
+	AuthStatusService,
+	UserLoginService
+} from '../core/services';
 @Component({
 	selector: 'app-login',
 	templateUrl: './auth.component.html',
 	styleUrls: ['./auth.component.scss'],
 })
-export class AuthComponent implements OnInit {
+export class AuthComponent {
 	public userFormGroup: FormGroup;
 	errorMsg: string;
 
@@ -23,7 +25,6 @@ export class AuthComponent implements OnInit {
 
 	constructor(
 		private userLoginService: UserLoginService,
-		private translate: TranslateService,
 		private authHelper: AuthentificatHelper,
 		private authStatus: AuthStatusService,
 		private router: Router,
@@ -37,14 +38,7 @@ export class AuthComponent implements OnInit {
 			]),
 			password: new FormControl('', [Validators.required]),
 		});
-
-		// this language will be used as a fallback when a translation isn't found in the current language
-		this.translate.setDefaultLang('en');
-		// the lang to use, if the lang isn't available, it will use the current loader to get them
-		this.translate.use('en');
 	}
-
-	ngOnInit() {}
 
 	public onSubmit(event): void {
 		event.preventDefault();

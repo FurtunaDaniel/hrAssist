@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
+// keep an empty line between third party imports and application imports
+// The empty line separates your stuff from their stuff. Style 03-06
 import { AuthGuard } from '../core/services';
 import { UserDetailsComponent } from './user-details';
 import { UserListComponent } from '.';

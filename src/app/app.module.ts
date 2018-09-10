@@ -5,6 +5,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpBackend, HttpClient } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 // keep an empty line between third party imports and application imports
 // The empty line separates your stuff from their stuff. Style 03-06
@@ -37,7 +39,8 @@ export function HttpLoaderFactory(handler: HttpBackend) {
 				useFactory: HttpLoaderFactory,
 				deps: [HttpBackend]
 			}
-		})
+		}),
+		ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
 	],
 	providers: [],
 	bootstrap: [AppComponent]

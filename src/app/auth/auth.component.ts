@@ -19,7 +19,7 @@ export class AuthComponent {
 	public userFormGroup: FormGroup;
 	errorMsg: string;
 
-	private userToken = "user_token";
+	private userToken = 'user_token';
 	private authToken = 'auth_token';
 	// @TODO this should be removed after development is done
 

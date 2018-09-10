@@ -7,7 +7,7 @@
     "start": "ng serve --open",
     "build": "ng build --prod",
     "test": "ng test --source-map=false",
-    "lint": "ng lint",
+    "lint": "ng lint hr-assist",
     "e2e": "ng e2e",
     "deploy":
       "ng build --prod && compodoc -p tsconfig.json -n \"Hr Assist Documentation\" && cp -r documentation/ dist",
@@ -19,7 +19,7 @@
       "github-changes -n ${npm_package_version} --only-pulls --use-commit-body --owner FurtunaDaniel --repository playground --token 0b92fd0470dc1b36835f1d2c632fa2492d36790c --file RELEASELOG.md",
     "version":
       "npm run generate-releaselog && gulp changelog && git add RELEASELOG.md CHANGELOG_AUTO.md CHANGELOG.md",
-    "deployDist": " firebase deploy"
+    "deployDist": "firebase deploy"
   },
   "engines": {
     "node": ">=8.0.0",
@@ -84,7 +84,7 @@
     "protractor": "~5.3.2",
     "ts-node": "~4.1.0",
     "tslint": "~5.10.0",
-    "tslint-angular": "^1.1.2",
+    "tslint-config-airbnb": "^5.11.0",
     "typescript": "2.7.2"
   }
 }

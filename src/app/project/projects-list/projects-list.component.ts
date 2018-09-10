@@ -9,7 +9,7 @@ import { MomentService } from '../../core/services';
 @Component({
 	selector: 'app-projects-list',
 	templateUrl: './projects-list.component.html',
-	styleUrls: ['./projects-list.component.scss']
+	styleUrls: ['./projects-list.component.scss'],
 })
 export class ProjectsListComponent implements OnInit {
 	displayedColumns = [
@@ -22,7 +22,7 @@ export class ProjectsListComponent implements OnInit {
 		'industries',
 		'users',
 		'technologies',
-		'action'
+		'action',
 	];
 	projects: any[];
 	dataSource: MatTableDataSource<any>;
@@ -33,7 +33,8 @@ export class ProjectsListComponent implements OnInit {
 
 	constructor(
 		private projectService: ProjectService,
-		private ms: MomentService
+		private ms: MomentService,
+
 	) {
 		this.isLoading = true;
 	}

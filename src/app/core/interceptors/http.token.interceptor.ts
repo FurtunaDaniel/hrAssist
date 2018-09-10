@@ -4,7 +4,7 @@ import {
 	HttpInterceptor,
 	HttpHandler,
 	HttpRequest,
-	HttpHeaders
+	HttpHeaders,
 } from '@angular/common/http';
 
 import { Observable } from 'rxjs/Observable';
@@ -19,26 +19,26 @@ export class HttpTokenInterceptor implements HttpInterceptor {
 
 	constructor(
 		private authHelper: AuthentificatHelper,
-		private authStatus: AuthStatusService
+		private authStatus: AuthStatusService,
 	) {
 		this.userToken = this.authStatus.getUserToken();
 		if (this.userToken) {
 			this.authToken = this.authHelper.getUserDecodedToken(
-				this.userToken
+				this.userToken,
 			);
 		}
 	}
 
 	intercept(
 		req: HttpRequest<any>,
-		next: HttpHandler
+		next: HttpHandler,
 	): Observable<HttpEvent<any>> {
 		// Clone the request to add the new header.
 		const authReq = req.clone({
 			headers: new HttpHeaders({
 				'Content-Type': 'application/json',
-				token: this.authToken
-			})
+				token: this.authToken,
+			}),
 		});
 		// send the newly created request
 		return next.handle(authReq).pipe(
@@ -61,7 +61,7 @@ export class HttpTokenInterceptor implements HttpInterceptor {
 					window.history.back();
 				}
 				return throwError(errorResponse);
-			})
+			}),
 		);
 	}
 }

@@ -10,17 +10,17 @@ const routes: Routes = [
 	{
 		path: '',
 		component: ProjectsListComponent,
-		canActivate: [AuthGuard]
+		canActivate: [AuthGuard],
 	},
 	{
 		path: ':id',
 		component: ProjectDetailsComponent,
-		canActivate: [AuthGuard]
-	}
+		canActivate: [AuthGuard],
+	},
 ];
 
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule]
+	exports: [RouterModule],
 })
 export class ProjectRoutingModule {}

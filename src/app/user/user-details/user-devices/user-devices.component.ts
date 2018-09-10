@@ -12,7 +12,7 @@ import { UserService } from '../../services/user.service';
 @Component({
 	selector: 'app-user-devices',
 	templateUrl: './user-devices.component.html',
-	styleUrls: ['./user-devices.component.scss']
+	styleUrls: ['./user-devices.component.scss'],
 })
 export class UserDevicesComponent implements OnInit, ToggleCard {
 	/* Toggle Card Proprieties
@@ -37,20 +37,20 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 	componentsToAdd = [];
 	constructor(
 		private devicesService: DevicesService,
-		private userService: UserService
+		private userService: UserService,
 	) {
 		this.showForm = false;
 
 		this.deviceFormGroup = new FormGroup({
 			device_name: new FormControl('', [
 				Validators.required,
-				Validators.pattern(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]+$`)
+				Validators.pattern(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]+$`),
 			]),
 			serial_number: new FormControl('', [
 				Validators.required,
-				Validators.pattern(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]+$`)
+				Validators.pattern(`^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]+$`),
 			]),
-			components: new FormControl([])
+			components: new FormControl([]),
 		});
 	}
 
@@ -69,7 +69,6 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 
 	public viewDevice(device, index): void {
 		this.devicesToRemove.push(device.device_id);
-
 		this.deviceFormGroup.get('device_name').disable();
 		this.deviceFormGroup.get('components').setValue(device.components);
 		this.deviceFormGroup.get('device_name').setValue(device.device_name);
@@ -86,6 +85,7 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 
 	public onSubmit(event): void {
 		event.preventDefault();
+
 		this.deviceFormGroup.get('components').setValue(this.componentsToAdd);
 
 		if (this.deviceFormGroup.valid || this.devicesToRemove.length) {

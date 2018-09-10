@@ -7,11 +7,11 @@ const routes: Routes = [
 	{
 		path: 'login',
 		component: AuthComponent,
-		canActivate: [NoAuthGuard]
-	}
+		canActivate: [NoAuthGuard],
+	},
 ];
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule]
+	exports: [RouterModule],
 })
 export class AuthRoutingModule {}

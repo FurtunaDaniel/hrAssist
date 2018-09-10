@@ -13,6 +13,8 @@ import {
 @NgModule({
 	imports: [SharedModule, ProjectRoutingModule],
 	declarations: [ProjectsListComponent, ProjectDetailsComponent],
+
 	providers: [ProjectService]
+
 })
 export class ProjectModule {}

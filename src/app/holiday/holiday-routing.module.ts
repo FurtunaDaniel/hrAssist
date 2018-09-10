@@ -10,17 +10,17 @@ const routes: Routes = [
 	{
 		path: '',
 		component: HolidaysListComponent,
-		canActivate: [AuthGuard]
+		canActivate: [AuthGuard],
 	},
 	{
 		path: ':id',
 		component: HolidayDetailsComponent,
-		canActivate: [AuthGuard]
-	}
+		canActivate: [AuthGuard],
+	},
 ];
 
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule]
+	exports: [RouterModule],
 })
 export class HolidayRoutingModule {}

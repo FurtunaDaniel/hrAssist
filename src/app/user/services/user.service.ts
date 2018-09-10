@@ -21,6 +21,7 @@ export class UserService {
 	// ~~~~~~~~ Employees General Info HTTP Requests ~~~~~~~
 	// START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	getUserInfo(): Observable<User> {
+
 		return this.apiService
 			.getAll(`/users/${this.id}`)
 			.pipe(
@@ -45,12 +46,13 @@ export class UserService {
 			'languages',
 			'technologies',
 			'projects',
-			'certifications'
+			'certifications',
 		];
 		let params = new HttpParams();
 		parameters.forEach(element => {
 			params = params.append('with[]', element.toString());
 		});
+
 		return this.apiService
 			.get(`/users`, params)
 			.pipe(
@@ -82,6 +84,7 @@ export class UserService {
 	// ~~~~~~~~ Employees Languages Card HTTP Requests ~~~~~~~
 	// START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	getUserLanguages(): Observable<any> {
+
 		return this.apiService
 			.getAll(`/users/${this.id}/languages`)
 			.pipe(
@@ -96,7 +99,7 @@ export class UserService {
 		languages.forEach(element => {
 			data.languages.push({
 				id: element.language.id,
-				level: element.level
+				level: element.level,
 			});
 		});
 		return this.apiService.put(`/users/${this.id}/languages`, data);
@@ -107,7 +110,7 @@ export class UserService {
 		data.forEach(element => {
 			params = params.append(
 				'language_ids[]'.toString(),
-				element.toString()
+				element.toString(),
 			);
 		});
 		return this.apiService.delete(`/users/${this.id}/languages`, params);
@@ -134,7 +137,7 @@ export class UserService {
 		devices.forEach(element => {
 			params = params.append(
 				'device_ids[]'.toString(),
-				element.toString()
+				element.toString(),
 			);
 		});
 		return this.apiService.delete(`/users/${this.id}/devices`, params);

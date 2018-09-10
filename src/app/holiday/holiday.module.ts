@@ -15,5 +15,6 @@ import {
 	imports: [SharedModule, HolidayRoutingModule],
 	declarations: [HolidaysListComponent, HolidayDetailsComponent],
 	providers: [HolidayService, UserService]
+
 })
 export class HolidayModule {}

@@ -7,7 +7,7 @@ import { UserService } from '../services/user.service';
 @Component({
 	selector: 'app-user-list',
 	templateUrl: './user-list.component.html',
-	styleUrls: ['./user-list.component.scss']
+	styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
 	displayedColumns = [
@@ -17,7 +17,7 @@ export class UserListComponent implements OnInit {
 		'certifications',
 		'projects',
 		'technologies',
-		'action'
+		'action',
 	];
 	users: any[];
 	dataSource: MatTableDataSource<any>;

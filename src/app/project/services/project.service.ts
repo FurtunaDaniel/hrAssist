@@ -15,7 +15,7 @@ export class ProjectService {
 			'industries',
 			'customers',
 			'users',
-			'technologies'
+			'technologies',
 		];
 		let params = new HttpParams();
 		parameters.forEach(element => {
@@ -23,7 +23,7 @@ export class ProjectService {
 		});
 		return this.apiService.get(`/projects`, params).pipe(
 			map(data => data.items),
-			catchError(this.handleError<any>(`getAll faild`))
+			catchError(this.handleError<any>(`getAll faild`)),
 		);
 	}
 	/**

@@ -15,7 +15,7 @@ import {
 	UserEducationComponent,
 	UserCoursesCertificationsComponent,
 	DevicesService,
-	LangaugesService
+	LangaugesService,
 } from './user-details';
 import { UserListComponent } from './user-list/user-list.component';
 import { SharedModule } from '../shared';
@@ -34,7 +34,7 @@ import { UserService } from './services/user.service';
 		UserProjectsComponent,
 		UserTechnologiesComponent,
 		UserEducationComponent,
-		UserCoursesCertificationsComponent
+		UserCoursesCertificationsComponent,
 	],
 	providers: [UserService, LangaugesService, DevicesService]
 })

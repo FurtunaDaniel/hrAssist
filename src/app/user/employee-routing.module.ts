@@ -11,17 +11,17 @@ const routes: Routes = [
 	{
 		path: '',
 		component: UserListComponent,
-		canActivate: [AuthGuard]
+		canActivate: [AuthGuard],
 	},
 	{
 		path: ':id',
 		component: UserDetailsComponent,
-		canActivate: [AuthGuard]
-	}
+		canActivate: [AuthGuard],
+	},
 ];
 
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
-	exports: [RouterModule]
+	exports: [RouterModule],
 })
 export class EmployeeRoutingModule {}

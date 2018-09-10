@@ -9,7 +9,7 @@ describe('NavBarComponent', () => {
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
 			imports: [MatButtonModule, MatMenuModule],
-			declarations: [NavBarComponent]
+			declarations: [NavBarComponent],
 		}).compileComponents();
 	}));
 

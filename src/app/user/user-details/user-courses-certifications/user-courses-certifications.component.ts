@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 @Component({
 	selector: 'app-user-courses-certifications',
 	templateUrl: './user-courses-certifications.component.html',
-	styleUrls: ['./user-courses-certifications.component.scss']
+	styleUrls: ['./user-courses-certifications.component.scss'],
 })
 export class UserCoursesCertificationsComponent implements OnInit, ToggleCard {
 	/* Toggle Card Proprieties

@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -12,7 +13,7 @@ import {
 @Component({
 	selector: 'app-login',
 	templateUrl: './auth.component.html',
-	styleUrls: ['./auth.component.scss']
+	styleUrls: ['./auth.component.scss'],
 })
 export class AuthComponent {
 	public userFormGroup: FormGroup;
@@ -26,16 +27,16 @@ export class AuthComponent {
 		private userLoginService: UserLoginService,
 		private authHelper: AuthentificatHelper,
 		private authStatus: AuthStatusService,
-		private router: Router
+		private router: Router,
 	) {
 		this.userFormGroup = new FormGroup({
 			email: new FormControl('', [
 				Validators.required,
 				Validators.pattern(
-					'([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})'
-				)
+					'([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})',
+				),
 			]),
-			password: new FormControl('', [Validators.required])
+			password: new FormControl('', [Validators.required]),
 		});
 	}
 
@@ -51,13 +52,13 @@ export class AuthComponent {
 						localStorage.setItem(
 							this.authToken,
 							this.authHelper.getUserDecodedToken(
-								data.custom_token
-							)
+								data.custom_token,
+							),
 						);
 						// this.router.navigate(['/employees/:id']);
 						this.router.navigate([
 							'/employees',
-							this.authHelper.getUserId(data.custom_token)
+							this.authHelper.getUserId(data.custom_token),
 						]);
 						this.authStatus.setIsLoggedInBasedOfRole();
 					}
@@ -67,7 +68,7 @@ export class AuthComponent {
 					this.errorMsg = error.error.message || 'Wrong credentials,';
 
 					return error;
-				}
+				},
 			);
 		}
 	}

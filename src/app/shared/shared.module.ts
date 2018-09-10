@@ -38,7 +38,7 @@ import {
 	DateAdapter,
 	MAT_DATE_FORMATS,
 	MAT_DATE_LOCALE,
-	MatProgressSpinnerModule
+	MatProgressSpinnerModule,
 } from '@angular/material';
 
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -53,14 +53,14 @@ const moment = _moment;
 // https://momentjs.com/docs/#/displaying/format/
 export const MY_FORMATS = {
 	parse: {
-		dateInput: 'YYYY-MMM-DD'
+		dateInput: 'YYYY-MMM-DD',
 	},
 	display: {
 		dateInput: 'L',
 		monthYearLabel: 'MMM YYYY',
 		dateA11yLabel: 'LL',
-		monthYearA11yLabel: 'MMMM YYYY'
-	}
+		monthYearA11yLabel: 'MMMM YYYY',
+	},
 };
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -109,7 +109,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 		FlexLayoutModule,
 		GravatarModule,
 		TranslateModule,
-		NgbModule.forRoot()
+		NgbModule.forRoot(),
 	],
 	declarations: [ToggleButtonComponent, FilterArrayPipe, SpinnerComponent],
 	exports: [
@@ -156,7 +156,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 		NgbModule,
 		CommonModule,
 		TranslateModule,
-		SpinnerComponent
+		SpinnerComponent,
 	],
 	providers: [
 		// `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
@@ -165,10 +165,10 @@ import { SpinnerComponent } from './spinner/spinner.component';
 		{
 			provide: DateAdapter,
 			useClass: MomentDateAdapter,
-			deps: [MAT_DATE_LOCALE]
+			deps: [MAT_DATE_LOCALE],
 		},
 
-		{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
-	]
+		{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+	],
 })
 export class SharedModule {}

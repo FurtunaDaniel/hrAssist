@@ -7,7 +7,7 @@ describe('AppComponent', () => {
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
 			declarations: [AppComponent],
-			imports: [RouterTestingModule, MatButtonModule, MatMenuModule]
+			imports: [RouterTestingModule, MatButtonModule, MatMenuModule],
 		}).compileComponents();
 	}));
 	it('should create the app', async(() => {
@@ -25,7 +25,7 @@ describe('AppComponent', () => {
 		fixture.detectChanges();
 		const compiled = fixture.debugElement.nativeElement;
 		expect(compiled.querySelector('h1').textContent).toContain(
-			'Welcome to HR APP!'
+			'Welcome to HR APP!',
 		);
 	}));
 

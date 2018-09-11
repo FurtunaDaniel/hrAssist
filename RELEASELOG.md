@@ -1,6 +1,7 @@
 ## Change Log
 
-### 0.0.0 (2018/09/06 13:17 +00:00)
+### 0.0.0-Alpha (2018/09/06 13:56 +00:00)
+- [#13](https://github.com/FurtunaDaniel/playground/pull/13) Add releaselog (@FurtunaDaniel)
 - [#12](https://github.com/FurtunaDaniel/playground/pull/12) Get rid on Inject in constructor for momentjs (@FurtunaDaniel)
 - [#11](https://github.com/FurtunaDaniel/playground/pull/11) Another fix... (@FurtunaDaniel)
 - [#10](https://github.com/FurtunaDaniel/playground/pull/10) add travis wait (@FurtunaDaniel)

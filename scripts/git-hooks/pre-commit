@@ -1,0 +1,45 @@
+#!/bin/sh
+# THIS example is inspired by ->
+# https://github.com/angular/material2/wiki/Pre-commit-hook-for-linters
+pass=true
+RED='\033[1;31m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+# Build will be check by travis, no need to check for each commit
+# echo "Running Build:"
+
+# # Run build and get the output and return code
+# build=$(npm run build)
+# ret_code=$?
+
+# # If it didn't pass, announce it failed and print the output
+# if [ $ret_code != 0 ]; then
+# 	printf "\n${RED}Build failed:${NC}"
+# 	echo "$build\n"
+#     # If the build have errors you can't commit your changes
+# 	pass=false
+# else
+# 	printf "${GREEN}Build passed.${NC}\n"
+# fi
+
+echo "Running Lint:"
+# Run lint and get the output and return code
+lint=$(npm run lint)
+ret_code=$?
+
+if [ $ret_code != 0 ]; then
+	printf "${RED}Lint failed:${NC}"
+	echo "$lint\n"
+    # if lint script have errors you can't commit your changes
+	pass=false
+else
+	printf "${GREEN}Lint passed.${NC}\n"
+fi
+
+# If there were no failures, it is good to commit
+if $pass; then
+	exit 0
+fi
+
+exit 1

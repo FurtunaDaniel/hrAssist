@@ -1,6 +1,6 @@
 {
   "name": "hr-assist",
-  "version": "0.0.0",
+  "version": "0.0.0-Alpha",
   "license": "MIT",
   "scripts": {
     "i": "rm -rf node_modules/ package-lock.json && npm run install-git-hooks && npm install",
@@ -14,7 +14,7 @@
     "doc": "./node_modules/.bin/compodoc -p tsconfig.json  -s --port 8081 --theme postmark -o ",
     "checkNode": "check-node-version --package",
     "fixLint": "ng lint hr-assist --fix",
-    "generate-releaselog": "github-changes -n ${npm_package_version} --only-pulls --use-commit-body --owner FurtunaDaniel --repository playground --token 0b92fd0470dc1b36835f1d2c632fa2492d36790c --file RELEASELOG.md",
+    "generate-releaselog": "github-changes -n ${npm_package_version} --only-pulls --use-commit-body --owner FurtunaDaniel --repository hrAssist --token ${HR_TOKEN} --file RELEASELOG.md",
     "version": "npm run generate-releaselog && gulp changelog && git add RELEASELOG.md CHANGELOG_AUTO.md CHANGELOG.md",
     "deployDist": "firebase deploy",
     "install-git-hooks": "./scripts/install-git-hooks.sh"

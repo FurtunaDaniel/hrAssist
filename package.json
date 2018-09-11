@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "i": "npm run install-git-hooks && npm install --global-style --no-package-lock",
+    "i": "rm -rf node_modules/ package-lock.json && npm run install-git-hooks && npm install",
     "ng": "ng",
     "start": "ng serve --open",
     "build": "ng build --prod",

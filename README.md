@@ -10,6 +10,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 `https://assist-hr.firebaseapp.com/documentation/`
 
+## Instalation
+
+Run `npm run i` to install all dependecies and to link the github hooks of this project.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:8080/`. The app will automatically reload if you change any of the source files.

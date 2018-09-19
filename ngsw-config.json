@@ -10,7 +10,10 @@
           "/index.html",
           "/*.css",
           "/*.js"
-        ]
+        ],
+        "urls": [
+            "https://fonts.googleapis.com/**"
+          ]
       }
     }, {
       "name": "assets",
@@ -20,6 +23,18 @@
         "files": [
           "/assets/**"
         ]
+      }
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "from-api",
+      "urls": ["/users", "/positions", "/languages", "/components", "/projects", "/holidays"],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 100,
+        "maxAge": "3d",
+        "timeout": "5s"
       }
     }
   ]

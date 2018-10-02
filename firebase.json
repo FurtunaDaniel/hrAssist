@@ -11,6 +11,14 @@
         "source": "documentation",
         "destination": "/documentation/index.html"
       }
-    ]
+    ],
+    "headers": [{
+        "source" : "**",
+        "headers" : [{
+          "key" : "Cache-Control",
+          "value" : "max-age=31536000"
+
+        }]
+      }]
   }
 }

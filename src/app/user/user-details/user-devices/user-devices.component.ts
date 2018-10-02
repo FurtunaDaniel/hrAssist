@@ -8,6 +8,7 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { ToggleCard } from '@app/shared';
 import { UserService } from '@app/user/services';
 import { DevicesService } from './devices.service';
+import { Device } from '@app/user/models';
 
 @Component({
 	selector: 'app-user-devices',
@@ -23,8 +24,7 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 	public isLoading: boolean;
 	/*End Toggle Card Proprieties */
 
-	public devices: any[];
-	public userDevices: any[];
+	public userDevices: Device[];
 	public devicesToRemove: any[];
 	public deviceFormGroup: FormGroup;
 

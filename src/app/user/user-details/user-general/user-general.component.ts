@@ -6,7 +6,7 @@ import { Subject } from 'rxjs/Subject';
 // keep an empty line between third party imports and application imports
 // The empty line separates your stuff from their stuff. Style 03-06
 import { ToggleCard } from '@app/shared';
-import { User } from '../../models/user.model';
+import { User, Position } from '@app/user/models';
 import { UserService, PositionService } from '@app/user/services';
 import { GravatarService } from '@infinitycube/gravatar';
 
@@ -35,7 +35,7 @@ export class UserGeneralComponent implements OnInit, ToggleCard {
 	public gravatarUrl: string;
 	public today: Date;
 	public positions: any[];
-	public userPosition: any;
+	public userPosition: Position;
 
 	private dateFormat: string;
 	private initialUserObj: User;
@@ -56,12 +56,6 @@ export class UserGeneralComponent implements OnInit, ToggleCard {
 		this.alertMsg.message = ``;
 		this.today = new Date();
 
-		// default userPosition
-		this.userPosition = {
-			id: 0,
-			name: '',
-			job_detail: null,
-		};
 	}
 
 	ngOnInit() {

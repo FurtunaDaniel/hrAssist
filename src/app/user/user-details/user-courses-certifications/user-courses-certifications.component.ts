@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToggleCard } from '../../../shared';
+import { ToggleCard } from '@app/shared';
 import { Subject } from 'rxjs/Subject';
 
 @Component({

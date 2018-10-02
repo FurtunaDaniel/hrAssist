@@ -9,7 +9,7 @@ import {
 	AuthentificatHelper,
 	AuthStatusService,
 	UserLoginService
-} from '../core/services';
+} from '@app/core/services';
 @Component({
 	selector: 'app-login',
 	templateUrl: './auth.component.html',

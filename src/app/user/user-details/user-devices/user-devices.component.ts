@@ -5,9 +5,9 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 // keep an empty line between third party imports and application imports
 // The empty line separates your stuff from their stuff. Style 03-06
-import { ToggleCard } from '../../../shared';
+import { ToggleCard } from '@app/shared';
+import { UserService } from '@app/user/services';
 import { DevicesService } from './devices.service';
-import { UserService } from '../../services/user.service';
 
 @Component({
 	selector: 'app-user-devices',

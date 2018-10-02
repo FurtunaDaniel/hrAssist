@@ -5,7 +5,7 @@ import {
 	RouterStateSnapshot,
 	ActivatedRouteSnapshot,
 } from '@angular/router';
-import { AuthentificatHelper, AuthStatusService } from '../core/services';
+import { AuthentificatHelper, AuthStatusService } from '@app/core/services';
 import { Observable } from 'rxjs';
 import { take, map } from 'rxjs/operators';
 

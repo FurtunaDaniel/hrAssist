@@ -7,7 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 // The empty line separates your stuff from their stuff. Style 03-06
 import { User } from '../models/user.model';
 import { Observable } from 'rxjs/Observable';
-import { ApiService } from '../../core/services/api.service';
+import { ApiService } from '@app/core/services';
 // import { Users } from '../models/users.model';
 @Injectable()
 export class UserService {

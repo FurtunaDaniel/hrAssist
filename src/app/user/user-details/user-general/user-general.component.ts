@@ -5,10 +5,9 @@ import { Subject } from 'rxjs/Subject';
 
 // keep an empty line between third party imports and application imports
 // The empty line separates your stuff from their stuff. Style 03-06
-import { ToggleCard } from '../../../shared';
+import { ToggleCard } from '@app/shared';
 import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';
-import { PositionService } from '../../services/position.service';
+import { UserService, PositionService } from '@app/user/services';
 import { GravatarService } from '@infinitycube/gravatar';
 
 import * as _ from 'lodash';

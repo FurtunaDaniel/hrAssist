@@ -11,7 +11,7 @@ import {
 	MatPaginatorModule,
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
-import { UserService } from '../services/user.service';
+import { UserService } from '@app/user/services';
 
 describe('UserListComponent', () => {
 	let component: UserListComponent;

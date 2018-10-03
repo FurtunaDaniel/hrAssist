@@ -92,7 +92,7 @@ export class UserService {
 			);
 	}
 
-	updateUserLanguages(languages): Observable<Language> {
+	updateUserLanguages(languages): Observable<Language[]> {
 		// @TODO Here should be used an interface but our Language has so much models...
 		const data: any = {};
 		data.languages = [];
@@ -105,7 +105,7 @@ export class UserService {
 		return this.apiService.put(`/users/${this.id}/languages`, data);
 	}
 
-	deleteUserLanguages(data: number[]): Observable<any> {
+	deleteUserLanguages(data: number[]): Observable<Language[]> {
 
 		let params = new HttpParams();
 		data.forEach(element => {

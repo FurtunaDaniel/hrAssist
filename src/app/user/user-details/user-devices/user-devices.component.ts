@@ -25,7 +25,7 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 	/*End Toggle Card Proprieties */
 
 	public userDevices: Device[];
-	public devicesToRemove: any[];
+	public devicesToRemove: number[];
 	public deviceFormGroup: FormGroup;
 
 	components: any[];

@@ -10,7 +10,8 @@
 		"ADD_NEW_LBL": "Add new {{ element }}",
 		"AUTOCOMPLETE_LBL": "Pick a {{ element }}",
 		"CLOSE_TOGGLE": "Close {{ card }}",
-		"VIEW_TOGGLE": "View/Edit {{ card }}"
+		"VIEW_TOGGLE": "View/Edit {{ card }}",
+		"PROJECT": "Project"
 	},
 	"TABLE": {
 		"NO_HEADER": "No.",
@@ -22,6 +23,7 @@
 		"INDUSTRY_HEADER": "Industries",
 		"EMPLOYEES_HEADER": "Employees",
 		"TECHNOLOGIES_HEADER": "Technologies",
+		"PROJECT_HEADER": "Project",
 		"ACTIONS_HEADER": "Actions",
 		"HOLIDAYS": {
 			"NO_DAYS": "No. Days",
@@ -50,5 +52,10 @@
 	"LANGUAGES": {
 		"TITLE": "Languages",
 		"NOTE_TEXT": "Complete here with the languages that you know."
+    },
+    "HOLIDAYS": {
+		"TITLE": "Holidays",
+        "NOTE_TEXT": "Complete here your vacation requests.",
+        "EXTRA_NOTE_TEXT": "{{ days }} days taken"
 	}
 }

@@ -70,8 +70,10 @@ import { ToggleButtonComponent } from './toggle-button';
 import { FilterArrayPipe } from '@app/shared/autocomplete-pipe/autocomplete.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { CardComponent } from './card/card.component';
 @NgModule({
 	imports: [
+		CommonModule,
 		RouterModule,
 		HttpClientModule,
 		MatButtonModule,
@@ -111,8 +113,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
 		TranslateModule,
 		NgbModule.forRoot(),
 	],
-	declarations: [ToggleButtonComponent, FilterArrayPipe, SpinnerComponent],
+	declarations: [ToggleButtonComponent, FilterArrayPipe, SpinnerComponent, CardComponent],
 	exports: [
+		CommonModule,
 		FilterArrayPipe,
 		ToggleButtonComponent,
 		RouterModule,
@@ -154,9 +157,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
 		FlexLayoutModule,
 		GravatarModule,
 		NgbModule,
-		CommonModule,
 		TranslateModule,
 		SpinnerComponent,
+		CardComponent,
 	],
 	providers: [
 		// `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your

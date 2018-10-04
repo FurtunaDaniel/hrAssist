@@ -1,3 +1,211 @@
-<p>
-  user-holidays works!
-</p>
+<app-card>
+
+  <!-- Card loading spinner -->
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <!--/. Card loading spinner -->
+
+
+  <!-- Card title -->
+  <strong [translate]="'HOLIDAYS.TITLE'"
+          class="c-card__title"></strong>
+  <!--/. Card title -->
+
+  <!-- Card subtitle -->
+  <div class="c-card__notes">
+    <strong [translate]="'COMMON.NOTE_LABEL'"></strong>
+    <span [translate]="'HOLIDAYS.NOTE_TEXT'"></span>
+    <p class="c-card__notes--extra">
+      {{ 'HOLIDAYS.EXTRA_NOTE_TEXT' | translate: { days: getTotalDays } }}
+    </p>
+  </div>
+  <!--/. Card subtitle -->
+
+
+  <!--  Card body Preview Language -->
+  <div *ngIf="!showForm"
+       class="c-card__preview">
+
+    <div class="responsive__table">
+      <mat-table #table
+                 [dataSource]="dataSource"
+                 matSort>
+
+        <ng-container matColumnDef="index">
+          <mat-header-cell *matHeaderCellDef
+                           [translate]="'TABLE.NO_HEADER'"> </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index;">{{ i+1 }}.</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="start_date"
+                      class="date--cell">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>
+            <span [translate]="'TABLE.SART_DATE_HEADER'"></span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.start_date ?
+            ms.moment(element.start_date).format('DD/MM/YYYY') : ''
+            }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="end_date"
+                      class="date--cell">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>
+            <span [translate]="'TABLE.END_DATE_HEADER'"></span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.end_date ? ms.moment(element.end_date).format('DD/MM/YYYY') :
+            '' }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="days">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>
+            <span [translate]="'TABLE.HOLIDAYS.NO_DAYS'"></span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.days }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="project">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>
+            <span [translate]="'TABLE.PROJECT_HEADER'"></span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.employee_replacements[0].project_name }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef
+                           [translate]="'TABLE.ACTIONS_HEADER'"> </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <a mat-icon-button
+               routerLink="/holidays/{{element.id}}"
+               routerLinkActive="active"
+               color="secondary">
+              <mat-icon aria-label="View">pageview</mat-icon>
+            </a>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></mat-row>
+      </mat-table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                     [pageSize]="10"></mat-paginator>
+    </div>
+
+  </div>
+  <!--/.  Card body Preview Language -->
+
+  <!--  Card body Language Form -->
+  <div class="c-card__form"
+       *ngIf="showForm">
+
+    <form (ngSubmit)="onSubmit($event)"
+          [formGroup]="holidayForm">
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px">
+        <!--  Start Date field -->
+        <mat-form-field fxFlex="50%">
+          <input matInput
+                 [matDatepickerFilter]="withoutWeekendDays"
+                 [matDatepicker]="startDate"
+                 formControlName="start_date"
+                 (dateInput)="formatDate('start_date', $event)"
+                 name="start_date"
+                 [min]="lastMonth"
+                 placeholder="Start Day">
+          <mat-datepicker-toggle matSuffix
+                                 [for]="startDate">
+          </mat-datepicker-toggle>
+          <mat-datepicker #startDate
+                          startView="month">
+          </mat-datepicker>
+        </mat-form-field>
+        <!--/.  Start Date field -->
+
+        <!--  End Date field -->
+        <mat-form-field fxFlex="50%">
+          <input matInput
+                 [matDatepicker]="endDate"
+                 (dateInput)="formatDate('end_date', $event)"
+                 formControlName="end_date"
+                 name="end_date"
+                 [min]="lastMonth"
+                 placeholder="End day">
+          <mat-datepicker-toggle matSuffix
+                                 [for]="endDate">
+          </mat-datepicker-toggle>
+          <mat-datepicker #endDate
+                          startView="month">
+          </mat-datepicker>
+        </mat-form-field>
+        <!--/.  End Date field -->
+      </div>
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px">
+        <!--  Signing Date field -->
+        <mat-form-field fxFlex="50%">
+          <input matInput
+                 [matDatepicker]="signingDay"
+                 formControlName="signing_day"
+                 (dateInput)="formatDate('signing_day', $event)"
+                 name="signing_day"
+                 [min]="lastMonth"
+                 placeholder="Signing day">
+          <mat-datepicker-toggle matSuffix
+                                 [for]="signingDay">
+          </mat-datepicker-toggle>
+          <mat-datepicker #signingDay
+                          startView="month">
+          </mat-datepicker>
+        </mat-form-field>
+        <!--/.  Signing Date field -->
+
+        <mat-form-field fxFlex="50%">
+          <input type="text"
+                 placeholder="Pick a language"
+                 aria-label="Select a language"
+                 matInput
+                 [matAutocomplete]="auto">
+
+        </mat-form-field>
+
+      </div>
+
+      <div fxLayout="row">
+        <button mat-button
+                type="submit"
+                [fxFlex]="100"
+                color="primary">
+          Save Changes
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!--/.  Card body Language Form -->
+
+  <!-- Card footer Actions button -->
+  <div class="c-card--actions">
+    <app-toggle-button (cardVisibility)="onToggle($event)"
+                       [cardVisibilitySubject]="cardVisibilitySubject"
+                       name="Holidays"
+                       [disableButton]="isLoading"
+                       fxLayoutAlign="center"
+                       fxLayout="row"
+                       fxFlex="100"></app-toggle-button>
+  </div>
+  <!--/. Card footer Actions button -->
+
+</app-card>

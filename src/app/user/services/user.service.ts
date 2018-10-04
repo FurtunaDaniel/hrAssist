@@ -146,6 +146,33 @@ export class UserService {
 	// ~~~~~~~~ Employees Devices Card HTTP Requests ~~~~~~~
 	// END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+	// ~~~~~~~~ Employees Devices Card HTTP Requests ~~~~~~~
+	// START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	getUserHolidays(): Observable<any> {
+		return this.apiService
+			.getAll(`/users/${this.id}/holidays`)
+			.pipe(map(data => data));
+	}
+
+	updateUserHoliday(device): Observable<any> {
+		if (!device.components.length) {
+			delete device.components;
+		}
+		return this.apiService.put(`/users/${this.id}/holidays`, device);
+	}
+	deleteUserHolidays(devices): Observable<any> {
+		let params = new HttpParams();
+		devices.forEach(element => {
+			params = params.append(
+				'device_ids[]'.toString(),
+				element.toString(),
+			);
+		});
+		return this.apiService.delete(`/users/${this.id}/holidays`, params);
+	}
+	// ~~~~~~~~ Employees Devices Card HTTP Requests ~~~~~~~
+	// END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	/**
 	 * Returns a function that handles Http operation failures.
 	 * This error handler lets the app continue to run as if no error occurred.

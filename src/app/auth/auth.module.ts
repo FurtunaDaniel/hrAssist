@@ -6,11 +6,11 @@ import { AuthComponent } from './auth.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { NoAuthGuard } from './no-auth-guard.service';
 import { SharedModule } from '../shared';
-import { UserLoginService } from '@app/core/services';
+import { UserAuthService } from '@app/core/services/';
 
 @NgModule({
 	imports: [AuthRoutingModule, SharedModule],
 	declarations: [AuthComponent],
-	providers: [NoAuthGuard, UserLoginService],
+	providers: [NoAuthGuard, UserAuthService],
 })
 export class AuthModule {}

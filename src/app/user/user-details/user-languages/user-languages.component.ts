@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import { ToggleCard } from '@app/shared';
 import { UserService } from '@app/user/services';
 import { LangaugesService } from './langauges.service';
+import { Language } from '@app/user/models';
 
 @Component({
 	selector: 'app-user-languages',
@@ -16,8 +17,8 @@ import { LangaugesService } from './langauges.service';
 export class UserLanguagesComponent implements OnInit, ToggleCard {
 	public isLoading: boolean;
 	public showForm: boolean;
-	public languages: any[];
-	public userLanguages: any[];
+	public languages: Language[];
+	public userLanguages: Language[];
 	public languagesToAdd: FormArray;
 	public languageFormGroup: FormGroup;
 	public languagesToRemove: any[];

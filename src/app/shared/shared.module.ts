@@ -41,7 +41,7 @@ import {
 	MatProgressSpinnerModule,
 } from '@angular/material';
 
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
 // syntax. However, rollup creates a synthetic default module and we thus need to import it using
@@ -56,7 +56,7 @@ export const MY_FORMATS = {
 		dateInput: 'YYYY-MMM-DD',
 	},
 	display: {
-		dateInput: 'L',
+		dateInput: 'DD/MMM/YYYY',
 		monthYearLabel: 'MMM YYYY',
 		dateA11yLabel: 'LL',
 		monthYearA11yLabel: 'MMMM YYYY',
@@ -171,7 +171,7 @@ import { CardComponent } from './card/card.component';
 			deps: [MAT_DATE_LOCALE],
 		},
 
-		{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+		{ provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
 	],
 })
 export class SharedModule {}

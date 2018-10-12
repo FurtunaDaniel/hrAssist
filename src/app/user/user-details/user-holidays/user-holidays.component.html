@@ -96,7 +96,7 @@
       </mat-table>
 
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
-                     [pageSize]="10"></mat-paginator>
+                     [pageSize]="5"></mat-paginator>
     </div>
 
   </div>
@@ -107,7 +107,8 @@
        *ngIf="showForm">
 
     <form (ngSubmit)="onSubmit($event)"
-          [formGroup]="holidayForm">
+          [formGroup]="holidayForm"
+          novalidate>
 
       <div fxLayout="row"
            fxLayout.xs="column"
@@ -115,37 +116,42 @@
         <!--  Start Date field -->
         <mat-form-field fxFlex="50%">
           <input matInput
+                 required
+                 (dateInput)="getDatesValidity"
                  [matDatepickerFilter]="withoutWeekendDays"
                  [matDatepicker]="startDate"
                  formControlName="start_date"
-                 (dateInput)="formatDate('start_date', $event)"
-                 name="start_date"
                  [min]="lastMonth"
-                 placeholder="Start Day">
+                 placeholder="Start date">
           <mat-datepicker-toggle matSuffix
                                  [for]="startDate">
           </mat-datepicker-toggle>
           <mat-datepicker #startDate
                           startView="month">
           </mat-datepicker>
+          <mat-error *ngIf="holidayForm.get('start_date').errors?.required"
+                     [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
         </mat-form-field>
         <!--/.  Start Date field -->
 
         <!--  End Date field -->
         <mat-form-field fxFlex="50%">
           <input matInput
+                 required
+                 (dateInput)="getDatesValidity"
+                 [matDatepickerFilter]="withoutWeekendDays"
                  [matDatepicker]="endDate"
-                 (dateInput)="formatDate('end_date', $event)"
                  formControlName="end_date"
-                 name="end_date"
                  [min]="lastMonth"
-                 placeholder="End day">
+                 placeholder="End date">
           <mat-datepicker-toggle matSuffix
                                  [for]="endDate">
           </mat-datepicker-toggle>
           <mat-datepicker #endDate
                           startView="month">
           </mat-datepicker>
+          <mat-error *ngIf="holidayForm.get('end_date').errors?.required"
+                     [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
         </mat-form-field>
         <!--/.  End Date field -->
       </div>
@@ -153,33 +159,173 @@
       <div fxLayout="row"
            fxLayout.xs="column"
            fxLayoutGap="20px">
+
         <!--  Signing Date field -->
         <mat-form-field fxFlex="50%">
           <input matInput
+                 required
+                 (dateInput)="getDatesValidity"
+                 [matDatepickerFilter]="withoutWeekendDays"
                  [matDatepicker]="signingDay"
                  formControlName="signing_day"
-                 (dateInput)="formatDate('signing_day', $event)"
                  name="signing_day"
                  [min]="lastMonth"
-                 placeholder="Signing day">
+                 placeholder="Signing date">
           <mat-datepicker-toggle matSuffix
                                  [for]="signingDay">
           </mat-datepicker-toggle>
           <mat-datepicker #signingDay
                           startView="month">
           </mat-datepicker>
+          <mat-error *ngIf="holidayForm.get('signing_day').errors?.required"
+                     [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
         </mat-form-field>
         <!--/.  Signing Date field -->
 
-        <mat-form-field fxFlex="50%">
-          <input type="text"
-                 placeholder="Pick a language"
-                 aria-label="Select a language"
-                 matInput
-                 [matAutocomplete]="auto">
+        <section fxFlex="50%"
+                 class="slider__form--field">
+          <label class="required-input"
+                 [translate]="'USER_HOLIDAY.GNEDER_LBL'"></label>
+          &nbsp;
+          <span [translate]="'USER_HOLIDAY.MALE_LBL'"></span>
+          &nbsp;
+          <mat-slide-toggle [color]="primary">
+            <span [translate]="'USER_HOLIDAY.FEMALE_LBL'"></span>
+          </mat-slide-toggle>
+
+        </section>
+
+      </div>
+
+      <!--  Team leader field -->
+      <div fxLayout="row">
+        <mat-form-field class="chip-list">
+
+          <mat-chip-list #teamLeadersList
+                         required
+                         formArrayName="teamLeaders">
+            <mat-chip *ngFor="let leader of holidayForm.get('teamLeaders').value; let i = index"
+                      (removed)="remove(i)"
+                      [selectable]="selectable"
+                      [removable]="removable">
+              {{ leader?.first_name + ' ' + leader?.last_name }}
+              <mat-icon matChipRemove
+                        *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input #chipInput
+                   [matAutocomplete]="auto"
+                   placeholder="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate:{ element:'team leader'} }}"
+                   attr.aria-label="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate:{ element:'team leader'} }}"
+                   [matChipInputFor]="teamLeadersList"
+                   required>
+
+            <mat-error *ngIf="$isSubmitted && holidayForm.get('teamLeaders').errors?.required"
+                       [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+
+          </mat-chip-list>
+
+          <mat-autocomplete #auto="matAutocomplete"
+                            (optionSelected)="selected($event)">
+            <mat-option *ngFor="let leader of users | FilterArrayByProperty:'fullName': chipInput.value"
+                        [value]="leader">
+              {{ leader.first_name + ' ' + leader.last_name }}
+            </mat-option>
+          </mat-autocomplete>
 
         </mat-form-field>
+      </div>
+      <!--/. Team leader field -->
 
+      <!-- Projects and replacer -->
+      <div formArrayName="onGoingProjects"
+           *ngFor="let item of holidayForm.get('onGoingProjects').controls; let onGoingProjectsIndex = index;">
+        <div [formGroupName]="onGoingProjectsIndex"
+             fxLayout="row"
+             fxLayout.xs="column"
+             fxLayoutGap="20px">
+
+          <mat-form-field fxFlex.gt-sm="45%">
+            <input type="text"
+                   #inputText
+                   placeholder="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate: { element: 'project'} }}"
+                   attr.aria-label="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate: { element: 'project'} }}"
+                   matInput
+                   required
+                   formControlName="project"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete"
+                              [displayWith]="displayFn">
+              <mat-option *ngFor="let project of projects | FilterArrayByProperty:'name': inputText.value"
+                          [value]="project">
+                {{ project.name }}
+              </mat-option>
+            </mat-autocomplete>
+
+            <mat-error *ngIf="holidayForm.get('onGoingProjects')?.controls[onGoingProjectsIndex]?.controls['project'].errors?.required"
+                       [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+
+          </mat-form-field>
+
+
+          <mat-form-field fxFlex.gt-sm="45%">
+            <input type="text"
+                   #userText
+                   placeholder="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate: { element: 'replacer'} }}"
+                   attr.aria-label="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate: { element: 'replacer'} }}"
+                   matInput
+                   required
+                   formControlName="replacer"
+                   [matAutocomplete]="test">
+            <mat-autocomplete #test="matAutocomplete"
+                              [displayWith]="displayFullName">
+              <mat-option *ngFor="let user of users | FilterArrayByProperty:'fullName': userText.value"
+                          [value]="user">
+                {{ user.fullName }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+
+
+          <div fxFlex.gt-sm="10%"
+               class="language-card--action">
+            <button mat-button
+                    matTooltip="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                    attr.aria-label="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                    *ngIf="onGoingProjectsIndex != 0 || holidayForm.get('onGoingProjects').controls.length > 1"
+                    (click)="removeField(onGoingProjectsIndex)">
+              <i class="material-icons">
+                cancel
+              </i>
+            </button>
+
+            <button *ngIf="holidayForm.get('onGoingProjects').controls.length - onGoingProjectsIndex == 1"
+                    mat-button
+                    matTooltip="{{ 'COMMON.ADD_NEW_LBL' | translate:{ element:'language'} }}"
+                    attr.aria-label="{{ 'COMMON.ADD_NEW_LBL' | translate:{ element:'language'} }}"
+                    color="primary"
+                    (click)="addFields()">
+              <i class="material-icons">
+                add_box
+              </i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+      <!--/. Projects and replacer -->
+
+      <div fxLayout="row"
+           fxLayoutAlign="center"
+           class="alert alert-warning"
+           *ngIf="invalidDates">
+        <span [translate]="'USER_HOLIDAY.MAIN_ERROR_MESSAGE'"></span>
+      </div>
+
+      <div fxLayout="row"
+           fxLayoutAlign="center"
+           class="alert alert-warning"
+           *ngIf="invalidDates">
+        <span [translate]="'USER_HOLIDAY.EXIST_INTERVAL_LBL'"> </span>
       </div>
 
       <div fxLayout="row">
@@ -187,14 +333,13 @@
                 type="submit"
                 [fxFlex]="100"
                 color="primary">
-          Save Changes
+          <span [translate]="'COMMON.SAVE_BTN'"></span>
         </button>
       </div>
 
     </form>
   </div>
-
-  <!--/.  Card body Language Form -->
+  <!--/. Card body Language Form -->
 
   <!-- Card footer Actions button -->
   <div class="c-card--actions">

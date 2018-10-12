@@ -3,10 +3,11 @@ import { map, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { ApiService } from '@app/core/services';
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { Project } from '@app/project/models/project.model';
 
 @Injectable()
 export class ProjectService {
-	constructor(private apiService: ApiService) {}
+	constructor(private apiService: ApiService) { }
 
 	getAll(): Observable<any> {
 		const parameters = [
@@ -26,6 +27,14 @@ export class ProjectService {
 			catchError(this.handleError<any>(`getAll faild`)),
 		);
 	}
+	getProjects(): Observable<Project[]> {
+		return this.apiService.get(`/projects`).pipe(
+			map(data => {
+				return data.items as Project;
+			}),
+			catchError(this.handleError<any>(`getAll faild`)),
+		);
+	}
 	/**
 	 * Returns a function that handles Http operation failures.
 	 * This error handler lets the app continue to run as if no error occurred.
@@ -40,8 +49,8 @@ export class ProjectService {
 				error.error instanceof ErrorEvent
 					? error.error.message
 					: `server returned code ${error.status} with body "${
-							error.error
-					  }"`;
+					error.error
+					}"`;
 
 			// TODO: better job of transforming error for user consumption
 			throw new Error(`${operation} failed: ${message}`);

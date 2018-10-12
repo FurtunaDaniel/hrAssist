@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { ApiService } from '@app/core/services';
 @Injectable()
 export class UserService {
-	private id: number;
+	public id: number;
 	constructor(private route: ActivatedRoute, private apiService: ApiService) {
 		this.route.params.subscribe(params => {
 			this.id = params.id;
@@ -33,7 +33,9 @@ export class UserService {
 		return this.apiService
 			.getAll(`/users/`)
 			.pipe(
-				map(data => data.items),
+				map(data =>
+					data.items.map((item: User) => new User().deserialize(item))
+				),
 				catchError(this.handleError<any>(`getUsers faild`))
 			);
 	}
@@ -154,17 +156,14 @@ export class UserService {
 			.pipe(map(data => data));
 	}
 
-	updateUserHoliday(device): Observable<any> {
-		if (!device.components.length) {
-			delete device.components;
-		}
-		return this.apiService.put(`/users/${this.id}/holidays`, device);
+	saveUserHoliday(holiday): Observable<any> {
+		return this.apiService.post(`/users/${this.id}/holidays`, holiday);
 	}
-	deleteUserHolidays(devices): Observable<any> {
+	deleteUserHolidays(holidays): Observable<any> {
 		let params = new HttpParams();
-		devices.forEach(element => {
+		holidays.forEach(element => {
 			params = params.append(
-				'device_ids[]'.toString(),
+				'holiday_ids[]'.toString(),
 				element.toString(),
 			);
 		});
@@ -187,8 +186,8 @@ export class UserService {
 				error.error instanceof ErrorEvent
 					? error.error.message
 					: `server returned code ${error.status} with body "${
-							error.error
-					  }"`;
+					error.error
+					}"`;
 
 			// TODO: better job of transforming error for user consumption
 			throw new Error(`${operation} failed: ${message}`);

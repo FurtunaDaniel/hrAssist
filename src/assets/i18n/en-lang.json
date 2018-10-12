@@ -57,5 +57,12 @@
 		"TITLE": "Holidays",
         "NOTE_TEXT": "Complete here your vacation requests.",
         "EXTRA_NOTE_TEXT": "{{ days }} days taken"
-	}
+    },
+    "USER_HOLIDAY": {
+        "MAIN_ERROR_MESSAGE": "End date must be greater than Start date and Signing date lesser than Start date !",
+        "GNEDER_LBL":"Gender",
+        "MALE_LBL":"Male",
+        "FEMALE_LBL": "Female",
+        "EXIST_INTERVAL_LBL":"You already have a vacation that intersect with this interval!"
+    }
 }

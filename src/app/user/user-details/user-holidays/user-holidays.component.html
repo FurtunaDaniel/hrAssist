@@ -85,18 +85,29 @@
             <a mat-icon-button
                routerLink="/holidays/{{element.id}}"
                routerLinkActive="active"
-               color="secondary">
+               color="primary">
               <mat-icon aria-label="View">pageview</mat-icon>
             </a>
+            <a mat-icon-button
+               color="warn">
+              <!-- *ngIf="ms.moment(element.signing_day) > previousDate" -->
+              <mat-icon aria-label="Delete"
+                        (click)="openDialog(element)">delete_forever</mat-icon>
+            </a>
+
           </mat-cell>
         </ng-container>
-
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></mat-row>
       </mat-table>
 
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
                      [pageSize]="5"></mat-paginator>
+    </div>
+
+    <div *ngIf="!holidays.length > 0">
+        <p [translate]="'COMMON.NO_DATA_LBL'">
+        </p>
     </div>
 
   </div>
@@ -121,7 +132,7 @@
                  [matDatepickerFilter]="withoutWeekendDays"
                  [matDatepicker]="startDate"
                  formControlName="start_date"
-                 [min]="lastMonth"
+                 [min]="previousDate"
                  placeholder="Start date">
           <mat-datepicker-toggle matSuffix
                                  [for]="startDate">
@@ -142,7 +153,7 @@
                  [matDatepickerFilter]="withoutWeekendDays"
                  [matDatepicker]="endDate"
                  formControlName="end_date"
-                 [min]="lastMonth"
+                 [min]="previousDate"
                  placeholder="End date">
           <mat-datepicker-toggle matSuffix
                                  [for]="endDate">
@@ -169,7 +180,7 @@
                  [matDatepicker]="signingDay"
                  formControlName="signing_day"
                  name="signing_day"
-                 [min]="lastMonth"
+                 [min]="previousDate"
                  placeholder="Signing date">
           <mat-datepicker-toggle matSuffix
                                  [for]="signingDay">
@@ -189,7 +200,9 @@
           &nbsp;
           <span [translate]="'USER_HOLIDAY.MALE_LBL'"></span>
           &nbsp;
-          <mat-slide-toggle [color]="primary">
+          <mat-slide-toggle [color]="primary"
+                            (change)="changeGender()"
+                            [checked]="female">
             <span [translate]="'USER_HOLIDAY.FEMALE_LBL'"></span>
           </mat-slide-toggle>
 
@@ -283,6 +296,10 @@
                 {{ user.fullName }}
               </mat-option>
             </mat-autocomplete>
+
+            <mat-error *ngIf="holidayForm.get('onGoingProjects')?.controls[onGoingProjectsIndex]?.controls['replacer'].errors?.required"
+                       [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+
           </mat-form-field>
 
 
@@ -324,10 +341,15 @@
       <div fxLayout="row"
            fxLayoutAlign="center"
            class="alert alert-warning"
-           *ngIf="invalidDates">
+           *ngIf="invalidInterval">
         <span [translate]="'USER_HOLIDAY.EXIST_INTERVAL_LBL'"> </span>
       </div>
-
+      <div fxLayout="row"
+           class="c-card__extra--notes">
+        <strong [translate]="'COMMON.INFO_LBL'"></strong>
+        <span [translate]="'USER_HOLIDAY.EXTRA_NOTE_LBL'"></span>
+      </div>
+      <p [translate]="'COMMON.REQUIRED_INFO_LBL'"></p>
       <div fxLayout="row">
         <button mat-button
                 type="submit"

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
-import { MatTableDataSource, MatPaginator, MatSort, MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatAutocompleteSelectedEvent, MatDialog } from '@angular/material';
 import { MomentService } from '@app/core/services';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
@@ -10,6 +10,7 @@ import { Project } from '@app/project/models/project.model';
 import { UserService } from '@app/user/services';
 import { User } from '@app/user/models';
 import { ToggleCard } from '@app/shared';
+import { ModalComponent } from '@app/shared/modal/modal.component';
 
 @Component({
 	selector: 'app-user-holidays',
@@ -36,7 +37,8 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 	public projects: Project[];
 	public holidays: Array<any> = [];
 	private dateFormat = 'YYYY-MM-DD';
-	public lastMonth = this.ms.moment(new Date()).subtract(1, 'w');
+	public previousDate = this.ms.moment(new Date()).subtract(1, 'w');
+	female = localStorage.getItem('female') ? true : false;
 	/* Holiday Form */
 	public holidayForm: FormGroup = new FormGroup({
 		start_date: new FormControl(null, Validators.required),
@@ -45,7 +47,7 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 		signing_day: new FormControl(this.ms.moment(), Validators.required),
 		onGoingProjects: new FormArray([this.createItem()])
 	});
-
+	/* MAT Table varables */
 	displayedColumns = ['index', 'start_date', 'end_date', 'days', 'project', 'action'];
 	dataSource: MatTableDataSource<any>;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
@@ -56,8 +58,7 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 	@ViewChild('chipInput') chipInput: ElementRef;
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-	// tslint:disable-next-line:max-line-length
-	constructor(private userService: UserService, private ms: MomentService, private projectService: ProjectService
+	constructor(private userService: UserService, private ms: MomentService, private projectService: ProjectService, public dialog: MatDialog
 	) { }
 
 	ngOnInit() {
@@ -72,6 +73,7 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 			this.dataSource.paginator = this.paginator;
 			this.dataSource.sort = this.sort;
 			this.isLoading = false;
+
 		});
 
 		this.userService.getUsers().subscribe(
@@ -85,6 +87,23 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 				this.projects = projects;
 			}
 		);
+	}
+	openDialog(item): void {
+		const dialogRef = this.dialog.open(ModalComponent, {
+			width: '450px',
+			data: item
+		});
+
+		dialogRef.afterClosed().subscribe(result => {
+			if (result) {
+				this.userService.deleteUserHolidays(result).subscribe(
+					data => {
+						this.holidays.splice(this.holidays.findIndex(holiday => holiday.holiday_id === data[0].id), 1);
+						// this.dataSource = new MatTableDataSource(this.holidays);
+					}
+				);
+			}
+		});
 	}
 
 	public withoutWeekendDays = (todayMoment: Moment): boolean => {
@@ -104,8 +123,7 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 	public onSubmit(event): void {
 		event.preventDefault();
 		this.$isSubmitted = true;
-
-		if (this.isIntervalValid && this.getDatesValidity && this.holidayForm.valid) {
+		if (this.getDatesValidity && this.isIntervalValid && this.holidayForm.valid) {
 
 			const projectIds = this.holidayForm.value.onGoingProjects.map(item =>
 				item.project.id.toString()
@@ -127,9 +145,8 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 				user_id: 29,
 				team_leader_ids: teamLeadersId
 			};
-			console.log(holiday);
 
-			/* check if are device to update, and update the list */
+			/* Save the holiday */
 			this.userService
 				.saveUserHoliday(holiday)
 				.subscribe(data => {
@@ -152,6 +169,8 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 			(this.holidayForm.get('onGoingProjects') as FormArray).removeAt(1);
 			this.holidayForm.reset();
 			this.$isSubmitted = false;
+			this.invalidDates = false;
+			this.invalidInterval = false;
 		}
 	}
 
@@ -191,14 +210,30 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 		);
 	}
 
+	/**
+	 * changeGender will set in localstorage the gender of user
+	 * Important note: this change won't persist every login
+	 */
+
+	public changeGender() {
+
+		if (!localStorage.getItem('female')) {
+			localStorage.setItem('female', 'true');
+			this.female = true;
+		} else {
+			localStorage.removeItem('female');
+			this.female = false;
+		}
+	}
+
 	/* Verify holiday date validity */
 	get getDatesValidity(): boolean {
 
 		const from = this.holidayForm.value.start_date;
 		const to = this.holidayForm.value.end_date;
 		const signingDate = this.holidayForm.value.signing_day;
-		const datesAreSelected = (from != null && signingDate != null && to != null);
 
+		const datesAreSelected = (from != null && signingDate != null && to != null);
 		if (datesAreSelected && signingDate <= from && from <= to) {
 			this.invalidDates = false;
 			return true;

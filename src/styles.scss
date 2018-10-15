@@ -190,3 +190,7 @@ mat-card {
 		transform: scale3D(0, 0, 1);
 	}
 }
+
+.required_field:after{
+    content: '&nbsp;*';
+}

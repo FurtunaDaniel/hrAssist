@@ -159,14 +159,14 @@ export class UserService {
 	saveUserHoliday(holiday): Observable<any> {
 		return this.apiService.post(`/users/${this.id}/holidays`, holiday);
 	}
+
 	deleteUserHolidays(holidays): Observable<any> {
 		let params = new HttpParams();
-		holidays.forEach(element => {
 			params = params.append(
 				'holiday_ids[]'.toString(),
-				element.toString(),
+				holidays.holiday_id.toString(),
 			);
-		});
+
 		return this.apiService.delete(`/users/${this.id}/holidays`, params);
 	}
 	// ~~~~~~~~ Employees Devices Card HTTP Requests ~~~~~~~

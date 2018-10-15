@@ -14,7 +14,6 @@ import {
 	MatCheckboxModule,
 	MatChipsModule,
 	MatDatepickerModule,
-	MatDialogModule,
 	MatDividerModule,
 	MatExpansionModule,
 	MatGridListModule,
@@ -38,8 +37,10 @@ import {
 	DateAdapter,
 	MAT_DATE_FORMATS,
 	MAT_DATE_LOCALE,
+	MatDialogModule,
 	MatProgressSpinnerModule,
 } from '@angular/material';
+// import {  MatDialogModule } from '@angular/material/dialog';
 
 import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 // Depending on whether rollup is used, moment needs to be imported differently.
@@ -71,8 +72,10 @@ import { FilterArrayPipe } from '@app/shared/autocomplete-pipe/autocomplete.pipe
 import { TranslateModule } from '@ngx-translate/core';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { CardComponent } from './card/card.component';
+import { ModalComponent } from './modal/modal.component';
 @NgModule({
 	imports: [
+		MatDialogModule,
 		CommonModule,
 		RouterModule,
 		HttpClientModule,
@@ -86,7 +89,6 @@ import { CardComponent } from './card/card.component';
 		MatCheckboxModule,
 		MatChipsModule,
 		MatDatepickerModule,
-		MatDialogModule,
 		MatDividerModule,
 		MatExpansionModule,
 		MatGridListModule,
@@ -113,7 +115,8 @@ import { CardComponent } from './card/card.component';
 		TranslateModule,
 		NgbModule.forRoot(),
 	],
-	declarations: [ToggleButtonComponent, FilterArrayPipe, SpinnerComponent, CardComponent],
+	entryComponents: [ModalComponent],
+	declarations: [ToggleButtonComponent, FilterArrayPipe, SpinnerComponent, CardComponent, ModalComponent],
 	exports: [
 		CommonModule,
 		FilterArrayPipe,
@@ -160,6 +163,7 @@ import { CardComponent } from './card/card.component';
 		TranslateModule,
 		SpinnerComponent,
 		CardComponent,
+		ModalComponent,
 	],
 	providers: [
 		// `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
@@ -174,4 +178,4 @@ import { CardComponent } from './card/card.component';
 		{ provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
 	],
 })
-export class SharedModule {}
+export class SharedModule { }

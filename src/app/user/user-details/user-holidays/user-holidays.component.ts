@@ -70,6 +70,7 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 			this.dataSource = new MatTableDataSource(
 				this.holidays,
 			);
+
 			this.dataSource.paginator = this.paginator;
 			this.dataSource.sort = this.sort;
 			this.isLoading = false;
@@ -99,7 +100,11 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 				this.userService.deleteUserHolidays(result).subscribe(
 					data => {
 						this.holidays.splice(this.holidays.findIndex(holiday => holiday.holiday_id === data[0].id), 1);
-						// this.dataSource = new MatTableDataSource(this.holidays);
+						/* Reinit mat-table */
+						this.dataSource = new MatTableDataSource(this.holidays);
+						this.dataSource.paginator = this.paginator;
+						this.dataSource.sort = this.sort;
+
 					}
 				);
 			}
@@ -285,7 +290,7 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 			const toSaveEndDate = this.holidayForm.value.end_date.format(this.dateFormat);
 
 			for (let i = 0; i < this.holidays.length; i++) {
-				if ((toSaveStartDate <= this.holidays[i].end_date) && (this.holidays[i].start_date <= toSaveEndDate)) {
+				if ((toSaveStartDate < this.holidays[i].end_date) && (this.holidays[i].start_date < toSaveEndDate)) {
 					this.invalidInterval = true;
 					break;
 				}

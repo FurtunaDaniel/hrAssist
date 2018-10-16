@@ -1,54 +1,78 @@
 {
-	"CORE": {
-		"LOADING": "Is Loading..."
-	},
-	"COMMON": {
-		"NOTE_LABEL": "NOTE: ",
-		"CANCEL_BTN": "Cancel",
-		"REMOVE_LBL": "Remove",
-		"SAVE_BTN": "Save Changes",
-		"ADD_NEW_LBL": "Add new {{ element }}",
-		"AUTOCOMPLETE_LBL": "Pick a {{ element }}",
-		"CLOSE_TOGGLE": "Close {{ card }}",
-		"VIEW_TOGGLE": "View/Edit {{ card }}"
-	},
-	"TABLE": {
-		"NO_HEADER": "No.",
-		"NAME_HEADER": "Name",
-		"SART_DATE_HEADER": "Start Date",
-		"END_DATE_HEADER": "End Date",
-		"CUSTOMER_HEADER": "Customer",
-		"APP_TYPE_HEADER": "Application Type",
-		"INDUSTRY_HEADER": "Industries",
-		"EMPLOYEES_HEADER": "Employees",
-		"TECHNOLOGIES_HEADER": "Technologies",
-		"ACTIONS_HEADER": "Actions",
-		"HOLIDAYS": {
-			"NO_DAYS": "No. Days",
-			"SIGNING_DAY": "Signing day"
-		}
-	},
-	"FORM": {
-		"FIELD_REQUIRED": "Field required",
-		"PATTERN_ERR": "Pattern doesn't match",
-		"EMAIL_LBL": "Email",
-		"PASSWORD_LBL": "Password",
-
-		"LOGIN": {
-			"TITLE": "Login",
-			"CREDENTIALS_ERROR": "{{ server_msg }} Please try again!",
-			"IMPORTANT_LBL": "Important! ",
-			"IMPORTANT_NOTE": "Use your ASSIST email credentials.",
-			"BTN_LBL": "Sign In"
-		}
-	},
-	"DEVICES": {
-		"TITLE": "Devices",
-		"NOTE_TEXT": "Complete here with the devices that you are using.",
-		"COMPONENTS": "Components: "
-	},
-	"LANGUAGES": {
-		"TITLE": "Languages",
-		"NOTE_TEXT": "Complete here with the languages that you know."
-	}
+    "CORE": {
+        "LOADING": "Is Loading..."
+    },
+    "COMMON": {
+        "NOTE_LABEL": "NOTE: ",
+        "CANCEL_BTN": "Cancel",
+        "REMOVE_LBL": "Remove",
+        "SAVE_BTN": "Save Changes",
+        "ADD_NEW_LBL": "Add new {{ element }}",
+        "AUTOCOMPLETE_LBL": "Pick a {{ element }}",
+        "CLOSE_TOGGLE": "Close {{ card }}",
+        "VIEW_TOGGLE": "View/Edit {{ card }}",
+        "PROJECT": "Project",
+        "INFO_LBL": "INFO: ",
+        "REQUIRED_INFO_LBL": "All * fields are required.",
+        "CONFIRM_LBL":"Confirm",
+        "NO_DATA_LBL":"You do not have any recorded data!"
+    },
+    "TABLE": {
+        "NO_HEADER": "No.",
+        "NAME_HEADER": "Name",
+        "SART_DATE_HEADER": "Start Date",
+        "END_DATE_HEADER": "End Date",
+        "CUSTOMER_HEADER": "Customer",
+        "APP_TYPE_HEADER": "Application Type",
+        "INDUSTRY_HEADER": "Industries",
+        "EMPLOYEES_HEADER": "Employees",
+        "TECHNOLOGIES_HEADER": "Technologies",
+        "PROJECT_HEADER": "Project",
+        "ACTIONS_HEADER": "Actions",
+        "HOLIDAYS": {
+            "NO_DAYS": "No. Days",
+            "SIGNING_DAY": "Signing day"
+        }
+    },
+    "FORM": {
+        "FIELD_REQUIRED": "Field required",
+        "PATTERN_ERR": "Pattern doesn't match",
+        "EMAIL_LBL": "Email",
+        "PASSWORD_LBL": "Password",
+        "LOGIN": {
+            "TITLE": "Login",
+            "CREDENTIALS_ERROR": "{{ server_msg }} Please try again!",
+            "IMPORTANT_LBL": "Important! ",
+            "IMPORTANT_NOTE": "Use your ASSIST email credentials.",
+            "BTN_LBL": "Sign In"
+        }
+    },
+    "DEVICES": {
+        "TITLE": "Devices",
+        "NOTE_TEXT": "Complete here with the devices that you are using.",
+        "COMPONENTS": "Components: "
+    },
+    "LANGUAGES": {
+        "TITLE": "Languages",
+        "NOTE_TEXT": "Complete here with the languages that you know."
+    },
+    "HOLIDAYS": {
+        "TITLE": "Holidays",
+        "NOTE_TEXT": "Complete here your vacation requests.",
+        "EXTRA_NOTE_TEXT": "{{ days }} days taken",
+        "MODAL_CONTENT_LBL":"The holiday from {{ from }} to {{ to }}."
+    },
+    "USER_HOLIDAY": {
+        "MAIN_ERROR_MESSAGE": "End date must be greater than Start date and Signing date lesser than Start date !",
+        "GNEDER_LBL": "Gender",
+        "MALE_LBL": "Male",
+        "FEMALE_LBL": "Female",
+        "EXIST_INTERVAL_LBL": "You already have a vacation that intersect with this interval!",
+        "EXTRA_NOTE_LBL": "All dates must be selected from the autocomplete list!"
+    },
+    "MODAL": {
+        "DELETE": {
+            "TITLE": "Are you sure you want to remove?"
+        }
+    }
 }

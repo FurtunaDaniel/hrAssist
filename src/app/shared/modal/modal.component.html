@@ -1,0 +1,20 @@
+<h1 mat-dialog-title
+    [translate]="'MODAL.DELETE.TITLE'"></h1>
+<div mat-dialog-content>
+  {{ 'HOLIDAYS.MODAL_CONTENT_LBL' | translate: { from: data.start_date,
+  to: data.end_date } }}
+</div>
+<div mat-dialog-actions>
+  <button mat-button
+          color="primary"
+          (click)="closeDialog()"
+          cdkFocusInitial>
+    <span [translate]="'COMMON.CANCEL_BTN'"></span>
+  </button>
+  <!-- <input type="text"> -->
+  <button mat-button
+          [mat-dialog-close]="data"
+          color="warn">
+    <span [translate]="'COMMON.CONFIRM_LBL'"></span>
+  </button>
+</div>

@@ -20,6 +20,7 @@ import {
 import { UserListComponent } from './user-list/user-list.component';
 import { SharedModule } from '../shared';
 import { UserService } from './services/user.service';
+import { ProjectService } from '@app/project';
 
 @NgModule({
 	imports: [SharedModule, EmployeeRoutingModule],
@@ -36,6 +37,6 @@ import { UserService } from './services/user.service';
 		UserEducationComponent,
 		UserCoursesCertificationsComponent,
 	],
-	providers: [UserService, LangaugesService, DevicesService]
+	providers: [UserService, LangaugesService, DevicesService, ProjectService]
 })
 export class UserModule {}

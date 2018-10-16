@@ -14,7 +14,6 @@ import {
 	MatCheckboxModule,
 	MatChipsModule,
 	MatDatepickerModule,
-	MatDialogModule,
 	MatDividerModule,
 	MatExpansionModule,
 	MatGridListModule,
@@ -38,10 +37,12 @@ import {
 	DateAdapter,
 	MAT_DATE_FORMATS,
 	MAT_DATE_LOCALE,
+	MatDialogModule,
 	MatProgressSpinnerModule,
 } from '@angular/material';
+// import {  MatDialogModule } from '@angular/material/dialog';
 
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MomentDateAdapter, MAT_MOMENT_DATE_FORMATS } from '@angular/material-moment-adapter';
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
 // syntax. However, rollup creates a synthetic default module and we thus need to import it using
@@ -56,7 +57,7 @@ export const MY_FORMATS = {
 		dateInput: 'YYYY-MMM-DD',
 	},
 	display: {
-		dateInput: 'L',
+		dateInput: 'DD/MMM/YYYY',
 		monthYearLabel: 'MMM YYYY',
 		dateA11yLabel: 'LL',
 		monthYearA11yLabel: 'MMMM YYYY',
@@ -70,8 +71,12 @@ import { ToggleButtonComponent } from './toggle-button';
 import { FilterArrayPipe } from '@app/shared/autocomplete-pipe/autocomplete.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { CardComponent } from './card/card.component';
+import { ModalComponent } from './modal/modal.component';
 @NgModule({
 	imports: [
+		MatDialogModule,
+		CommonModule,
 		RouterModule,
 		HttpClientModule,
 		MatButtonModule,
@@ -84,7 +89,6 @@ import { SpinnerComponent } from './spinner/spinner.component';
 		MatCheckboxModule,
 		MatChipsModule,
 		MatDatepickerModule,
-		MatDialogModule,
 		MatDividerModule,
 		MatExpansionModule,
 		MatGridListModule,
@@ -111,8 +115,10 @@ import { SpinnerComponent } from './spinner/spinner.component';
 		TranslateModule,
 		NgbModule.forRoot(),
 	],
-	declarations: [ToggleButtonComponent, FilterArrayPipe, SpinnerComponent],
+	entryComponents: [ModalComponent],
+	declarations: [ToggleButtonComponent, FilterArrayPipe, SpinnerComponent, CardComponent, ModalComponent],
 	exports: [
+		CommonModule,
 		FilterArrayPipe,
 		ToggleButtonComponent,
 		RouterModule,
@@ -154,9 +160,10 @@ import { SpinnerComponent } from './spinner/spinner.component';
 		FlexLayoutModule,
 		GravatarModule,
 		NgbModule,
-		CommonModule,
 		TranslateModule,
 		SpinnerComponent,
+		CardComponent,
+		ModalComponent,
 	],
 	providers: [
 		// `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
@@ -168,7 +175,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 			deps: [MAT_DATE_LOCALE],
 		},
 
-		{ provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+		{ provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
 	],
 })
-export class SharedModule {}
+export class SharedModule { }

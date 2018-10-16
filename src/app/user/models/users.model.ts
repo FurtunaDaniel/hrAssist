@@ -1,5 +1,5 @@
 import { User } from './user.model';
 
-export class Users {
+export interface Users {
 	items: Array<User>;
 }

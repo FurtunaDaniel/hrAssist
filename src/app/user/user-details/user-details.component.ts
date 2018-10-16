@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 // keep an empty line between third party imports and application imports
 // The empty line separates your stuff from their stuff. Style 03-06
-import { UserService } from '../services/user.service';
+import { UserService } from '@app/user/services';
 @Component({
 	selector: 'app-user-details',
 	templateUrl: './user-details.component.html',

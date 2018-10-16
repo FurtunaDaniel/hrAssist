@@ -5,10 +5,9 @@ import { catchError, map } from 'rxjs/operators';
 
 // keep an empty line between third party imports and application imports
 // The empty line separates your stuff from their stuff. Style 03-06
-import { User } from '../models/user.model';
+import { User, Position, Language, Device } from '@app/user/models';
 import { Observable } from 'rxjs/Observable';
-import { ApiService } from '../../core/services/api.service';
-// import { Users } from '../models/users.model';
+import { ApiService } from '@app/core/services';
 @Injectable()
 export class UserService {
 	private id: number;
@@ -61,11 +60,11 @@ export class UserService {
 			);
 	}
 
-	updateUserInfo(data): Observable<any> {
+	updateUserInfo(data): Observable<User> {
 		return this.apiService.put(`/users/${this.id}`, data);
 	}
 
-	getUserPosition(): Observable<any> {
+	getUserPosition(): Observable<Position> {
 		return this.apiService
 			.getAll(`/users/${this.id}/position`)
 			.pipe(
@@ -74,7 +73,7 @@ export class UserService {
 			);
 	}
 
-	updateUserPosition(data): Observable<any> {
+	updateUserPosition(data): Observable<Position> {
 		data.user_id = this.id;
 		return this.apiService.put(`/users/${this.id}/position`, data);
 	}
@@ -83,7 +82,7 @@ export class UserService {
 
 	// ~~~~~~~~ Employees Languages Card HTTP Requests ~~~~~~~
 	// START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	getUserLanguages(): Observable<any> {
+	getUserLanguages(): Observable<Language[]> {
 
 		return this.apiService
 			.getAll(`/users/${this.id}/languages`)
@@ -93,7 +92,8 @@ export class UserService {
 			);
 	}
 
-	updateUserLanguages(languages): Observable<any> {
+	updateUserLanguages(languages): Observable<Language[]> {
+		// @TODO Here should be used an interface but our Language has so much models...
 		const data: any = {};
 		data.languages = [];
 		languages.forEach(element => {
@@ -105,7 +105,8 @@ export class UserService {
 		return this.apiService.put(`/users/${this.id}/languages`, data);
 	}
 
-	deleteUserLanguages(data): Observable<any> {
+	deleteUserLanguages(data: number[]): Observable<Language[]> {
+
 		let params = new HttpParams();
 		data.forEach(element => {
 			params = params.append(
@@ -120,7 +121,7 @@ export class UserService {
 
 	// ~~~~~~~~ Employees Devices Card HTTP Requests ~~~~~~~
 	// START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	getUserDevices(): Observable<any> {
+	getUserDevices(): Observable<Device[]> {
 		return this.apiService
 			.getAll(`/users/${this.id}/devices`)
 			.pipe(map(data => data.items));

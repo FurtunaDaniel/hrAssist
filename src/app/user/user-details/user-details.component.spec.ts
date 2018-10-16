@@ -24,9 +24,9 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { FilterArrayPipe } from '../../shared/autocomplete.pipe';
+import { FilterArrayPipe } from '@app/shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AuthentificatHelper } from '../../core/services';
+import { AuthentificatHelper } from '@app/core/services';
 describe('UserDetailsComponent', () => {
 	let component: UserDetailsComponent;
 	let fixture: ComponentFixture<UserDetailsComponent>;

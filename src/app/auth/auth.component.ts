@@ -8,8 +8,9 @@ import { Router } from '@angular/router';
 import {
 	AuthentificatHelper,
 	AuthStatusService,
-	UserLoginService
-} from '../core/services';
+} from '@app/core/services';
+import { UserAuthService } from '@app/core/services/user-auth.service';
+
 @Component({
 	selector: 'app-login',
 	templateUrl: './auth.component.html',
@@ -18,13 +19,12 @@ import {
 export class AuthComponent {
 	public userFormGroup: FormGroup;
 	errorMsg: string;
-
 	private userToken = 'user_token';
 	private authToken = 'auth_token';
 	// @TODO this should be removed after development is done
 
 	constructor(
-		private userLoginService: UserLoginService,
+		private userAuthService: UserAuthService,
 		private authHelper: AuthentificatHelper,
 		private authStatus: AuthStatusService,
 		private router: Router,
@@ -43,7 +43,7 @@ export class AuthComponent {
 	public onSubmit(event): void {
 		event.preventDefault();
 		if (this.userFormGroup.valid) {
-			this.userLoginService.login(this.userFormGroup.value).subscribe(
+			this.userAuthService.login(this.userFormGroup.value).subscribe(
 				data => {
 					if (data.status === 'success') {
 						localStorage.setItem(this.userToken, data.custom_token);
@@ -62,6 +62,7 @@ export class AuthComponent {
 						]);
 						this.authStatus.setIsLoggedInBasedOfRole();
 					}
+
 					return data;
 				},
 				error => {

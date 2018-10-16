@@ -67,7 +67,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { GravatarModule } from '@infinitycube/gravatar';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToggleButtonComponent } from './toggle-button';
-import { FilterArrayPipe } from './autocomplete.pipe';
+import { FilterArrayPipe } from '@app/shared/autocomplete-pipe/autocomplete.pipe';
 import { TranslateModule } from '@ngx-translate/core';
 import { SpinnerComponent } from './spinner/spinner.component';
 @NgModule({

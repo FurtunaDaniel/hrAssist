@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { map, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
-import { ApiService } from '../../core/services/api.service';
+import { ApiService } from '@app/core/services';
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()

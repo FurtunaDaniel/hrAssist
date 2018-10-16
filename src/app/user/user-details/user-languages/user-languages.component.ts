@@ -4,9 +4,10 @@ import { Subject } from 'rxjs/Subject';
 
 // keep an empty line between third party imports and application imports
 // The empty line separates your stuff from their stuff. Style 03-06
-import { ToggleCard } from '../../../shared';
-import { UserService } from '../../services/user.service';
+import { ToggleCard } from '@app/shared';
+import { UserService } from '@app/user/services';
 import { LangaugesService } from './langauges.service';
+import { Language } from '@app/user/models';
 
 @Component({
 	selector: 'app-user-languages',
@@ -16,8 +17,8 @@ import { LangaugesService } from './langauges.service';
 export class UserLanguagesComponent implements OnInit, ToggleCard {
 	public isLoading: boolean;
 	public showForm: boolean;
-	public languages: any[];
-	public userLanguages: any[];
+	public languages: Language[];
+	public userLanguages: Language[];
 	public languagesToAdd: FormArray;
 	public languageFormGroup: FormGroup;
 	public languagesToRemove: any[];

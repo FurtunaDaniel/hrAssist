@@ -12,9 +12,9 @@
     </span>
   </mat-card-title>
 
-  <mat-card-subtitle fxLayout="row">
+  <mat-card-subtitle fxLayout="row" *ngIf="!isLoading" >
     <p class="c-card-profile__info c-card-profile__name u-clearfix">
-      <strong>Profile of: </strong> {{ user?.first_name }} {{ user?.middle_name }} {{ user?.last_name }}
+      <strong>Profile of: </strong> {{ user.first_name }} {{ user.middle_name }} {{ user.last_name }}
     </p>
   </mat-card-subtitle>
 
@@ -227,7 +227,7 @@
         </div>
 
 
-        <div *ngIf="user.work_info?.bitbucket"
+        <div *ngIf="user.work_info"
              class="c-card-profile__info"
              fxLayout="row"
              fxLayout.xs="column">
@@ -244,7 +244,7 @@
         </div>
 
 
-        <div *ngIf="user.work_info?.github"
+        <div *ngIf="user.work_info"
              class="c-card-profile__info"
              fxLayout="row"
              fxLayout.xs="column">
@@ -261,7 +261,7 @@
         </div>
 
 
-        <div *ngIf="user.work_info?.ssh_public_key"
+        <div *ngIf="user.work_info"
              class="c-card-profile__info"
              fxLayout="row"
              fxLayout.xs="column">
@@ -296,9 +296,9 @@
 
         </div>
         <div fxFlex.gt-xs="100"
-             *ngIf="user.work_info?.ssh_public_key && showSsh"
+             *ngIf="user.work_info && showSsh"
              class="wrap-text">
-          <span>{{ user?.work_info?.ssh_public_key }}</span>
+          <span>{{ user.work_info.ssh_public_key }}</span>
         </div>
 
 

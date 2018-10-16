@@ -1,6 +1,6 @@
 // import { Component, OnInit } from '@angular/core';
 
-// import { User, UserService } from '../../core';
+// import { User, UserService } from '@app/core/services';
 
 // @Component({
 //   selector: 'app-layout-header',

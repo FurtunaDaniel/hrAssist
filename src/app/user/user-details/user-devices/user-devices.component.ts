@@ -5,9 +5,10 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 
 // keep an empty line between third party imports and application imports
 // The empty line separates your stuff from their stuff. Style 03-06
-import { ToggleCard } from '../../../shared';
+import { ToggleCard } from '@app/shared';
+import { UserService } from '@app/user/services';
 import { DevicesService } from './devices.service';
-import { UserService } from '../../services/user.service';
+import { Device } from '@app/user/models';
 
 @Component({
 	selector: 'app-user-devices',
@@ -23,9 +24,8 @@ export class UserDevicesComponent implements OnInit, ToggleCard {
 	public isLoading: boolean;
 	/*End Toggle Card Proprieties */
 
-	public devices: any[];
-	public userDevices: any[];
-	public devicesToRemove: any[];
+	public userDevices: Device[];
+	public devicesToRemove: number[];
 	public deviceFormGroup: FormGroup;
 
 	components: any[];

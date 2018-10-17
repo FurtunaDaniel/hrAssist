@@ -1,0 +1,195 @@
+.holiday-preview {
+    max-width: 1000px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.clearfix {
+    display: table;
+}
+
+.holiday__container {
+    max-width: 800px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-bottom: 0;
+}
+
+.title {
+    font-size: 25px;
+}
+
+.holiday__text {
+    font-size: 14px;
+    margin-bottom: 20px;
+    line-height: 20px;
+}
+
+.text--center {
+    text-align: center;
+}
+
+.text--left {
+    float: left;
+}
+
+.text--right {
+    float: right;
+}
+
+.holiday__inner {
+    max-width: 700px;
+    width: 100%;
+    p {
+        margin-bottom: 0;
+    }
+}
+
+.text--lite {
+    margin-top: 0;
+}
+
+.text--lite2 {
+    margin-bottom: 0;
+}
+
+.table {
+    border-collapse: collapse;
+    margin-left: 40px;
+    text-align: center;
+    width: 85%;
+    margin-bottom: 20px;
+    border: 1px solid #000;
+    th,
+    td {
+        border: 1px solid #000;
+    }
+    th,
+    td {
+        padding: 10px;
+        font-size: 12px;
+    }
+}
+
+.list {
+    padding: 0;
+    margin: 0 auto;
+    list-style-type: none;
+}
+
+.holiday_btn {
+    margin-top: -2px;
+}
+
+.holiday_newdate_btn {
+    margin-top: -6px;
+}
+
+.md-block.md-icon-float.md-input-has-placeholder label {
+    display: none;
+}
+
+.requiest-vacation {
+    max-width: 850px;
+    margin-left: auto;
+    margin-right: auto;
+    img {
+        max-width: 125px;
+    }
+    .absolute-block {
+        position: absolute;
+    }
+    .vacation-heading {
+        text-align: center;
+        font-size: 26px;
+        text-decoration: underline;
+    }
+    table {
+        width: 100%;
+        border: 1px solid #000;
+        border-collapse: collapse;
+        th,
+        tr {
+            border: 1px solid #000;
+        }
+        td {
+            border: 1px solid #000;
+            padding-left: 5px;
+        }
+        .last-collumn {
+            vertical-align: baseline;
+        }
+        .right-border {
+            border-right: 1px solid #000;
+        }
+    }
+}
+
+input[type="search"] {
+    border: none !important;
+}
+
+@media print {
+    .hide-print {
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+    }
+    .page-content {
+        padding: 0 !important;
+    }
+    nav,
+    .c-navigation {
+        display: none;
+    }
+    .vacation-heading {
+        margin-top: -20px;
+    }
+    .requiest-vacation {
+        max-width: 90%;
+        font-size: 18pt;
+        td p {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+    }
+    .page {
+        padding: 0;
+        border: initial;
+        border-radius: initial;
+        width: initial;
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: auto;
+        color: black;
+        float: none !important;
+        background: transparent none;
+    }
+    .page:last-child {
+        page-break-after: auto;
+    }
+    html,
+    body {
+        width: auto;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        background: white;
+        min-height: auto;
+    }
+    *,
+    *:before,
+    *:after {
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+}
+
+@page {
+    size: A4;
+    margin: 7mm 16mm 27mm 16mm;
+}

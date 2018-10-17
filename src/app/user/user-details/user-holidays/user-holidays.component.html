@@ -83,11 +83,12 @@
                            [translate]="'TABLE.ACTIONS_HEADER'"> </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <a mat-icon-button
-               routerLink="/holidays/{{element.id}}"
+               routerLink="/holidays/{{element.holiday_id}}"
                routerLinkActive="active"
                color="primary">
               <mat-icon aria-label="View">pageview</mat-icon>
             </a>
+
             <a mat-icon-button
                color="warn"
                *ngIf="ms.moment(element.signing_day) > previousDate">

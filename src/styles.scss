@@ -196,17 +196,19 @@ mat-card {
 .required_field:after {
     content: '&nbsp;*';
 }
-
-@media print {
-    html {
-        body {
-            font-size: 16px !important;
-        }
-    }
+@page {
+    size: A4;
+    margin: 0;
 }
 
-html {
+@media print {
+    app-nav-bar{
+        display: none;
+    }
+
+    html,
     body {
-        font-size: 16px !important;
+        width: 210mm;
+        height: 297mm;
     }
 }

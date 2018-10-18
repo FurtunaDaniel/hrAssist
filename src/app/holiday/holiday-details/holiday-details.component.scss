@@ -102,6 +102,7 @@
         position: absolute;
     }
     .vacation-heading {
+        font-weight: bold;
         text-align: center;
         font-size: 26px;
         text-decoration: underline;
@@ -131,6 +132,11 @@ input[type="search"] {
     border: none !important;
 }
 
+h4,
+p {
+    margin-top: 10px;
+}
+
 @media print {
     .hide-print {
         display: none;
@@ -140,19 +146,17 @@ input[type="search"] {
     .page-content {
         padding: 0 !important;
     }
-    nav,
-    .c-navigation {
-        display: none;
-    }
     .vacation-heading {
-        margin-top: -20px;
+        margin-top: -10px;
     }
     .requiest-vacation {
-        max-width: 90%;
         font-size: 18pt;
         td p {
             margin-top: 5px;
             margin-bottom: 5px;
+        }
+        img {
+            max-width: 155pt;
         }
     }
     .page {
@@ -171,15 +175,6 @@ input[type="search"] {
     .page:last-child {
         page-break-after: auto;
     }
-    html,
-    body {
-        width: auto;
-        height: auto;
-        margin: 0;
-        padding: 0;
-        background: white;
-        min-height: auto;
-    }
     *,
     *:before,
     *:after {
@@ -189,7 +184,3 @@ input[type="search"] {
     }
 }
 
-@page {
-    size: A4;
-    margin: 7mm 16mm 27mm 16mm;
-}

@@ -88,10 +88,9 @@
                color="primary">
               <mat-icon aria-label="View">pageview</mat-icon>
             </a>
-
             <a mat-icon-button
                color="warn"
-               *ngIf="ms.moment(element.signing_day) > previousDate">
+               *ngIf="ms.moment(element.signing_day) >= previousDate">
               <mat-icon aria-label="Delete"
                         (click)="openDialog(element)">delete_forever</mat-icon>
             </a>
@@ -107,8 +106,8 @@
     </div>
 
     <div *ngIf="!holidays.length > 0">
-        <p [translate]="'COMMON.NO_DATA_LBL'">
-        </p>
+      <p [translate]="'COMMON.NO_DATA_LBL'">
+      </p>
     </div>
 
   </div>
@@ -129,7 +128,7 @@
         <mat-form-field fxFlex="50%">
           <input matInput
                  required
-                 (dateInput)="getDatesValidity"
+                 (dateInput)="getDatesValidity; isIntervalValid"
                  [matDatepickerFilter]="withoutWeekendDays"
                  [matDatepicker]="startDate"
                  formControlName="start_date"
@@ -150,7 +149,7 @@
         <mat-form-field fxFlex="50%">
           <input matInput
                  required
-                 (dateInput)="getDatesValidity"
+                 (dateInput)="getDatesValidity; isIntervalValid"
                  [matDatepickerFilter]="withoutWeekendDays"
                  [matDatepicker]="endDate"
                  formControlName="end_date"
@@ -176,7 +175,7 @@
         <mat-form-field fxFlex="50%">
           <input matInput
                  required
-                 (dateInput)="getDatesValidity"
+                 (dateInput)="getDatesValidity; isIntervalValid"
                  [matDatepickerFilter]="withoutWeekendDays"
                  [matDatepicker]="signingDay"
                  formControlName="signing_day"

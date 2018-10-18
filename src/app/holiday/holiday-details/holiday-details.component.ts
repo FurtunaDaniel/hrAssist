@@ -18,12 +18,12 @@ export class HolidayDetailsComponent implements OnInit {
 		this.holidayService.getHoliday().subscribe(
 			holiday => {
 				this.holiday = holiday;
-				const holidayLeaders = holiday.employee_replacements.map(item => {
+				const holidayLeaders = [];
+				holiday.employee_replacements.forEach(item => {
 					if (item.team_leader) {
-						return [item.team_leader];
+						holidayLeaders.push(item.team_leader);
 					}
 				});
-				console.log(holiday);
 				this.userService.getUsers().subscribe(employees => {
 					const userfound = employees.find(employee => {
 						/* When will find a match will return it and stop searching */
@@ -47,10 +47,9 @@ export class HolidayDetailsComponent implements OnInit {
 							end_date: holiday.end_date,
 							days: holiday.days,
 							id: holiday.holiday_id,
+							isFemale: localStorage.getItem('female')
 						};
-						console.error(this.holidayPaper);
 					}
-					console.warn(userfound);
 
 				});
 

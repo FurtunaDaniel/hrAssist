@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { MatTableDataSource, MatPaginator, MatSort, MatAutocompleteSelectedEvent, MatDialog } from '@angular/material';
-import { MomentService } from '@app/core/services';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
+import { MomentService } from '@app/core/services';
 import { Moment } from 'moment';
 import { ProjectService } from '@app/project/services';
-import { Project } from '@app/project/models/project.model';
 import { UserService } from '@app/user/services';
 import { User } from '@app/user/models';
 import { ToggleCard } from '@app/shared';
 import { ModalComponent } from '@app/shared/modal/modal.component';
+import { Project } from '@app/project/models/project.model';
 
 @Component({
 	selector: 'app-user-holidays',
@@ -47,6 +47,12 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 		signing_day: new FormControl(this.ms.moment(), Validators.required),
 		onGoingProjects: new FormArray([this.createItem()])
 	});
+	public from;
+	public to;
+	public signingDate;
+
+	public datesAreSelected: boolean;
+
 	/* MAT Table varables */
 	displayedColumns = ['index', 'start_date', 'end_date', 'days', 'project', 'action'];
 	dataSource: MatTableDataSource<any>;
@@ -141,10 +147,10 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 			);
 
 			const holiday = {
-				days: this.calculateHolidays(this.holidayForm.value.start_date, this.holidayForm.value.end_date),
-				start_date: this.holidayForm.value.start_date.format(this.dateFormat),
-				end_date: this.holidayForm.value.end_date.format(this.dateFormat),
-				signing_day: this.holidayForm.value.signing_day.format(this.dateFormat),
+				days: this.calculateHolidays(this.from, this.to),
+				start_date: this.from.format(this.dateFormat),
+				end_date: this.to.format(this.dateFormat),
+				signing_day: this.signingDate.format(this.dateFormat),
 				project_ids: projectIds,
 				replacer_ids: replacerIds,
 				user_id: 29,
@@ -233,16 +239,15 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 
 	/* Verify holiday date validity */
 	get getDatesValidity(): boolean {
+		this.from = this.holidayForm.value.start_date;
+		this.to = this.holidayForm.value.end_date;
+		this.signingDate = this.holidayForm.value.signing_day;
+		this.datesAreSelected = (this.from != null && this.signingDate != null && this.to != null);
 
-		const from = this.holidayForm.value.start_date;
-		const to = this.holidayForm.value.end_date;
-		const signingDate = this.holidayForm.value.signing_day;
-
-		const datesAreSelected = (from != null && signingDate != null && to != null);
-		if (datesAreSelected && signingDate <= from && from <= to) {
+		if (this.datesAreSelected && this.signingDate <= this.from && this.from <= this.to) {
 			this.invalidDates = false;
 			return true;
-		} if (datesAreSelected) {
+		} if (this.datesAreSelected) {
 			this.invalidDates = true;
 			return false;
 		}
@@ -285,14 +290,15 @@ export class UserHolidaysComponent implements OnInit, ToggleCard {
 
 	/* Check if this holiday interval already exist */
 	private get isIntervalValid(): boolean {
-		if (this.holidays.length) {
-			const toSaveStartDate = this.holidayForm.value.start_date.format(this.dateFormat);
-			const toSaveEndDate = this.holidayForm.value.end_date.format(this.dateFormat);
-
+		if (this.holidays.length && this.datesAreSelected) {
+			const toSaveStartDate = this.from.format(this.dateFormat);
+			const toSaveEndDate = this.to.format(this.dateFormat);
 			for (let i = 0; i < this.holidays.length; i++) {
 				if ((toSaveStartDate < this.holidays[i].end_date) && (this.holidays[i].start_date < toSaveEndDate)) {
 					this.invalidInterval = true;
 					break;
+				} else {
+					this.invalidInterval = false;
 				}
 			}
 			if (!this.invalidInterval) {

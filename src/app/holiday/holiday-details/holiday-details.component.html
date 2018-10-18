@@ -1,3 +1,112 @@
-<p>
-  holiday-details works!
-</p>
+<section class="requiest-vacation page show-print" *ngIf="holidayPaper">
+
+  <img src="/assets/images/logo-assist.png" class="holiday__logo"/>
+  <div class="hide-print absolute-block">
+      <button mat-button color="primary"
+        label="View Holiday"
+        aria-label="View Holiday"
+        (click)="print()">
+        <mat-icon> local_printshop</mat-icon>
+        <span>Print vacation request</span>
+      </button>
+  </div>
+  <h1 class="vacation-heading">Cerere pentru concediu de odihnă</h1>
+  <p>Stimate Domnule Director,</p>
+  <p>
+      Subsemnat{{ holidayPaper.isFemale ? 'a' : 'ul' }}
+      <strong>{{ holidayPaper.lastName }} {{ holidayPaper.firstName }}</strong>,
+      angaja{{ holidayPaper.isFemale ? 'tă a' : 't al' }}
+      firmei SC ASSIST Software SRL, vă rog să-mi aprobaţi
+      <strong>{{ holidayPaper.holidays }} </strong>
+
+      <span *ngIf="holidayPaper.holidays === 1">zi</span>
+      <span *ngIf="holidayPaper.holidays > 1">zile</span>
+      din concediul de odihnă
+
+      <span *ngIf="holidayPaper.holidays === 1">aferentă</span>
+      <span *ngIf="holidayPaper.holidays > 1">aferente</span> anului
+
+      <span *ngIf="holidayPaper.signing">{{ holidayPaper.signing | date: 'yyyy '}}</span>
+      <span *ngIf="!holidayPaper.signing">{{ today | date: 'yyyy' }}</span>
+
+      <span *ngIf="holidayPaper.holidays > 1">în intervalul
+        <span>
+         <strong>{{ holidayPaper.startDate | date: 'dd.MM.yyyy' }} - {{ holidayPaper.endDate | date: 'dd.MM.yyyy' }}</strong>
+        </span>.
+      </span>
+
+      <span *ngIf="holidayPaper.holidays === 1">în data de <span>
+          <strong>{{ holidayPaper.startDate | date: 'dd.MM.yyyy' }}</strong>
+      </span>.
+      </span>
+  </p>
+
+  <p>Vă mulțumesc.</p>
+
+  <table>
+      <tr>
+          <td class="right-border">
+              <p>Cu considerație,</p>
+                  <strong>{{ holidayPaper.lastName }} {{ holidayPaper.firstName }}</strong>
+
+              <p>Semnătura,</p>
+              <p>
+                  Data:
+                  <strong *ngIf="holidayPaper.signing">
+                      {{ holidayPaper.signing | date: 'dd.MM.yyyy' }}
+                  </strong>
+                  <strong *ngIf="!holidayPaper.signing">
+                      {{ today | date: 'dd.MM.yyyy' }}
+                  </strong>
+              </p>
+          </td>
+          <td class="last-collumn">
+              <p><strong>APROBAT,</strong></p>
+              <p>Gheorghe DAVID</p>
+          </td>
+      </tr>
+  </table>
+
+  <h4><strong>Mențiuni</strong></h4>
+
+  <p><strong>1.</strong> Task-urile din proiectele la care sunt implicat vor fi preluate de:</p>
+  <table>
+      <thead>
+          <tr class="text--center">
+              <th>Proiect</th>
+              <th>Înlocuitor</th>
+              <th>Semnătura înlocuitorului</th>
+          </tr>
+      </thead>
+      <tbody *ngFor="let replace of holidayPaper.holidayRep">
+          <tr class="text--center">
+              <td>{{ replace.project_name }}</td>
+              <td>{{ replace.replacer_name }}</td>
+              <td></td>
+          </tr>
+      </tbody>
+  </table>
+
+  <p>
+      <strong>2.</strong> Am luat notă de cererea de concediu și confirm că avem la dispoziție toate elementele de acces, resursele și informațiile necesare derulării corespunzătoare a proiectelor în care colegul meu, solicitant al prezentei cereri, este implicat.
+  </p>
+  <p>
+      Team leader<span *ngIf="holidayPaper.leaders.length > 1">s</span>,
+      <br />
+      <strong *ngFor="let leader of holidayPaper.leaders; let i = index">
+          {{ leader }}<span *ngIf="i < (holidayPaper.leaders.length-1)">,</span>
+      </strong>
+  </p>
+
+  <p>Semnătura:</p>
+  <p>
+      Data:
+      <strong *ngIf="holidayPaper.signing">
+          {{ holidayPaper.signing | date: 'dd.MM.yyyy' }}
+      </strong>
+      <strong *ngIf="!holidayPaper.signing">
+          {{ today | date: 'dd.MM.yyyy' }}
+      </strong>
+  </p>
+
+</section>

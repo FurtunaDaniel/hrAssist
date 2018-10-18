@@ -1,3 +1,378 @@
-<p>
-  user-holidays works!
-</p>
+<app-card>
+
+  <!-- Card loading spinner -->
+  <app-spinner *ngIf="isLoading"></app-spinner>
+  <!--/. Card loading spinner -->
+
+
+  <!-- Card title -->
+  <strong [translate]="'HOLIDAYS.TITLE'"
+          class="c-card__title"></strong>
+  <!--/. Card title -->
+
+  <!-- Card subtitle -->
+  <div class="c-card__notes">
+    <strong [translate]="'COMMON.NOTE_LABEL'"></strong>
+    <span [translate]="'HOLIDAYS.NOTE_TEXT'"></span>
+    <p class="c-card__notes--extra">
+      {{ 'HOLIDAYS.EXTRA_NOTE_TEXT' | translate: { days: getTotalDays } }}
+    </p>
+  </div>
+  <!--/. Card subtitle -->
+
+
+  <!--  Card body Preview Language -->
+  <div *ngIf="!showForm"
+       class="c-card__preview">
+
+    <div class="responsive__table">
+      <mat-table #table
+                 [dataSource]="dataSource"
+                 matSort>
+
+        <ng-container matColumnDef="index">
+          <mat-header-cell *matHeaderCellDef
+                           [translate]="'TABLE.NO_HEADER'"> </mat-header-cell>
+          <mat-cell *matCellDef="let element; let i = index;">{{ i+1 }}.</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="start_date"
+                      class="date--cell">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>
+            <span [translate]="'TABLE.SART_DATE_HEADER'"></span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.start_date ?
+            ms.moment(element.start_date).format('DD/MM/YYYY') : ''
+            }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="end_date"
+                      class="date--cell">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>
+            <span [translate]="'TABLE.END_DATE_HEADER'"></span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{ element.end_date ? ms.moment(element.end_date).format('DD/MM/YYYY') :
+            '' }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="days">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>
+            <span [translate]="'TABLE.HOLIDAYS.NO_DAYS'"></span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.days }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="project">
+          <mat-header-cell *matHeaderCellDef
+                           mat-sort-header>
+            <span [translate]="'TABLE.PROJECT_HEADER'"></span>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            {{ element.employee_replacements[0].project_name }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef
+                           [translate]="'TABLE.ACTIONS_HEADER'"> </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <a mat-icon-button
+               routerLink="/holidays/{{element.holiday_id}}"
+               routerLinkActive="active"
+               color="primary">
+              <mat-icon aria-label="View">pageview</mat-icon>
+            </a>
+            <a mat-icon-button
+               color="warn"
+               *ngIf="ms.moment(element.signing_day) >= previousDate">
+              <mat-icon aria-label="Delete"
+                        (click)="openDialog(element)">delete_forever</mat-icon>
+            </a>
+
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></mat-row>
+      </mat-table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"
+                     [pageSize]="5"></mat-paginator>
+    </div>
+
+    <div *ngIf="!holidays.length > 0">
+      <p [translate]="'COMMON.NO_DATA_LBL'">
+      </p>
+    </div>
+
+  </div>
+  <!--/.  Card body Preview Language -->
+
+  <!--  Card body Language Form -->
+  <div class="c-card__form"
+       *ngIf="showForm">
+
+    <form (ngSubmit)="onSubmit($event)"
+          [formGroup]="holidayForm"
+          novalidate>
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px">
+        <!--  Start Date field -->
+        <mat-form-field fxFlex="50%">
+          <input matInput
+                 required
+                 (dateInput)="getDatesValidity; isIntervalValid"
+                 [matDatepickerFilter]="withoutWeekendDays"
+                 [matDatepicker]="startDate"
+                 formControlName="start_date"
+                 [min]="previousDate"
+                 placeholder="Start date">
+          <mat-datepicker-toggle matSuffix
+                                 [for]="startDate">
+          </mat-datepicker-toggle>
+          <mat-datepicker #startDate
+                          startView="month">
+          </mat-datepicker>
+          <mat-error *ngIf="holidayForm.get('start_date').errors?.required"
+                     [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+        </mat-form-field>
+        <!--/.  Start Date field -->
+
+        <!--  End Date field -->
+        <mat-form-field fxFlex="50%">
+          <input matInput
+                 required
+                 (dateInput)="getDatesValidity; isIntervalValid"
+                 [matDatepickerFilter]="withoutWeekendDays"
+                 [matDatepicker]="endDate"
+                 formControlName="end_date"
+                 [min]="previousDate"
+                 placeholder="End date">
+          <mat-datepicker-toggle matSuffix
+                                 [for]="endDate">
+          </mat-datepicker-toggle>
+          <mat-datepicker #endDate
+                          startView="month">
+          </mat-datepicker>
+          <mat-error *ngIf="holidayForm.get('end_date').errors?.required"
+                     [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+        </mat-form-field>
+        <!--/.  End Date field -->
+      </div>
+
+      <div fxLayout="row"
+           fxLayout.xs="column"
+           fxLayoutGap="20px">
+
+        <!--  Signing Date field -->
+        <mat-form-field fxFlex="50%">
+          <input matInput
+                 required
+                 (dateInput)="getDatesValidity; isIntervalValid"
+                 [matDatepickerFilter]="withoutWeekendDays"
+                 [matDatepicker]="signingDay"
+                 formControlName="signing_day"
+                 name="signing_day"
+                 [min]="previousDate"
+                 placeholder="Signing date">
+          <mat-datepicker-toggle matSuffix
+                                 [for]="signingDay">
+          </mat-datepicker-toggle>
+          <mat-datepicker #signingDay
+                          startView="month">
+          </mat-datepicker>
+          <mat-error *ngIf="holidayForm.get('signing_day').errors?.required"
+                     [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+        </mat-form-field>
+        <!--/.  Signing Date field -->
+
+        <section fxFlex="50%"
+                 class="slider__form--field">
+          <label class="required-input"
+                 [translate]="'USER_HOLIDAY.GNEDER_LBL'"></label>
+          &nbsp;
+          <span [translate]="'USER_HOLIDAY.MALE_LBL'"></span>
+          &nbsp;
+          <mat-slide-toggle [color]="primary"
+                            (change)="changeGender()"
+                            [checked]="female">
+            <span [translate]="'USER_HOLIDAY.FEMALE_LBL'"></span>
+          </mat-slide-toggle>
+
+        </section>
+
+      </div>
+
+      <!--  Team leader field -->
+      <div fxLayout="row">
+        <mat-form-field class="chip-list">
+
+          <mat-chip-list #teamLeadersList
+                         required
+                         formArrayName="teamLeaders">
+            <mat-chip *ngFor="let leader of holidayForm.get('teamLeaders').value; let i = index"
+                      (removed)="remove(i)"
+                      [selectable]="selectable"
+                      [removable]="removable">
+              {{ leader?.first_name + ' ' + leader?.last_name }}
+              <mat-icon matChipRemove
+                        *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input #chipInput
+                   [matAutocomplete]="auto"
+                   placeholder="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate:{ element:'team leader'} }}"
+                   attr.aria-label="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate:{ element:'team leader'} }}"
+                   [matChipInputFor]="teamLeadersList"
+                   required>
+
+            <mat-error *ngIf="$isSubmitted && holidayForm.get('teamLeaders').errors?.required"
+                       [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+
+          </mat-chip-list>
+
+          <mat-autocomplete #auto="matAutocomplete"
+                            (optionSelected)="selected($event)">
+            <mat-option *ngFor="let leader of users | FilterArrayByProperty:'fullName': chipInput.value"
+                        [value]="leader">
+              {{ leader.first_name + ' ' + leader.last_name }}
+            </mat-option>
+          </mat-autocomplete>
+
+        </mat-form-field>
+      </div>
+      <!--/. Team leader field -->
+
+      <!-- Projects and replacer -->
+      <div formArrayName="onGoingProjects"
+           *ngFor="let item of holidayForm.get('onGoingProjects').controls; let onGoingProjectsIndex = index;">
+        <div [formGroupName]="onGoingProjectsIndex"
+             fxLayout="row"
+             fxLayout.xs="column"
+             fxLayoutGap="20px">
+
+          <mat-form-field fxFlex.gt-sm="45%">
+            <input type="text"
+                   #inputText
+                   placeholder="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate: { element: 'project'} }}"
+                   attr.aria-label="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate: { element: 'project'} }}"
+                   matInput
+                   required
+                   formControlName="project"
+                   [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete"
+                              [displayWith]="displayFn">
+              <mat-option *ngFor="let project of projects | FilterArrayByProperty:'name': inputText.value"
+                          [value]="project">
+                {{ project.name }}
+              </mat-option>
+            </mat-autocomplete>
+
+            <mat-error *ngIf="holidayForm.get('onGoingProjects')?.controls[onGoingProjectsIndex]?.controls['project'].errors?.required"
+                       [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+
+          </mat-form-field>
+
+
+          <mat-form-field fxFlex.gt-sm="45%">
+            <input type="text"
+                   #userText
+                   placeholder="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate: { element: 'replacer'} }}"
+                   attr.aria-label="{{ 'COMMON.AUTOCOMPLETE_LBL' | translate: { element: 'replacer'} }}"
+                   matInput
+                   required
+                   formControlName="replacer"
+                   [matAutocomplete]="test">
+            <mat-autocomplete #test="matAutocomplete"
+                              [displayWith]="displayFullName">
+              <mat-option *ngFor="let user of users | FilterArrayByProperty:'fullName': userText.value"
+                          [value]="user">
+                {{ user.fullName }}
+              </mat-option>
+            </mat-autocomplete>
+
+            <mat-error *ngIf="holidayForm.get('onGoingProjects')?.controls[onGoingProjectsIndex]?.controls['replacer'].errors?.required"
+                       [translate]="'FORM.FIELD_REQUIRED'"></mat-error>
+
+          </mat-form-field>
+
+
+          <div fxFlex.gt-sm="10%"
+               class="language-card--action">
+            <button mat-button
+                    matTooltip="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                    attr.aria-label="{{ 'COMMON.REMOVE_LBL' | translate }}"
+                    *ngIf="onGoingProjectsIndex != 0 || holidayForm.get('onGoingProjects').controls.length > 1"
+                    (click)="removeField(onGoingProjectsIndex)">
+              <i class="material-icons">
+                cancel
+              </i>
+            </button>
+
+            <button *ngIf="holidayForm.get('onGoingProjects').controls.length - onGoingProjectsIndex == 1"
+                    mat-button
+                    matTooltip="{{ 'COMMON.ADD_NEW_LBL' | translate:{ element:'language'} }}"
+                    attr.aria-label="{{ 'COMMON.ADD_NEW_LBL' | translate:{ element:'language'} }}"
+                    color="primary"
+                    (click)="addFields()">
+              <i class="material-icons">
+                add_box
+              </i>
+            </button>
+          </div>
+
+        </div>
+      </div>
+      <!--/. Projects and replacer -->
+
+      <div fxLayout="row"
+           fxLayoutAlign="center"
+           class="alert alert-warning"
+           *ngIf="invalidDates">
+        <span [translate]="'USER_HOLIDAY.MAIN_ERROR_MESSAGE'"></span>
+      </div>
+
+      <div fxLayout="row"
+           fxLayoutAlign="center"
+           class="alert alert-warning"
+           *ngIf="invalidInterval">
+        <span [translate]="'USER_HOLIDAY.EXIST_INTERVAL_LBL'"> </span>
+      </div>
+      <div fxLayout="row"
+           class="c-card__extra--notes">
+        <strong [translate]="'COMMON.INFO_LBL'"></strong>
+        <span [translate]="'USER_HOLIDAY.EXTRA_NOTE_LBL'"></span>
+      </div>
+      <p [translate]="'COMMON.REQUIRED_INFO_LBL'"></p>
+      <div fxLayout="row">
+        <button mat-button
+                type="submit"
+                [fxFlex]="100"
+                color="primary">
+          <span [translate]="'COMMON.SAVE_BTN'"></span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+  <!--/. Card body Language Form -->
+
+  <!-- Card footer Actions button -->
+  <div class="c-card--actions">
+    <app-toggle-button (cardVisibility)="onToggle($event)"
+                       [cardVisibilitySubject]="cardVisibilitySubject"
+                       name="Holidays"
+                       [disableButton]="isLoading"
+                       fxLayoutAlign="center"
+                       fxLayout="row"
+                       fxFlex="100"></app-toggle-button>
+  </div>
+  <!--/. Card footer Actions button -->
+
+</app-card>

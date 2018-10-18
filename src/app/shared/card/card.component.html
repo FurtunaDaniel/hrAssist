@@ -1,0 +1,42 @@
+<mat-card class="c-card">
+
+  <!-- Card loading spinner -->
+  <ng-content select="app-spinner"></ng-content>
+  <!--/. Card loading spinner -->
+
+
+  <!-- Card title -->
+  <mat-card-title>
+    <span class="md-headline">
+      <ng-content select=".c-card__title"></ng-content>
+    </span>
+  </mat-card-title>
+  <!--/. Card title -->
+
+
+  <!-- Card subtitle -->
+  <mat-card-subtitle fxLayout="row">
+    <ng-content select=".c-card__notes"></ng-content>
+  </mat-card-subtitle>
+  <!--/. Card subtitle -->
+
+
+  <!-- Card body -->
+  <mat-card-content>
+    <ng-content select=".c-card__preview"></ng-content>
+    <ng-content select=".c-card__form"></ng-content>
+  </mat-card-content>
+  <!--/. Card body -->
+
+
+  <!-- Card footer -->
+  <mat-card-footer fxLayoutAlign="center"
+                   class="c-card__footer">
+    <mat-card-actions fxFlex="100">
+      <ng-content select=".c-card--actions"></ng-content>
+    </mat-card-actions>
+  </mat-card-footer>
+  <!--/. Actions button -->
+
+
+</mat-card>

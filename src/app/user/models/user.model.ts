@@ -1,4 +1,5 @@
-export interface User {
+export class User {
+
 	id: number;
 	first_name: string;
 	middle_name: string;
@@ -31,6 +32,13 @@ export interface User {
 	company_end_date: any;
 	email: string;
 	is_active: boolean;
-	test: any;
 
+	get fullName(): string {
+		return this.first_name + this.last_name;
+	}
+
+	deserialize(input: any): this {
+		Object.assign(this, input);
+		return this;
+	}
 }

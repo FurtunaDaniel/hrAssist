@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Observable';
 import { ApiService } from '@app/core/services';
 @Injectable()
 export class UserService {
-	private id: number;
+	public id: number;
 	constructor(private route: ActivatedRoute, private apiService: ApiService) {
 		this.route.params.subscribe(params => {
 			this.id = params.id;
@@ -33,7 +33,9 @@ export class UserService {
 		return this.apiService
 			.getAll(`/users/`)
 			.pipe(
-				map(data => data.items),
+				map(data =>
+					data.items.map((item: User) => new User().deserialize(item))
+				),
 				catchError(this.handleError<any>(`getUsers faild`))
 			);
 	}
@@ -146,6 +148,30 @@ export class UserService {
 	// ~~~~~~~~ Employees Devices Card HTTP Requests ~~~~~~~
 	// END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+	// ~~~~~~~~ Employees Devices Card HTTP Requests ~~~~~~~
+	// START ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	getUserHolidays(): Observable<any> {
+		return this.apiService
+			.getAll(`/users/${this.id}/holidays`)
+			.pipe(map(data => data));
+	}
+
+	saveUserHoliday(holiday): Observable<any> {
+		return this.apiService.post(`/users/${this.id}/holidays`, holiday);
+	}
+
+	deleteUserHolidays(holidays): Observable<any> {
+		let params = new HttpParams();
+			params = params.append(
+				'holiday_ids[]'.toString(),
+				holidays.holiday_id.toString(),
+			);
+
+		return this.apiService.delete(`/users/${this.id}/holidays`, params);
+	}
+	// ~~~~~~~~ Employees Devices Card HTTP Requests ~~~~~~~
+	// END ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	/**
 	 * Returns a function that handles Http operation failures.
 	 * This error handler lets the app continue to run as if no error occurred.
@@ -160,8 +186,8 @@ export class UserService {
 				error.error instanceof ErrorEvent
 					? error.error.message
 					: `server returned code ${error.status} with body "${
-							error.error
-					  }"`;
+					error.error
+					}"`;
 
 			// TODO: better job of transforming error for user consumption
 			throw new Error(`${operation} failed: ${message}`);

@@ -5,16 +5,21 @@ import { Routes, RouterModule } from '@angular/router';
 // The empty line separates your stuff from their stuff. Style 03-06
 import { AuthGuard } from '@app/core/services';
 import { HolidaysListComponent, HolidayDetailsComponent } from '.';
+import { HolidaysCalendarComponent } from './holidays-calendar/holidays-calendar.component';
 
 const routes: Routes = [
 	{
-		path: '',
-		component: HolidaysListComponent,
+		path: 'calendar',
+		component: HolidaysCalendarComponent,
+		canActivate: [AuthGuard],
+	}, {
+		path: ':id',
+		component: HolidayDetailsComponent,
 		canActivate: [AuthGuard],
 	},
 	{
-		path: ':id',
-		component: HolidayDetailsComponent,
+		path: '',
+		component: HolidaysListComponent,
 		canActivate: [AuthGuard],
 	},
 ];
@@ -23,4 +28,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class HolidayRoutingModule {}
+export class HolidayRoutingModule { }

@@ -1,0 +1,34 @@
+<h1 mat-dialog-title
+    [translate]="'HOLIDAYS.CALENDAR.TITLE_LBL'"
+    class="dialog-title"></h1>
+<div mat-dialog-content>
+
+  <div class="dialog__content--subtitle">
+    <span [translate]="'HOLIDAYS.CALENDAR.SUB_TITLE_LBL'"></span>
+    <strong>{{ data.title }}</strong>
+  </div>
+
+  <div *ngIf="data.days > 1"
+       class="dialog__content--info">
+    {{ 'HOLIDAYS.CALENDAR.MULTIPLE_DAYS_INFO' | translate: { startDate: data.start, endDate: data.end } }}
+  </div>
+
+  <div *ngIf="data.days == 1"
+       class="dialog__content--info">
+    {{ 'HOLIDAYS.CALENDAR.SINGLE_DAY_INFO' | translate: { startDate: data.start } }}
+  </div>
+
+  <div class="dialog__content--note">
+    {{ 'HOLIDAYS.CALENDAR.SIGNING_DAY_INFO' | translate: { signingDate: data.signingDate } }}
+  </div>
+
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button
+          color="primary"
+          (click)="closeDialog()"
+          cdkFocusInitial>
+    <span [translate]="'COMMON.CANCEL_BTN'"></span>
+  </button>
+</div>

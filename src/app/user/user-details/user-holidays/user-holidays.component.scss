@@ -8,3 +8,21 @@
 .chip-list {
     width: 100%;
 }
+
+mat-list {
+    max-height: 55px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    mat-list-item {
+        font-size: 12px;
+        height: 25px;
+        /*Horrible hack to get rid of .mat-list-item-content padding */
+        margin-left: -16px;
+    }
+}
+
+.cdk-column-action {
+    min-width: 80px;
+    justify-content: center;
+    justify-items: center;
+}

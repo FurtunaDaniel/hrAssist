@@ -14,8 +14,8 @@
         "PROJECT": "Project",
         "INFO_LBL": "INFO: ",
         "REQUIRED_INFO_LBL": "All * fields are required.",
-        "CONFIRM_LBL":"Confirm",
-        "NO_DATA_LBL":"You do not have any recorded data!"
+        "CONFIRM_LBL": "Confirm",
+        "NO_DATA_LBL": "You do not have any recorded data!"
     },
     "TABLE": {
         "NO_HEADER": "No.",
@@ -60,7 +60,14 @@
         "TITLE": "Holidays",
         "NOTE_TEXT": "Complete here your vacation requests.",
         "EXTRA_NOTE_TEXT": "{{ days }} days taken",
-        "MODAL_CONTENT_LBL":"The holiday from {{ from }} to {{ to }}."
+        "MODAL_CONTENT_LBL": "The holiday from {{ from }} to {{ to }}.",
+        "CALENDAR": {
+            "TITLE_LBL": "Holiday details",
+            "SUB_TITLE_LBL": "Employee name: ",
+            "MULTIPLE_DAYS_INFO": "Holiday between {{ startDate }} - {{ endDate }}.",
+            "SINGLE_DAY_INFO": " Holiday on {{ startDate }}.",
+            "SIGNING_DAY_INFO": "Signing date: {{ signingDate }}."
+        }
     },
     "USER_HOLIDAY": {
         "MAIN_ERROR_MESSAGE": "End date must be greater than Start date and Signing date lesser than Start date !",

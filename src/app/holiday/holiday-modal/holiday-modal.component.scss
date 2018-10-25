@@ -1,0 +1,19 @@
+[mat-dialog-actions] {
+    justify-content: flex-end;
+}
+
+.dialog-title {
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.dialog__content--subtitle {
+    color: var(--gray-dark);
+    font-size: 18px;
+}
+
+.dialog__content--note {
+    color: var(--gray);
+    font-size: 14px;
+}

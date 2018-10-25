@@ -74,7 +74,11 @@
             <span [translate]="'TABLE.PROJECT_HEADER'"></span>
           </mat-header-cell>
           <mat-cell *matCellDef="let element">
-            {{ element.employee_replacements[0].project_name }}
+              <mat-list>
+                  <mat-list-item *ngFor="let project of element.employee_replacements">
+                    {{ project.project_name }}
+                  </mat-list-item>
+                </mat-list>
           </mat-cell>
         </ng-container>
 

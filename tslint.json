@@ -12,6 +12,7 @@
     "deprecation": {
       "severity": "warn"
     },
+    "align":[false, "parameters"],
     "no-increment-decrement": false,
     // prefer-array-literal Should be true when we will
     // have a clear model of items

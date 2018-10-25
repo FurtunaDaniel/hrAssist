@@ -1,13 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
-// @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+// @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 $assist-color: #004993;
-body {
-    font-family: Roboto, Arial, sans-serif;
-    margin: 0;
-}
-
 .basic-container {
     padding: 5px;
 }
@@ -21,6 +16,13 @@ app-root,
 html,
 body {
     height: 100%;
+    font-family: Roboto, Arial, sans-serif;
+    margin: 0;
+}
+
+body {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .main {
@@ -186,7 +188,7 @@ mat-card {
         -moz-transform: scale3D(1, 1, 1);
         -ms-transform: scale3D(1, 1, 1);
         -o-transform: scale3D(1, 1, 1);
-}
+    }
     35% {
         -webkit-transform: scale3D(0, 0, 1);
         transform: scale3D(0, 0, 1);
@@ -196,16 +198,18 @@ mat-card {
 .required_field:after {
     content: '&nbsp;*';
 }
+
+/* @Print settings */
+
 @page {
     size: A4;
     margin: 0;
 }
 
 @media print {
-    app-nav-bar{
+    app-nav-bar {
         display: none;
     }
-
     html,
     body {
         width: 210mm;

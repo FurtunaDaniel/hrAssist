@@ -8,7 +8,7 @@ import { ApiService } from '@app/core/services';
 
 @Injectable()
 export class DevicesService {
-	constructor(private apiService: ApiService) {}
+	constructor(private apiService: ApiService) { }
 	getAll(): Observable<any> {
 		return this.apiService.getAll('/devices').pipe(map(data => data));
 	}

@@ -74,7 +74,7 @@ export class UserGeneralComponent implements OnInit, ToggleCard {
 
 					first_name: new FormControl(
 								this.user.first_name || '',
-						  [
+							[
 							Validators.required,
 							Validators.pattern(`^[a-zA-Z ,.'-]+$`),
 						],
@@ -86,7 +86,7 @@ export class UserGeneralComponent implements OnInit, ToggleCard {
 
 					last_name: new FormControl(
 								this.user.last_name || '',
-						  [
+							[
 							Validators.required,
 							Validators.pattern(`^[a-zA-Z ,.'-]+$`),
 						],
@@ -106,7 +106,7 @@ export class UserGeneralComponent implements OnInit, ToggleCard {
 					phone: new FormControl(this.user.phone || null),
 					other_email: new FormControl(
 								this.user.other_email || null,
-						  [
+							[
 							Validators.pattern(
 										// tslint:disable-next-line:max-line-length
 										`^[a-z0-9!#$%&'*+/=?^_\`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?`,

@@ -21,6 +21,8 @@
     "forin": true,
     "import-blacklist": [true, "rxjs/Rx"],
     "import-spacing": true,
+    //add ident rule in order to fix & pass lint hook
+    "indent": [true, "tabs", 4],
     "ter-indent": [false, "tab"],
     "ter-func-call-spacing": [false],
     "interface-over-type-literal": true,

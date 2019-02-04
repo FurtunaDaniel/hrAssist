@@ -9,7 +9,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class HolidayModalComponent {
 
 	constructor(public dialogRef: MatDialogRef<HolidayModalComponent>,
-		           @Inject(MAT_DIALOG_DATA) public data: any
+					@Inject(MAT_DIALOG_DATA) public data: any
 	) { }
 
 	closeDialog(): void {
